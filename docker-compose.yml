@@ -1,0 +1,48 @@
+services:
+  db:
+    image: postgres:16
+    container_name: habitflow-db
+    environment:
+      POSTGRES_USER: habitflow
+      POSTGRES_PASSWORD: devpassword
+      POSTGRES_DB: habitflow_dev
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U habitflow -d habitflow_dev"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: habitflow-backend
+    ports:
+      - "3001:3001"
+    environment:
+      DATABASE_URL: postgresql://habitflow:devpassword@db:5432/habitflow_dev
+      JWT_SECRET: dev-secret-change-in-production
+      PORT: 3001
+      CORS_ORIGIN: http://localhost:3000
+    depends_on:
+      db:
+        condition: service_healthy
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: habitflow-frontend
+    ports:
+      - "3000:3000"
+    environment:
+      NEXT_PUBLIC_API_URL: http://localhost:3001
+    depends_on:
+      - backend
+
+volumes:
+  pgdata:
