@@ -1,44 +1,35 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
+import { useRouter } from 'next/navigation';
+import Link from 'next/link';
+import { useAuth } from '@/contexts/AuthContext';
 
 export default function HomePage() {
-  const [apiStatus, setApiStatus] = useState<'checking' | 'connected' | 'error'>('checking');
+  const router = useRouter();
+  const { user, isLoading } = useAuth();
 
   useEffect(() => {
-    const checkApi = async () => {
-      try {
-        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/health`);
-        if (res.ok) {
-          setApiStatus('connected');
-        } else {
-          setApiStatus('error');
-        }
-      } catch {
-        setApiStatus('error');
-      }
-    };
+    if (!isLoading && user) {
+      router.push('/dashboard');
+    }
+  }, [user, isLoading, router]);
 
-    checkApi();
-  }, []);
+  if (isLoading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="animate-pulse text-neutral-400">Loading...</div>
+      </div>
+    );
+  }
 
-  const statusColor =
-    apiStatus === 'connected'
-      ? 'bg-success-500'
-      : apiStatus === 'error'
-      ? 'bg-red-500'
-      : 'bg-neutral-400 animate-pulse';
-
-  const statusText =
-    apiStatus === 'connected'
-      ? 'Backend connected'
-      : apiStatus === 'error'
-      ? 'Backend unreachable'
-      : 'Checking backend...';
+  if (user) {
+    return null;
+  }
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center px-4">
-        
+      {/* Logo / Brand */}
       <div className="mb-12 text-center">
         <h1 className="text-5xl font-bold text-neutral-800 tracking-tight">
           Habit<span className="text-primary-500">Flow</span>
@@ -48,18 +39,20 @@ export default function HomePage() {
         </p>
       </div>
 
+      {/* CTA Buttons */}
       <div className="flex flex-col sm:flex-row gap-3 w-full max-w-sm">
-        <button className="flex-1 px-6 py-3 bg-primary-500 text-white font-semibold rounded-xl hover:bg-primary-600 transition-colors">
+        <Link
+          href="/auth/signup"
+          className="flex-1 px-6 py-3 bg-primary-500 text-white font-semibold rounded-xl hover:bg-primary-600 transition-colors text-center"
+        >
           Get Started
-        </button>
-        <button className="flex-1 px-6 py-3 border border-neutral-300 text-neutral-700 font-semibold rounded-xl hover:bg-neutral-100 transition-colors">
+        </Link>
+        <Link
+          href="/auth/login"
+          className="flex-1 px-6 py-3 border border-neutral-300 text-neutral-700 font-semibold rounded-xl hover:bg-neutral-100 transition-colors text-center"
+        >
           Log In
-        </button>
-      </div>
-
-      <div className="mt-16 flex items-center gap-2 text-sm text-neutral-400">
-        <span className={`w-2.5 h-2.5 rounded-full ${statusColor}`} />
-        <span>{statusText}</span>
+        </Link>
       </div>
     </div>
   );

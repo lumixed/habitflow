@@ -1,4 +1,3 @@
-# ─── Stage 1: Install & Build ─────────────────────────────────────────
 FROM node:20-alpine AS builder
 
 WORKDIR /app
@@ -8,11 +7,9 @@ RUN npm ci
 
 COPY . .
 
-# Tell Next.js to produce a standalone build (single server.js file)
 ENV NEXT_TELEMETRY_DISABLED=1
 RUN npm run build
 
-# ─── Stage 2: Production ──────────────────────────────────────────────
 FROM node:20-alpine AS production
 
 WORKDIR /app
@@ -20,7 +17,6 @@ WORKDIR /app
 ENV NODE_ENV=production
 ENV NEXT_TELEMETRY_DISABLED=1
 
-# Copy only what Next.js standalone needs
 COPY --from=builder /app/next.config.js ./
 COPY --from=builder /app/public ./public
 COPY --from=builder /app/.next/standalone ./
