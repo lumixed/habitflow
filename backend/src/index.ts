@@ -2,7 +2,8 @@ import express from 'express';
 import cors from 'cors';
 import { errorHandler } from './middleware/errorHandler';
 import authRoutes from './routes/auth';
-import { connected } from 'process';
+import habitRoutes from './routes/habits';
+
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -20,6 +21,7 @@ app.get('/api/health', (req, res) => {
 });
 
 app.use('/api/auth', authRoutes);
+app.use('/api/habits', habitRoutes);
 app.use(errorHandler);
 
 app.listen(PORT, () => {
@@ -28,4 +30,3 @@ app.listen(PORT, () => {
 });
 
 export default app;
-
