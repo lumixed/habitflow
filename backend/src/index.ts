@@ -2,6 +2,7 @@ import express from 'express';
 import cors from 'cors';
 import { errorHandler } from './middleware/errorHandler';
 import authRoutes from './routes/auth';
+import { connected } from 'process';
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -27,3 +28,4 @@ app.listen(PORT, () => {
 });
 
 export default app;
+
