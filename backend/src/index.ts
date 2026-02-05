@@ -3,7 +3,7 @@ import cors from 'cors';
 import { errorHandler } from './middleware/errorHandler';
 import authRoutes from './routes/auth';
 import habitRoutes from './routes/habits';
-
+import completionRoutes from './routes/completions';
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -22,6 +22,9 @@ app.get('/api/health', (req, res) => {
 
 app.use('/api/auth', authRoutes);
 app.use('/api/habits', habitRoutes);
+app.use('/api/completions', completionRoutes);
+app.use('/api/streak', completionRoutes);
+
 app.use(errorHandler);
 
 app.listen(PORT, () => {
