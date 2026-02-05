@@ -7,9 +7,6 @@ const nextConfig = {
     env: {
       NEXT_PUBLIC_API_URL: process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001',
     },
-    // Disable the "X-Powered-By: Next.js" header in production
-    poweredBy: false,
   };
   
   module.exports = nextConfig;
-  

@@ -83,8 +83,8 @@ const api = {
   put: <T>(endpoint: string, body?: unknown, token?: string): Promise<T> =>
     request<T>('PUT', endpoint, body, token),
 
-  delete: <T>(endpoint: string, token?: string): Promise<T> =>
-    request<T>('DELETE', endpoint, undefined, token),
+  delete: <T>(endpoint: string, body?: unknown, token?: string): Promise<T> =>
+    request<T>('DELETE', endpoint, body, token),
 };
 
 export default api;
