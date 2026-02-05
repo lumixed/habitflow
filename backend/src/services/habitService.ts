@@ -48,6 +48,7 @@ export async function getHabitsByUser(user_id: string) {
     return habits;
 }
 
+
 export async function getHabitById(habit_id: string, user_id: string) {
     const habit = await prisma.habit.findUnique({
         where: { id: habit_id },
@@ -63,6 +64,7 @@ export async function getHabitById(habit_id: string, user_id: string) {
 
     return habit;
 }
+
 
 export async function updateHabit(habit_id: string, user_id: string, updates: UpdateHabitInput) {
     const habit = await getHabitById(habit_id, user_id);
