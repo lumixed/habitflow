@@ -41,13 +41,13 @@ export function useCompletions(habit_id: string) {
     const toggleCompletion = async (date: Date) => {
         const dateStr = date.toISOString().split('T')[0];
         const isCompleted = completions.some(
-            (c) => c.completed_date.split('T')[0] === dateStr
+            (c) => c.completed_date?.split('T')[0] === dateStr
         );
 
         try {
             if (isCompleted) {
                 await api.delete('/api/completions', { habit_id, completed_date: dateStr }, token!);
-                setCompletions((prev) => prev.filter((c) => c.completed_date.split('T')[0] !== dateStr));
+                setCompletions((prev) => prev.filter((c) => c.completed_date?.split('T')[0] !== dateStr));
 
                 const streakData = await api.get<{ streak: number }>(`/api/streak/${habit_id}`, token!);
                 setStreak(streakData.streak);
@@ -73,7 +73,7 @@ export function useCompletions(habit_id: string) {
 
     const isDateCompleted = (date: Date): boolean => {
         const dateStr = date.toISOString().split('T')[0];
-        return completions.some((c) => c.completed_date.split('T')[0] === dateStr);
+        return completions.some((c) => c.completed_date?.split('T')[0] === dateStr);
     };
 
     return {
