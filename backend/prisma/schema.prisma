@@ -14,12 +14,20 @@ model User {
   display_name       String
   avatar_url         String?
   created_at         DateTime          @default(now())
+  
+  // Gamification fields
+  xp                 Int               @default(0)
+  level              Int               @default(1)
+  coins              Int               @default(0)
 
   habits             Habit[]
   completions        Completion[]
   group_memberships  GroupMember[]
   notification_pref  NotificationPref?
   created_groups     Group[]           @relation("GroupCreator")
+  achievements       UserAchievement[]
+  streaks            Streak[]
+  powerups           UserPowerup[]
 }
 
 model Habit {
@@ -35,6 +43,7 @@ model Habit {
 
   user        User         @relation(fields: [user_id], references: [id], onDelete: Cascade)
   completions Completion[]
+  streaks     Streak[]
 }
 
 enum Frequency {
@@ -96,4 +105,79 @@ model NotificationPref {
   reminder_time String   @default("09:00")
 
   user          User     @relation(fields: [user_id], references: [id], onDelete: Cascade)
+}
+
+// Gamification Models
+
+model Achievement {
+  id          String              @id @default(uuid())
+  key         String              @unique
+  name        String
+  description String
+  icon        String
+  category    AchievementCategory
+  xp_reward   Int                 @default(0)
+  coin_reward Int                 @default(0)
+  created_at  DateTime            @default(now())
+  
+  users       UserAchievement[]
+}
+
+enum AchievementCategory {
+  STREAK
+  COMPLETION
+  SOCIAL
+  MILESTONE
+  SPECIAL
+}
+
+model UserAchievement {
+  id             String      @id @default(uuid())
+  user_id        String
+  achievement_id String
+  unlocked_at    DateTime    @default(now())
+  
+  user           User        @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  achievement    Achievement @relation(fields: [achievement_id], references: [id], onDelete: Cascade)
+  
+  @@unique([user_id, achievement_id])
+}
+
+model Streak {
+  id              String    @id @default(uuid())
+  user_id         String
+  habit_id        String
+  current_count   Int       @default(0)
+  longest_count   Int       @default(0)
+  last_completed  DateTime?
+  started_at      DateTime  @default(now())
+  
+  user            User      @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  habit           Habit     @relation(fields: [habit_id], references: [id], onDelete: Cascade)
+  
+  @@unique([user_id, habit_id])
+}
+
+model Powerup {
+  id          String        @id @default(uuid())
+  key         String        @unique
+  name        String
+  description String
+  icon        String
+  cost_coins  Int
+  created_at  DateTime      @default(now())
+  
+  users       UserPowerup[]
+}
+
+model UserPowerup {
+  id         String    @id @default(uuid())
+  user_id    String
+  powerup_id String
+  quantity   Int       @default(0)
+  
+  user       User      @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  powerup    Powerup   @relation(fields: [powerup_id], references: [id], onDelete: Cascade)
+  
+  @@unique([user_id, powerup_id])
 }
