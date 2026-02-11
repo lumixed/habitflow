@@ -4,7 +4,7 @@
  */
 
 import { PrismaClient } from '@prisma/client';
-import { calculateRewards, checkLevelUp, getXPProgress } from '../utils/xpCalculator';
+import { calculateRewards, checkLevelUp, getXPProgress, getLevelFromXP } from '../utils/xpCalculator';
 import { updateStreak } from './streakService';
 import { checkAchievements, checkSpecialAchievements } from './achievementService';
 
@@ -140,6 +140,72 @@ export async function processCompletion(
         streakMilestone: milestone,
         streakCount: streak.currentCount
     };
+}
+
+/**
+ * Rollback gamification rewards for a removed completion
+ */
+export async function rollbackCompletion(
+    userId: string,
+    habitId: string,
+    completionDate: Date
+): Promise<void> {
+    // Get streak info
+    const streak = await prisma.streak.findUnique({
+        where: {
+            user_id_habit_id: {
+                user_id: userId,
+                habit_id: habitId
+            }
+        }
+    });
+
+    if (!streak) return;
+
+    // Calculate rewards that would have been given
+    const rewards = calculateRewards(streak.current_count);
+
+    // Update user stats (decrement XP and coins)
+    const user = await prisma.user.findUnique({
+        where: { id: userId }
+    });
+
+    if (user) {
+        const newXP = Math.max(0, user.xp - rewards.totalXP);
+        const newCoins = Math.max(0, user.coins - rewards.coins);
+        const newLevel = getLevelFromXP(newXP);
+
+        await prisma.user.update({
+            where: { id: userId },
+            data: {
+                xp: newXP,
+                coins: newCoins,
+                level: newLevel
+            }
+        });
+    }
+
+    // Rollback streak
+    // Find previous completion to restore last_completed date
+    const lastCompletion = await prisma.completion.findFirst({
+        where: {
+            habit_id: habitId,
+            completed_date: {
+                lt: completionDate
+            }
+        },
+        orderBy: {
+            completed_date: 'desc'
+        }
+    });
+
+    await prisma.streak.update({
+        where: { id: streak.id },
+        data: {
+            current_count: Math.max(0, streak.current_count - 1),
+            last_completed: lastCompletion ? lastCompletion.completed_date : null
+        }
+    });
 }
 
 /**

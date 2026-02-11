@@ -41,14 +41,14 @@ export function useHabits() {
         if (!token) return;
 
         const fetchHabits = async () => {
-        try {
-            const data = await api.get<{ habits: Habit[] }>('/api/habits', token);
-            setHabits(data.habits);
-        } catch (err: any) {
-            setError(err.message || 'Failed to load habits');
-        } finally {
-            setIsLoading(false);
-        }
+            try {
+                const data = await api.get<{ habits: Habit[] }>('/api/habits', token);
+                setHabits(data.habits);
+            } catch (err: any) {
+                setError(err.message || 'Failed to load habits');
+            } finally {
+                setIsLoading(false);
+            }
         };
 
         fetchHabits();
@@ -67,7 +67,7 @@ export function useHabits() {
     };
 
     const deleteHabit = async (id: string) => {
-        await api.delete(`/api/habits/${id}`, token!);
+        await api.delete(`/api/habits/${id}`, undefined, token!);
         setHabits((prev) => prev.filter((h) => h.id !== id));
     };
 

@@ -63,6 +63,8 @@ export default function DashboardPage() {
         // Refetch stats to update XP bar
         refetchStats();
 
+        if (!rewards) return;
+
         // Check for achievements
         if (rewards.newAchievements && rewards.newAchievements.length > 0) {
             const achievement = rewards.newAchievements[0];

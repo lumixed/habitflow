@@ -58,6 +58,10 @@ export async function unlogCompletion(habit_id: string, user_id: string, complet
         throw new AppError('Habit not found', 404);
     }
 
+    // Rollback gamification rewards and streaks
+    const { rollbackCompletion } = require('./gamificationService');
+    await rollbackCompletion(user_id, habit_id, completed_date);
+
     const result = await prisma.completion.deleteMany({
         where: {
             habit_id,

@@ -3,6 +3,8 @@
 import { useState, useEffect } from 'react';
 import Navbar from '@/components/Navbar';
 import AchievementBadge from '@/components/AchievementBadge';
+import api from '@/lib/api';
+import { useAuth } from '@/contexts/AuthContext';
 
 interface Achievement {
     key: string;
@@ -17,27 +19,21 @@ interface Achievement {
 }
 
 export default function AchievementsPage() {
+    const { token } = useAuth();
     const [achievements, setAchievements] = useState<Achievement[]>([]);
     const [loading, setLoading] = useState(true);
     const [filter, setFilter] = useState<string>('all');
 
     useEffect(() => {
-        fetchAchievements();
-    }, []);
+        if (token) {
+            fetchAchievements();
+        }
+    }, [token]);
 
     const fetchAchievements = async () => {
         try {
-            const token = localStorage.getItem('token');
-            const response = await fetch('http://localhost:3001/api/gamification/achievements', {
-                headers: {
-                    'Authorization': `Bearer ${token}`
-                }
-            });
-
-            if (response.ok) {
-                const data = await response.json();
-                setAchievements(data);
-            }
+            const data = await api.get<Achievement[]>('/api/gamification/achievements', token!);
+            setAchievements(data);
         } catch (error) {
             console.error('Failed to fetch achievements:', error);
         } finally {

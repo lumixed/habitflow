@@ -1,8 +1,10 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
+import api from '@/lib/api';
+import { useAuth } from '@/contexts/AuthContext';
 
-interface GamificationStats {
+export interface GamificationStats {
     userId: string;
     displayName: string;
     level: number;
@@ -18,37 +20,33 @@ interface GamificationStats {
 }
 
 export function useGamification() {
+    const { token } = useAuth();
     const [stats, setStats] = useState<GamificationStats | null>(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
 
-    const fetchStats = async () => {
+    const fetchStats = useCallback(async () => {
+        if (!token) {
+            setLoading(false);
+            return;
+        }
+
         try {
             setLoading(true);
-            const token = localStorage.getItem('token');
-            const response = await fetch('http://localhost:3001/api/gamification/stats', {
-                headers: {
-                    'Authorization': `Bearer ${token}`
-                }
-            });
-
-            if (!response.ok) {
-                throw new Error('Failed to fetch gamification stats');
-            }
-
-            const data = await response.json();
+            const data = await api.get<GamificationStats>('/api/gamification/stats', token);
             setStats(data);
             setError(null);
         } catch (err: any) {
+            console.error('Failed to fetch gamification stats:', err);
             setError(err.message);
         } finally {
             setLoading(false);
         }
-    };
+    }, [token]);
 
     useEffect(() => {
         fetchStats();
-    }, []);
+    }, [fetchStats]);
 
     return {
         stats,

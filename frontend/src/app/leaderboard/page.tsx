@@ -1,6 +1,8 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import { useAuth } from '@/contexts/AuthContext';
+import api from '@/lib/api';
 import Navbar from '@/components/Navbar';
 
 interface LeaderboardEntry {
@@ -13,27 +15,24 @@ interface LeaderboardEntry {
 }
 
 export default function LeaderboardPage() {
+    const { token } = useAuth();
     const [leaderboard, setLeaderboard] = useState<LeaderboardEntry[]>([]);
     const [loading, setLoading] = useState(true);
     const [timeframe, setTimeframe] = useState<'all' | 'weekly' | 'monthly'>('all');
 
     useEffect(() => {
-        fetchLeaderboard();
-    }, [timeframe]);
+        if (token) {
+            fetchLeaderboard();
+        }
+    }, [token, timeframe]);
 
     const fetchLeaderboard = async () => {
         try {
-            const token = localStorage.getItem('token');
-            const response = await fetch(`http://localhost:3001/api/gamification/leaderboard?limit=50`, {
-                headers: {
-                    'Authorization': `Bearer ${token}`
-                }
-            });
-
-            if (response.ok) {
-                const data = await response.json();
-                setLeaderboard(data);
-            }
+            const data = await api.get<LeaderboardEntry[]>(
+                `/api/gamification/leaderboard?limit=50`,
+                token!
+            );
+            setLeaderboard(data);
         } catch (error) {
             console.error('Failed to fetch leaderboard:', error);
         } finally {

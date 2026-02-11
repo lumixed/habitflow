@@ -40,10 +40,11 @@ export default function HabitCard({ habit, onToggleActive, onDelete, onEdit, onR
     const today = new Date();
     const isTodayCompleted = isDateCompleted(today);
 
-    const handleToggleToday = async () => {
+    const handleToggleToday = async (e: React.MouseEvent) => {
+        e.stopPropagation();
         try {
             const rewards = await toggleCompletion(today);
-            if (rewards && onReward) {
+            if (onReward) {
                 onReward(rewards);
             }
         } catch (err) {
@@ -93,8 +94,8 @@ export default function HabitCard({ habit, onToggleActive, onDelete, onEdit, onR
                             <button
                                 onClick={handleToggleToday}
                                 className={`p-1.5 rounded-lg transition-all ${isTodayCompleted
-                                        ? 'text-white bg-success-500 hover:bg-success-600'
-                                        : 'text-neutral-400 hover:text-success-600 hover:bg-success-50'
+                                    ? 'text-white bg-success-500 hover:bg-success-600'
+                                    : 'text-neutral-400 hover:text-success-600 hover:bg-success-50'
                                     }`}
                                 title={isTodayCompleted ? 'Completed today' : 'Mark as done today'}
                             >
@@ -106,7 +107,10 @@ export default function HabitCard({ habit, onToggleActive, onDelete, onEdit, onR
 
                         {/* Edit */}
                         <button
-                            onClick={() => onEdit(habit)}
+                            onClick={(e) => {
+                                e.stopPropagation();
+                                onEdit(habit);
+                            }}
                             className="p-1.5 text-neutral-400 hover:text-neutral-600 hover:bg-neutral-100 rounded-lg transition-colors"
                             title="Edit"
                         >
@@ -117,10 +121,13 @@ export default function HabitCard({ habit, onToggleActive, onDelete, onEdit, onR
 
                         {/* Toggle active/inactive */}
                         <button
-                            onClick={() => onToggleActive(habit.id, !habit.is_active)}
+                            onClick={(e) => {
+                                e.stopPropagation();
+                                onToggleActive(habit.id, !habit.is_active);
+                            }}
                             className={`p-1.5 rounded-lg transition-colors ${habit.is_active
-                                    ? 'text-success-600 hover:bg-success-50'
-                                    : 'text-neutral-400 hover:bg-neutral-100'
+                                ? 'text-success-600 hover:bg-success-50'
+                                : 'text-neutral-400 hover:bg-neutral-100'
                                 }`}
                             title={habit.is_active ? 'Pause habit' : 'Resume habit'}
                         >
@@ -137,7 +144,8 @@ export default function HabitCard({ habit, onToggleActive, onDelete, onEdit, onR
 
                         {/* Delete (two-click confirm) */}
                         <button
-                            onClick={() => {
+                            onClick={(e) => {
+                                e.stopPropagation();
                                 if (confirmDelete) {
                                     onDelete(habit.id);
                                 } else {
@@ -146,8 +154,8 @@ export default function HabitCard({ habit, onToggleActive, onDelete, onEdit, onR
                                 }
                             }}
                             className={`p-1.5 rounded-lg transition-colors ${confirmDelete
-                                    ? 'text-white bg-red-500 hover:bg-red-600'
-                                    : 'text-neutral-400 hover:text-red-500 hover:bg-red-50'
+                                ? 'text-white bg-red-500 hover:bg-red-600'
+                                : 'text-neutral-400 hover:text-red-500 hover:bg-red-50'
                                 }`}
                             title={confirmDelete ? 'Click again to confirm delete' : 'Delete'}
                         >
