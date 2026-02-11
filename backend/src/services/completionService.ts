@@ -1,5 +1,6 @@
 import prisma from '../config/prisma';
 import { AppError } from '../middleware/errorHandler';
+import { processCompletion } from './gamificationService';
 
 interface LogCompletionInput {
     habit_id: string;
@@ -22,17 +23,27 @@ export async function logCompletion(input: LogCompletionInput) {
 
     try {
         const completion = await prisma.completion.create({
-        data: {
-            habit_id: input.habit_id,
-            user_id: input.user_id,
-            completed_date: input.completed_date,
-        },
+            data: {
+                habit_id: input.habit_id,
+                user_id: input.user_id,
+                completed_date: input.completed_date,
+            },
         });
 
-        return completion;
+        // Process gamification rewards
+        const rewards = await processCompletion(
+            input.user_id,
+            input.habit_id,
+            input.completed_date
+        );
+
+        return {
+            completion,
+            rewards
+        };
     } catch (error: any) {
         if (error.code === 'P2002') {
-        throw new AppError('Already logged for this date', 409);
+            throw new AppError('Already logged for this date', 409);
         }
         throw error;
     }
@@ -49,8 +60,8 @@ export async function unlogCompletion(habit_id: string, user_id: string, complet
 
     const result = await prisma.completion.deleteMany({
         where: {
-        habit_id,
-        completed_date,
+            habit_id,
+            completed_date,
         },
     });
 
@@ -109,65 +120,65 @@ export async function calculateStreak(habit_id: string, user_id: string): Promis
         let checkDate = new Date(today);
 
         while (true) {
-        const dateStr = checkDate.toISOString().split('T')[0];
-        if (completedDates.has(dateStr)) {
-            streak++;
-            checkDate.setDate(checkDate.getDate() - 1);
-        } else {
-            if (checkDate.getTime() === today.getTime()) {
-            checkDate.setDate(checkDate.getDate() - 1);
-            continue;
+            const dateStr = checkDate.toISOString().split('T')[0];
+            if (completedDates.has(dateStr)) {
+                streak++;
+                checkDate.setDate(checkDate.getDate() - 1);
+            } else {
+                if (checkDate.getTime() === today.getTime()) {
+                    checkDate.setDate(checkDate.getDate() - 1);
+                    continue;
+                }
+                break;
             }
-            break;
-        }
         }
     } else if (habit.frequency === 'WEEKDAYS') {
         let checkDate = new Date(today);
 
         while (true) {
-        const dayOfWeek = checkDate.getDay();
+            const dayOfWeek = checkDate.getDay();
 
-        if (dayOfWeek === 0 || dayOfWeek === 6) {
-            checkDate.setDate(checkDate.getDate() - 1);
-            continue;
-        }
-
-        const dateStr = checkDate.toISOString().split('T')[0];
-        if (completedDates.has(dateStr)) {
-            streak++;
-            checkDate.setDate(checkDate.getDate() - 1);
-        } else {
-            if (checkDate.getTime() === today.getTime()) {
-            checkDate.setDate(checkDate.getDate() - 1);
-            continue;
+            if (dayOfWeek === 0 || dayOfWeek === 6) {
+                checkDate.setDate(checkDate.getDate() - 1);
+                continue;
             }
-            break;
-        }
+
+            const dateStr = checkDate.toISOString().split('T')[0];
+            if (completedDates.has(dateStr)) {
+                streak++;
+                checkDate.setDate(checkDate.getDate() - 1);
+            } else {
+                if (checkDate.getTime() === today.getTime()) {
+                    checkDate.setDate(checkDate.getDate() - 1);
+                    continue;
+                }
+                break;
+            }
         }
     } else if (habit.frequency === 'WEEKLY') {
         let checkDate = new Date(today);
         let weekStart = getWeekStart(checkDate);
 
         while (true) {
-        const weekEnd = new Date(weekStart);
-        weekEnd.setDate(weekEnd.getDate() + 6);
+            const weekEnd = new Date(weekStart);
+            weekEnd.setDate(weekEnd.getDate() + 6);
 
-        const hasCompletionThisWeek = completions.some((c) => {
-            const compDate = new Date(c.completed_date);
-            return compDate >= weekStart && compDate <= weekEnd;
-        });
+            const hasCompletionThisWeek = completions.some((c) => {
+                const compDate = new Date(c.completed_date);
+                return compDate >= weekStart && compDate <= weekEnd;
+            });
 
-        if (hasCompletionThisWeek) {
-            streak++;
-            weekStart.setDate(weekStart.getDate() - 7);
-        } else {
-            const thisWeekStart = getWeekStart(today);
-            if (weekStart.getTime() === thisWeekStart.getTime()) {
-            weekStart.setDate(weekStart.getDate() - 7);
-            continue;
+            if (hasCompletionThisWeek) {
+                streak++;
+                weekStart.setDate(weekStart.getDate() - 7);
+            } else {
+                const thisWeekStart = getWeekStart(today);
+                if (weekStart.getTime() === thisWeekStart.getTime()) {
+                    weekStart.setDate(weekStart.getDate() - 7);
+                    continue;
+                }
+                break;
             }
-            break;
-        }
         }
     }
 

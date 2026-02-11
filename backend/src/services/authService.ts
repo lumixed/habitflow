@@ -55,14 +55,17 @@ export async function signup({ email, password, display_name }: SignupInput) {
     const password_hash = await bcrypt.hash(password, 12);
     const user = await prisma.$transaction(async (tx) => {
         const newUser = await tx.user.create({
-        data: {
-            email,
-            password_hash,
-            display_name: display_name.trim(),
-        },
+            data: {
+                email,
+                password_hash,
+                display_name: display_name.trim(),
+                xp: 0,
+                level: 1,
+                coins: 0,
+            },
         });
         await tx.notificationPref.create({
-        data: { user_id: newUser.id },
+            data: { user_id: newUser.id },
         });
 
         return newUser;
@@ -76,9 +79,9 @@ export async function signup({ email, password, display_name }: SignupInput) {
     return {
         token,
         user: {
-        id: user.id,
-        email: user.email,
-        display_name: user.display_name,
+            id: user.id,
+            email: user.email,
+            display_name: user.display_name,
         },
     };
 }
@@ -113,9 +116,9 @@ export async function login({ email, password }: LoginInput) {
     return {
         token,
         user: {
-        id: user.id,
-        email: user.email,
-        display_name: user.display_name,
+            id: user.id,
+            email: user.email,
+            display_name: user.display_name,
         },
     };
 }
@@ -123,14 +126,14 @@ export async function login({ email, password }: LoginInput) {
 // ─── Get Current User ─────────────────────────────────────────────────
 
 export async function getUserById(userId: string) {
-  const user = await prisma.user.findUnique({
+    const user = await prisma.user.findUnique({
         where: { id: userId },
         select: {
-        id: true,
-        email: true,
-        display_name: true,
-        avatar_url: true,
-        created_at: true,
+            id: true,
+            email: true,
+            display_name: true,
+            avatar_url: true,
+            created_at: true,
         },
     });
 
