@@ -1,9 +1,8 @@
 'use client';
 
-import { useState, useEffect, use } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Navbar from '@/components/Navbar';
-import AchievementBadge from '@/components/AchievementBadge';
 import api from '@/lib/api';
 import { useAuth } from '@/contexts/AuthContext';
 
@@ -33,8 +32,8 @@ interface ProfileData {
     longestStreak: number;
 }
 
-export default function ProfilePage({ params }: { params: Promise<{ id: string }> }) {
-    const { id } = use(params);
+export default function ProfilePage({ params }: { params: { id: string } }) {
+    const id = params?.id;
     const { token } = useAuth();
     const router = useRouter();
     const [profile, setProfile] = useState<ProfileData | null>(null);
