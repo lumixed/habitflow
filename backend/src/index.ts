@@ -6,6 +6,7 @@ import habitRoutes from './routes/habits';
 import completionRoutes from './routes/completions';
 import groupRoutes from './routes/groups';
 import gamificationRoutes from './routes/gamification';
+import analyticsRoutes from './routes/analytics';
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -28,6 +29,7 @@ app.use('/api/completions', completionRoutes);
 app.use('/api/streak', completionRoutes);
 app.use('/api/groups', groupRoutes);
 app.use('/api/gamification', gamificationRoutes);
+app.use('/api/analytics', analyticsRoutes);
 
 app.use(errorHandler);
 
