@@ -39,6 +39,20 @@ router.get('/stats', authenticate, async (req: Request, res: Response) => {
 });
 
 /**
+ * GET /api/gamification/profile/:id
+ * Get gamification stats for a specific user (public/friend profile)
+ */
+router.get('/profile/:id', authenticate, async (req: Request, res: Response) => {
+    try {
+        const userId = req.params.id;
+        const stats = await getUserStats(userId);
+        res.json(stats);
+    } catch (error: any) {
+        res.status(500).json({ error: error.message });
+    }
+});
+
+/**
  * GET /api/gamification/achievements
  * Get all achievements with user progress
  */

@@ -2,6 +2,7 @@
 
 import { useSocial } from '@/hooks/useSocial';
 import { formatDistanceToNow } from 'date-fns';
+import Link from 'next/link';
 import { useState } from 'react';
 
 export default function SocialFeed() {
@@ -56,17 +57,21 @@ export default function SocialFeed() {
                 <div key={activity.id} className="border-b border-neutral-100 pb-6 last:border-0 last:pb-0">
                     <div className="flex gap-4">
                         {/* Avatar */}
-                        <div className="w-10 h-10 rounded-full bg-primary-100 flex items-center justify-center text-primary-600 font-bold overflow-hidden">
-                            {activity.user.avatar_url ? (
-                                <img src={activity.user.avatar_url} alt="" className="w-full h-full object-cover" />
-                            ) : (
-                                activity.user.display_name[0]
-                            )}
-                        </div>
+                        <Link href={`/profile/${activity.user.id}`} className="hover:opacity-80 transition-opacity">
+                            <div className="w-10 h-10 rounded-full bg-primary-100 flex items-center justify-center text-primary-600 font-bold overflow-hidden">
+                                {activity.user.avatar_url ? (
+                                    <img src={activity.user.avatar_url} alt="" className="w-full h-full object-cover" />
+                                ) : (
+                                    activity.user.display_name[0]
+                                )}
+                            </div>
+                        </Link>
 
                         <div className="flex-1">
                             <div className="flex items-center gap-2 mb-1">
-                                <span className="font-bold text-neutral-900">{activity.user.display_name}</span>
+                                <Link href={`/profile/${activity.user.id}`} className="font-bold text-neutral-900 hover:text-primary-600 transition-colors">
+                                    {activity.user.display_name}
+                                </Link>
                                 <span className="text-xs text-neutral-400">
                                     {formatDistanceToNow(new Date(activity.created_at), { addSuffix: true })}
                                 </span>

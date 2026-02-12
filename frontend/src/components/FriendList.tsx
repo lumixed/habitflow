@@ -1,6 +1,7 @@
 'use client';
 
 import { useSocial } from '@/hooks/useSocial';
+import Link from 'next/link';
 
 export default function FriendList() {
     const { friends, requests, handleRequest, isLoading } = useSocial();
@@ -93,9 +94,12 @@ export default function FriendList() {
                                     </div>
                                 </div>
                             </div>
-                            <button className="text-xs font-semibold text-primary-600 hover:bg-primary-50 px-3 py-1.5 rounded-lg transition-colors">
+                            <Link
+                                href={`/profile/${friend.id}`}
+                                className="text-xs font-semibold text-primary-600 hover:bg-primary-50 px-3 py-1.5 rounded-lg transition-colors border border-transparent hover:border-primary-100"
+                            >
                                 View Profile
-                            </button>
+                            </Link>
                         </div>
                     ))}
                 </div>

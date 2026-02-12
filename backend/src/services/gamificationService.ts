@@ -252,6 +252,7 @@ export async function getUserStats(userId: string) {
     return {
         userId: user.id,
         displayName: user.display_name,
+        avatarUrl: user.avatar_url,
         level: user.level,
         xp: user.xp,
         coins: user.coins,
@@ -260,6 +261,16 @@ export async function getUserStats(userId: string) {
             nextLevelXP: xpProgress.nextLevelXP,
             progress: xpProgress.progress
         },
+        achievements: user.achievements.map(ua => ({
+            key: ua.achievement.key,
+            name: ua.achievement.name,
+            icon: ua.achievement.icon,
+            unlockedAt: ua.unlocked_at
+        })),
+        streaks: user.streaks.map(s => ({
+            habitTitle: s.habit.title,
+            currentCount: s.current_count
+        })),
         achievementCount: user.achievements.length,
         longestStreak
     };
