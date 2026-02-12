@@ -42,6 +42,12 @@ export default function Navbar() {
                             Achievements
                         </Link>
                         <Link
+                            href="/analytics"
+                            className="text-sm text-neutral-500 hover:text-neutral-700 transition-colors"
+                        >
+                            Analytics
+                        </Link>
+                        <Link
                             href="/leaderboard"
                             className="text-sm text-neutral-500 hover:text-neutral-700 transition-colors"
                         >
