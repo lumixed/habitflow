@@ -28,6 +28,7 @@ model User {
   achievements       UserAchievement[]
   streaks            Streak[]
   powerups           UserPowerup[]
+  analytics          Analytics?
 }
 
 model Habit {
@@ -180,4 +181,17 @@ model UserPowerup {
   powerup    Powerup   @relation(fields: [powerup_id], references: [id], onDelete: Cascade)
   
   @@unique([user_id, powerup_id])
+}
+
+model Analytics {
+  id                String   @id @default(uuid())
+  user_id           String   @unique
+  best_streak       Int      @default(0)
+  total_completions Int      @default(0)
+  average_completions_per_week Float @default(0)
+  most_productive_day String? // e.g., "Monday"
+  most_productive_time String? // e.g., "Morning"
+  last_updated      DateTime @default(now())
+  
+  user              User     @relation(fields: [user_id], references: [id], onDelete: Cascade)
 }
