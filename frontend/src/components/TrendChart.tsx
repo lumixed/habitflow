@@ -17,6 +17,15 @@ interface TrendChartProps {
 }
 
 const TrendChart: React.FC<TrendChartProps> = ({ data }) => {
+    if (!data || !Array.isArray(data)) {
+        return (
+            <div className="bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-sm border border-gray-100 dark:border-gray-700 h-[350px]">
+                <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-6">Completion Trends</h3>
+                <p className="text-gray-500 text-center py-20">No trend data available.</p>
+            </div>
+        );
+    }
+
     return (
         <div className="bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-sm border border-gray-100 dark:border-gray-700 h-[350px]">
             <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-6">Completion Trends</h3>

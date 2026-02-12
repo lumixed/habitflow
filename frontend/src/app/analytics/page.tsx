@@ -1,6 +1,8 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import { useAuth } from '@/contexts/AuthContext';
+import api from '@/lib/api';
 import Navbar from '@/components/Navbar';
 import StatCard from '@/components/StatCard';
 import TrendChart from '@/components/TrendChart';
@@ -11,7 +13,8 @@ import {
     Zap,
     Calendar,
     Clock,
-    TrendingUp
+    TrendingUp,
+    AlertCircle
 } from 'lucide-react';
 
 interface AnalyticsData {
@@ -27,37 +30,35 @@ interface AnalyticsData {
 }
 
 export default function AnalyticsPage() {
+    const { token } = useAuth();
     const [data, setData] = useState<AnalyticsData>({
         heatmap: [],
         insights: null,
         trends: []
     });
     const [loading, setLoading] = useState(true);
+    const [error, setError] = useState<string | null>(null);
 
     useEffect(() => {
-        fetchAnalytics();
-    }, []);
+        if (token) {
+            fetchAnalytics();
+        }
+    }, [token]);
 
     const fetchAnalytics = async () => {
+        setLoading(true);
+        setError(null);
         try {
-            const token = localStorage.getItem('token');
-            const headers = { 'Authorization': `Bearer ${token}` };
-
-            const [heatmapRes, insightsRes, trendsRes] = await Promise.all([
-                fetch('http://localhost:3001/api/analytics/heatmap', { headers }),
-                fetch('http://localhost:3001/api/analytics/insights', { headers }),
-                fetch('http://localhost:3001/api/analytics/trends', { headers })
-            ]);
-
             const [heatmap, insights, trends] = await Promise.all([
-                heatmapRes.json(),
-                insightsRes.json(),
-                trendsRes.json()
+                api.get<any[]>('/api/analytics/heatmap', token!),
+                api.get<any>('/api/analytics/insights', token!),
+                api.get<any[]>('/api/analytics/trends', token!)
             ]);
 
             setData({ heatmap, insights, trends });
-        } catch (error) {
+        } catch (error: any) {
             console.error('Failed to fetch analytics:', error);
+            setError(error.message || 'Failed to load analytics data. Please try again later.');
         } finally {
             setLoading(false);
         }
@@ -67,8 +68,29 @@ export default function AnalyticsPage() {
         return (
             <div className="min-h-screen bg-neutral-50 dark:bg-neutral-900">
                 <Navbar />
-                <div className="flex items-center justify-center h-[calc(100-64px)] py-20">
+                <div className="flex items-center justify-center min-h-[400px]">
                     <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary-600"></div>
+                </div>
+            </div>
+        );
+    }
+
+    if (error) {
+        return (
+            <div className="min-h-screen bg-neutral-50 dark:bg-neutral-900">
+                <Navbar />
+                <div className="max-w-4xl mx-auto px-4 py-20 text-center">
+                    <div className="mb-6 inline-flex p-4 rounded-full bg-red-50 dark:bg-red-900/20 text-red-500">
+                        <AlertCircle className="w-12 h-12" />
+                    </div>
+                    <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">Something went wrong</h2>
+                    <p className="text-gray-500 dark:text-gray-400 mb-8">{error}</p>
+                    <button
+                        onClick={fetchAnalytics}
+                        className="px-6 py-2.5 bg-primary-600 text-white font-semibold rounded-xl hover:bg-primary-700 transition-colors"
+                    >
+                        Try Again
+                    </button>
                 </div>
             </div>
         );
