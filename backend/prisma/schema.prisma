@@ -29,6 +29,15 @@ model User {
   streaks            Streak[]
   powerups           UserPowerup[]
   analytics          Analytics?
+  
+  // Social relations
+  sent_requests      FriendRequest[]   @relation("SentRequests")
+  received_requests  FriendRequest[]   @relation("ReceivedRequests")
+  friends            Friendship[]      @relation("UserFriends")
+  friend_of          Friendship[]      @relation("FriendOf")
+  social_activities  SocialActivity[]
+  reactions          Reaction[]
+  comments           Comment[]
 }
 
 model Habit {
@@ -194,4 +203,84 @@ model Analytics {
   last_updated      DateTime @default(now())
   
   user              User     @relation(fields: [user_id], references: [id], onDelete: Cascade)
+}
+
+// Social Models
+
+model FriendRequest {
+  id           String             @id @default(uuid())
+  sender_id    String
+  receiver_id  String
+  status       FriendRequestStatus @default(PENDING)
+  created_at   DateTime           @default(now())
+  updated_at   DateTime           @updatedAt
+
+  sender       User @relation("SentRequests", fields: [sender_id], references: [id], onDelete: Cascade)
+  receiver     User @relation("ReceivedRequests", fields: [receiver_id], references: [id], onDelete: Cascade)
+
+  @@unique([sender_id, receiver_id])
+}
+
+enum FriendRequestStatus {
+  PENDING
+  ACCEPTED
+  DECLINED
+}
+
+model Friendship {
+  id         String   @id @default(uuid())
+  user_id    String
+  friend_id  String
+  created_at DateTime @default(now())
+
+  user       User @relation("UserFriends", fields: [user_id], references: [id], onDelete: Cascade)
+  friend     User @relation("FriendOf", fields: [friend_id], references: [id], onDelete: Cascade)
+
+  @@unique([user_id, friend_id])
+}
+
+model SocialActivity {
+  id             String       @id @default(uuid())
+  user_id        String
+  type           ActivityType
+  content_id     String?      // ID of habit, achievement, or powerup
+  content_text   String?      // Description of the activity
+  metadata       Json?        // Flexible storage for activity-specific data
+  created_at     DateTime     @default(now())
+
+  user           User         @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  reactions      Reaction[]
+  comments       Comment[]
+}
+
+enum ActivityType {
+  HABIT_COMPLETED
+  LEVEL_UP
+  ACHIEVEMENT_UNLOCKED
+  STREAK_MILESTONE
+}
+
+model Reaction {
+  id           String         @id @default(uuid())
+  activity_id  String
+  user_id      String
+  type         String         @default("LIKE") // "LIKE", "FIRE", "CELEBRATE", etc.
+  created_at   DateTime       @default(now())
+
+  activity     SocialActivity @relation(fields: [activity_id], references: [id], onDelete: Cascade)
+  user         User           @relation(fields: [user_id], references: [id], onDelete: Cascade)
+
+  @@unique([activity_id, user_id, type])
+}
+
+model Comment {
+  id           String         @id @default(uuid())
+  activity_id  String
+  user_id      String
+  content      String
+  created_at   DateTime       @default(now())
+  updated_at   DateTime       @updatedAt
+
+  activity     SocialActivity @relation(fields: [activity_id], references: [id], onDelete: Cascade)
+  user         User           @relation(fields: [user_id], references: [id], onDelete: Cascade)
 }
