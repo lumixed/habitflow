@@ -139,53 +139,53 @@ export default function DashboardPage() {
                 )}
 
                 {/* Header row */}
-                <div className="flex items-center justify-between mb-6">
+                <div className="flex items-center justify-between mb-8">
                     <div>
-                        <h2 className="text-2xl font-bold text-neutral-900">My Habits</h2>
-                        <p className="text-sm text-neutral-500 mt-0.5">
-                            {activeHabits.length} active {activeHabits.length === 1 ? 'habit' : 'habits'}
+                        <h2 className="text-xl font-black text-neutral-900 uppercase tracking-tight">Habits</h2>
+                        <p className="text-[10px] font-bold text-neutral-400 mt-0.5 uppercase tracking-widest">
+                            {activeHabits.length} ACTIVE {activeHabits.length === 1 ? 'HABIT' : 'HABITS'}
                         </p>
                     </div>
                     <button
                         onClick={handleOpenCreate}
-                        className="flex items-center gap-2 px-4 py-2.5 bg-primary-600 text-white text-sm font-semibold rounded-xl hover:bg-primary-700 transition-colors"
+                        className="flex items-center gap-2 px-4 py-2 bg-neutral-900 dark:bg-white text-white dark:text-neutral-900 text-xs font-black uppercase tracking-widest rounded-md hover:bg-neutral-800 transition-colors"
                     >
-                        <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+                        <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M12 4v16m8-8H4" />
                         </svg>
-                        Add habit
+                        Add
                     </button>
                 </div>
 
                 {/* ── Empty state ─────────────────────────────────────────── */}
                 {!habitsLoading && habits.length === 0 && (
-                    <div className="text-center py-20 px-6">
-                        <div className="text-5xl mb-4">🌱</div>
-                        <h3 className="text-lg font-semibold text-neutral-800 mb-2">No habits yet</h3>
-                        <p className="text-neutral-500 mb-6 max-w-sm mx-auto">
-                            Create your first habit and start building a routine that sticks.
+                    <div className="text-center py-24 px-6 border-2 border-dashed border-neutral-100 dark:border-neutral-800 rounded-lg">
+                        <div className="text-4xl mb-4 opacity-10 grayscale">🌱</div>
+                        <h3 className="text-sm font-black text-neutral-900 dark:text-white mb-2 uppercase tracking-tight">No habits yet</h3>
+                        <p className="text-xs font-bold text-neutral-400 mb-6 max-w-xs mx-auto uppercase tracking-widest leading-relaxed">
+                            Create a routine that sticks.
                         </p>
                         <button
                             onClick={handleOpenCreate}
-                            className="px-5 py-2.5 bg-primary-600 text-white text-sm font-semibold rounded-xl hover:bg-primary-700 transition-colors"
+                            className="px-6 py-2.5 bg-neutral-900 dark:bg-white text-white dark:text-neutral-900 text-xs font-black uppercase tracking-widest rounded-md hover:bg-neutral-800 transition-colors"
                         >
-                            Create your first habit
+                            Create first habit
                         </button>
                     </div>
                 )}
 
                 {/* ── Loading ─────────────────────────────────────────────── */}
                 {habitsLoading && (
-                    <div className="space-y-3">
+                    <div className="space-y-2">
                         {[1, 2, 3].map((i) => (
-                            <div key={i} className="h-24 bg-white rounded-xl border border-neutral-200 animate-pulse" />
+                            <div key={i} className="h-20 bg-neutral-50 dark:bg-neutral-900/50 rounded-md border border-neutral-100 dark:border-neutral-800 animate-pulse" />
                         ))}
                     </div>
                 )}
 
                 {/* ── Active Habits ─────────────────────────────────────── */}
                 {!habitsLoading && activeHabits.length > 0 && (
-                    <div className="space-y-3">
+                    <div className="space-y-2">
                         {activeHabits.map((habit) => (
                             <div key={habit.id} onClick={() => setViewingHabit(habit)} className="cursor-pointer">
                                 <HabitCard
@@ -205,11 +205,11 @@ export default function DashboardPage() {
 
                 {/* ── Paused Habits ─────────────────────────────────────── */}
                 {!habitsLoading && pausedHabits.length > 0 && (
-                    <div className="mt-8">
-                        <h3 className="text-sm font-semibold text-neutral-400 uppercase tracking-wider mb-3">
-                            Paused
+                    <div className="mt-10 pt-10 border-t border-neutral-100 dark:border-neutral-800">
+                        <h3 className="text-[10px] font-black text-neutral-400 uppercase tracking-[0.2em] mb-4">
+                            PAUSED
                         </h3>
-                        <div className="space-y-3">
+                        <div className="space-y-2">
                             {pausedHabits.map((habit) => (
                                 <div key={habit.id} onClick={() => setViewingHabit(habit)} className="cursor-pointer">
                                     <HabitCard

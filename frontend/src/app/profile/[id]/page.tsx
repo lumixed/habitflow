@@ -132,28 +132,28 @@ export default function ProfilePage({ params }: { params: { id: string } }) {
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                     {/* Left Column: Stats & Streaks */}
                     <div className="space-y-8">
-                        <div className="bg-white dark:bg-gray-800 rounded-3xl p-6 shadow-sm border border-neutral-100 dark:border-gray-700">
-                            <h3 className="text-lg font-bold mb-4">Statistics</h3>
-                            <div className="space-y-4">
-                                <div className="flex justify-between items-center p-3 bg-neutral-50 dark:bg-gray-700 rounded-2xl">
-                                    <span className="text-neutral-500 text-sm">Longest Streak</span>
-                                    <span className="font-bold text-orange-500">{profile.longestStreak} days</span>
+                        <div className="bg-white dark:bg-gray-800 rounded-xl p-5 shadow-sm border border-neutral-200 dark:border-gray-700">
+                            <h3 className="text-[10px] font-black text-neutral-400 dark:text-neutral-500 mb-4 uppercase tracking-[0.2em]">Statistics</h3>
+                            <div className="space-y-2">
+                                <div className="flex justify-between items-center p-3 bg-neutral-50 dark:bg-gray-700/50 rounded-lg border border-neutral-100 dark:border-gray-600">
+                                    <span className="text-neutral-500 text-[10px] font-bold uppercase tracking-wider">Longest Streak</span>
+                                    <span className="font-bold text-neutral-900 dark:text-white text-sm">{profile.longestStreak} DAYS</span>
                                 </div>
-                                <div className="flex justify-between items-center p-3 bg-neutral-50 dark:bg-gray-700 rounded-2xl">
-                                    <span className="text-neutral-500 text-sm">Achievements</span>
-                                    <span className="font-bold text-purple-500">{profile.achievementCount}</span>
+                                <div className="flex justify-between items-center p-3 bg-neutral-50 dark:bg-gray-700/50 rounded-lg border border-neutral-100 dark:border-gray-600">
+                                    <span className="text-neutral-500 text-[10px] font-bold uppercase tracking-wider">Achievements</span>
+                                    <span className="font-bold text-neutral-900 dark:text-white text-sm">{profile.achievementCount}</span>
                                 </div>
                             </div>
                         </div>
 
                         {profile.streaks.length > 0 && (
-                            <div className="bg-white dark:bg-gray-800 rounded-3xl p-6 shadow-sm border border-neutral-100 dark:border-gray-700">
-                                <h3 className="text-lg font-bold mb-4">Current Streaks</h3>
-                                <div className="space-y-3">
+                            <div className="bg-white dark:bg-gray-800 rounded-xl p-5 shadow-sm border border-neutral-200 dark:border-gray-700">
+                                <h3 className="text-[10px] font-black text-neutral-400 dark:text-neutral-500 mb-4 uppercase tracking-[0.2em]">Current Streaks</h3>
+                                <div className="space-y-1">
                                     {profile.streaks.map((streak, i) => (
-                                        <div key={i} className="flex justify-between items-center">
-                                            <span className="text-sm font-medium">{streak.habitTitle}</span>
-                                            <span className="text-sm font-bold text-orange-500">🔥 {streak.currentCount}</span>
+                                        <div key={i} className="flex justify-between items-center p-2 hover:bg-neutral-50 dark:hover:bg-gray-700/30 rounded-md transition-colors">
+                                            <span className="text-[10px] font-bold text-neutral-600 dark:text-gray-400 uppercase tracking-tight">{streak.habitTitle}</span>
+                                            <span className="text-[10px] font-black text-orange-600">STREAK: {streak.currentCount}</span>
                                         </div>
                                     ))}
                                 </div>
@@ -163,21 +163,21 @@ export default function ProfilePage({ params }: { params: { id: string } }) {
 
                     {/* Right Column: Achievements */}
                     <div className="md:col-span-2">
-                        <div className="bg-white dark:bg-gray-800 rounded-3xl p-6 shadow-sm border border-neutral-100 dark:border-gray-700">
-                            <h3 className="text-lg font-bold mb-6">Unlocked Achievements</h3>
+                        <div className="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-sm border border-neutral-200 dark:border-gray-700 h-full">
+                            <h3 className="text-[10px] font-black text-neutral-400 dark:text-neutral-500 mb-6 uppercase tracking-[0.2em]">Unlocked Achievements</h3>
                             {profile.achievements.length > 0 ? (
-                                <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
+                                <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
                                     {profile.achievements.map((achievement) => (
-                                        <div key={achievement.key} className="flex flex-col items-center text-center p-4 rounded-2xl bg-neutral-50 dark:bg-gray-700 hover:bg-white border-2 border-transparent hover:border-primary-100 transition-all duration-300 shadow-sm cursor-default">
-                                            <div className="text-3xl mb-2">{achievement.icon}</div>
-                                            <div className="text-xs font-bold leading-tight">{achievement.name}</div>
+                                        <div key={achievement.key} className="flex flex-col items-center text-center p-4 rounded-lg bg-white dark:bg-gray-800 border border-neutral-200 dark:border-gray-700 hover:border-neutral-400 transition-all shadow-sm group">
+                                            <div className="text-2xl mb-2 transition-transform duration-300">{achievement.icon}</div>
+                                            <div className="text-[9px] font-black text-neutral-900 dark:text-neutral-100 uppercase tracking-tighter">{achievement.name}</div>
                                         </div>
                                     ))}
                                 </div>
                             ) : (
-                                <div className="text-center py-12 text-neutral-400">
-                                    <div className="text-4xl mb-4">🔒</div>
-                                    <p>No achievements unlocked yet</p>
+                                <div className="text-center py-20 text-neutral-300">
+                                    <div className="text-3xl mb-3 opacity-10">🏆</div>
+                                    <p className="text-[10px] font-black uppercase tracking-widest">No achievements yet</p>
                                 </div>
                             )}
                         </div>

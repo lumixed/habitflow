@@ -69,15 +69,15 @@ export default function AchievementsPage() {
                 <div className="max-w-6xl mx-auto">
                     {/* Header */}
                     <div className="mb-8">
-                        <h1 className="text-4xl font-bold text-gray-900 dark:text-white mb-2">
-                            🏆 Achievements
+                        <h1 className="text-2xl font-bold text-gray-900 dark:text-white mb-2 uppercase tracking-tight">
+                            Achievements
                         </h1>
-                        <p className="text-gray-600 dark:text-gray-400">
+                        <p className="text-[10px] font-bold text-gray-500 dark:text-gray-400 uppercase tracking-widest">
                             {unlockedCount} of {achievements.length} unlocked
                         </p>
-                        <div className="mt-4 bg-gray-200 dark:bg-gray-700 rounded-full h-3 overflow-hidden">
+                        <div className="mt-3 bg-gray-100 dark:bg-gray-800 rounded-md h-1.5 overflow-hidden">
                             <div
-                                className="bg-gradient-to-r from-yellow-400 to-orange-500 h-full transition-all duration-500"
+                                className="bg-amber-500 h-full transition-all duration-700"
                                 style={{ width: `${(unlockedCount / achievements.length) * 100}%` }}
                             ></div>
                         </div>
@@ -90,14 +90,14 @@ export default function AchievementsPage() {
                                 key={category}
                                 onClick={() => setFilter(category)}
                                 className={`
-                px-4 py-2 rounded-lg font-medium transition-all duration-200
+                px-3 py-1.5 rounded-md text-[10px] font-black uppercase tracking-wider transition-all duration-200
                 ${filter === category
-                                        ? 'bg-indigo-600 text-white shadow-lg'
-                                        : 'bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700'
+                                        ? 'bg-neutral-900 dark:bg-white text-white dark:text-neutral-900 shadow-sm'
+                                        : 'bg-white dark:bg-gray-800 text-neutral-500 dark:text-gray-400 border border-neutral-200 dark:border-gray-700 hover:bg-neutral-50 dark:hover:bg-gray-700'
                                     }
               `}
                             >
-                                {category === 'all' ? 'All' : category.charAt(0) + category.slice(1).toLowerCase()}
+                                {category === 'all' ? 'All' : category}
                             </button>
                         ))}
                     </div>

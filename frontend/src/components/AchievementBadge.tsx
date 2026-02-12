@@ -23,10 +23,10 @@ export default function AchievementBadge({
         <div
             onClick={onClick}
             className={`
-        relative p-4 rounded-lg border-2 transition-all duration-300 cursor-pointer
+        relative p-4 rounded-md border-2 transition-all duration-200 cursor-pointer
         ${unlocked
-                    ? 'bg-gradient-to-br from-yellow-50 to-orange-50 dark:from-yellow-900/20 dark:to-orange-900/20 border-yellow-400 dark:border-yellow-600 shadow-lg hover:shadow-xl hover:scale-105'
-                    : 'bg-gray-100 dark:bg-gray-800 border-gray-300 dark:border-gray-700 opacity-60 hover:opacity-80'
+                    ? 'bg-white dark:bg-gray-800 border-amber-300 dark:border-amber-600 shadow-sm hover:border-amber-400'
+                    : 'bg-gray-50 dark:bg-gray-900 border-gray-200 dark:border-gray-800 opacity-50'
                 }
       `}
         >
@@ -39,7 +39,7 @@ export default function AchievementBadge({
 
             {/* Badge content */}
             <div className="text-center">
-                <div className="text-5xl mb-2 filter drop-shadow-lg">
+                <div className="text-4xl mb-3">
                     {unlocked ? icon : '❓'}
                 </div>
                 <h3 className={`font-bold mb-1 ${unlocked ? 'text-gray-900 dark:text-white' : 'text-gray-600 dark:text-gray-400'}`}>
@@ -50,26 +50,19 @@ export default function AchievementBadge({
                 </p>
 
                 {/* Rewards */}
-                {(xpReward || coinReward) && (
-                    <div className="flex items-center justify-center gap-3 text-xs mt-2">
-                        {xpReward && (
-                            <span className="bg-indigo-100 dark:bg-indigo-900/30 text-indigo-700 dark:text-indigo-300 px-2 py-1 rounded-full font-semibold">
-                                +{xpReward} XP
-                            </span>
-                        )}
-                        {coinReward && (
-                            <span className="bg-yellow-100 dark:bg-yellow-900/30 text-yellow-700 dark:text-yellow-300 px-2 py-1 rounded-full font-semibold">
-                                +{coinReward} 🪙
-                            </span>
-                        )}
-                    </div>
-                )}
+                <div className="flex items-center justify-center gap-2 text-[10px] mt-3">
+                    {xpReward && (
+                        <span className="bg-indigo-50 dark:bg-indigo-900/20 text-indigo-600 dark:text-indigo-400 px-2 py-0.5 rounded-md font-bold border border-indigo-100 dark:border-indigo-800/50 uppercase tracking-tighter">
+                            +{xpReward} XP
+                        </span>
+                    )}
+                    {coinReward && (
+                        <span className="bg-amber-50 dark:bg-amber-900/20 text-amber-600 dark:text-amber-400 px-2 py-0.5 rounded-md font-bold border border-amber-100 dark:border-amber-800/50 uppercase tracking-tighter">
+                            +{coinReward} COINS
+                        </span>
+                    )}
+                </div>
             </div>
-
-            {/* Shine effect for unlocked achievements */}
-            {unlocked && (
-                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent animate-shine pointer-events-none rounded-lg"></div>
-            )}
         </div>
     );
 }

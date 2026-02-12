@@ -54,12 +54,12 @@ export default function HabitCard({ habit, onToggleActive, onDelete, onEdit, onR
 
     return (
         <div
-            className={`relative bg-white rounded-xl border transition-all ${habit.is_active ? 'border-neutral-200 shadow-sm' : 'border-neutral-200 opacity-60'
+            className={`relative bg-white dark:bg-gray-800 rounded-md border transition-all ${habit.is_active ? 'border-neutral-200 dark:border-neutral-700 shadow-sm' : 'border-neutral-200 dark:border-neutral-700 opacity-60'
                 }`}
         >
             {/* Color accent strip on the left */}
             <div
-                className="absolute left-0 top-0 bottom-0 w-1 rounded-l-xl"
+                className="absolute left-0 top-0 bottom-0 w-0.5 rounded-l-md"
                 style={{ backgroundColor: habit.color }}
             />
 
@@ -72,14 +72,14 @@ export default function HabitCard({ habit, onToggleActive, onDelete, onEdit, onR
 
                         {/* Title + frequency + streak */}
                         <div className="flex-1">
-                            <h3 className="font-semibold text-neutral-900">{habit.title}</h3>
-                            <div className="flex items-center gap-2 mt-0.5">
-                                <span className="text-xs text-neutral-400">{FREQUENCY_LABELS[habit.frequency]}</span>
+                            <h3 className="text-sm font-bold text-neutral-900 dark:text-neutral-100 uppercase tracking-tight leading-4">{habit.title}</h3>
+                            <div className="flex items-center gap-2 mt-1">
+                                <span className="text-[10px] font-black text-neutral-400 uppercase tracking-wider">{FREQUENCY_LABELS[habit.frequency]}</span>
                                 {streak > 0 && (
                                     <>
                                         <span className="text-neutral-300">•</span>
-                                        <span className="text-xs font-medium text-primary-600">
-                                            🔥 {streak} {streak === 1 ? 'day' : 'days'}
+                                        <span className="text-[10px] font-black text-orange-600 uppercase tracking-wider">
+                                            STREAK: {streak} {streak === 1 ? 'DAY' : 'DAYS'}
                                         </span>
                                     </>
                                 )}
@@ -93,14 +93,14 @@ export default function HabitCard({ habit, onToggleActive, onDelete, onEdit, onR
                         {habit.is_active && (
                             <button
                                 onClick={handleToggleToday}
-                                className={`p-1.5 rounded-lg transition-all ${isTodayCompleted
-                                    ? 'text-white bg-success-500 hover:bg-success-600'
-                                    : 'text-neutral-400 hover:text-success-600 hover:bg-success-50'
+                                className={`p-1.5 rounded-md transition-all ${isTodayCompleted
+                                    ? 'text-white bg-neutral-900 dark:bg-white dark:text-neutral-900'
+                                    : 'text-neutral-400 hover:text-neutral-900 dark:hover:text-white border border-neutral-100 dark:border-neutral-700'
                                     }`}
                                 title={isTodayCompleted ? 'Completed today' : 'Mark as done today'}
                             >
-                                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                                <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
                                 </svg>
                             </button>
                         )}
