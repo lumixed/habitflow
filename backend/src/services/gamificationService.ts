@@ -129,6 +129,20 @@ export async function processCompletion(
         }
     });
 
+    // Log level up
+    if (levelUpInfo.leveledUp) {
+        const { logActivity } = require('./socialService');
+        logActivity(userId, 'LEVEL_UP', undefined, `Reached level ${levelUpInfo.newLevel}`, { level: levelUpInfo.newLevel }).catch((err: any) => console.error('Failed to log level up activity:', err));
+    }
+
+    // Log achievements
+    if (newAchievements.length > 0) {
+        const { logActivity } = require('./socialService');
+        for (const achievement of newAchievements) {
+            logActivity(userId, 'ACHIEVEMENT_UNLOCKED', achievement.key, achievement.name).catch((err: any) => console.error('Failed to log achievement activity:', err));
+        }
+    }
+
     return {
         xp: rewards.totalXP + achievementXP,
         coins: rewards.coins + achievementCoins,

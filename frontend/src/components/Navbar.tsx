@@ -48,6 +48,12 @@ export default function Navbar() {
                             Analytics
                         </Link>
                         <Link
+                            href="/social"
+                            className="text-sm text-neutral-500 hover:text-neutral-700 transition-colors"
+                        >
+                            Social
+                        </Link>
+                        <Link
                             href="/leaderboard"
                             className="text-sm text-neutral-500 hover:text-neutral-700 transition-colors"
                         >

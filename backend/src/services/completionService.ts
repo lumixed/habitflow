@@ -41,6 +41,10 @@ export async function logCompletion(input: LogCompletionInput) {
         // Update analytics
         updateUserInsights(input.user_id).catch(err => console.error('Failed to update analytics:', err));
 
+        // Log social activity
+        const { logActivity } = require('./socialService');
+        logActivity(input.user_id, 'HABIT_COMPLETED', input.habit_id, habit.title).catch((err: any) => console.error('Failed to log social activity:', err));
+
         return {
             completion,
             rewards
