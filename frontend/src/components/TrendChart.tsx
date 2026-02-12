@@ -19,16 +19,16 @@ interface TrendChartProps {
 const TrendChart: React.FC<TrendChartProps> = ({ data }) => {
     if (!data || !Array.isArray(data)) {
         return (
-            <div className="bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-sm border border-gray-100 dark:border-gray-700 h-[350px]">
-                <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-6">Completion Trends</h3>
-                <p className="text-gray-500 text-center py-20">No trend data available.</p>
+            <div className="bg-white dark:bg-gray-800 rounded-md p-6 shadow-sm border border-neutral-100 dark:border-gray-700 h-[350px]">
+                <h3 className="text-[10px] font-black text-neutral-400 dark:text-neutral-500 mb-6 uppercase tracking-[0.2em]">Completion Trends</h3>
+                <p className="text-[10px] font-bold text-neutral-400 text-center py-24 uppercase tracking-widest">No trend data available.</p>
             </div>
         );
     }
 
     return (
-        <div className="bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-sm border border-gray-100 dark:border-gray-700 h-[350px]">
-            <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-6">Completion Trends</h3>
+        <div className="bg-white dark:bg-gray-800 rounded-md p-6 shadow-sm border border-neutral-100 dark:border-gray-700 h-[350px]">
+            <h3 className="text-[10px] font-black text-neutral-400 dark:text-neutral-500 mb-6 uppercase tracking-[0.2em]">Completion Trends</h3>
             <div className="h-[250px] w-full">
                 <ResponsiveContainer width="100%" height="100%">
                     <AreaChart
@@ -37,8 +37,8 @@ const TrendChart: React.FC<TrendChartProps> = ({ data }) => {
                     >
                         <defs>
                             <linearGradient id="colorCount" x1="0" y1="0" x2="0" y2="1">
-                                <stop offset="5%" stopColor="#6366f1" stopOpacity={0.1} />
-                                <stop offset="95%" stopColor="#6366f1" stopOpacity={0} />
+                                <stop offset="5%" stopColor="#10B981" stopOpacity={0.1} />
+                                <stop offset="95%" stopColor="#10B981" stopOpacity={0} />
                             </linearGradient>
                         </defs>
                         <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#E5E7EB" />
@@ -56,16 +56,20 @@ const TrendChart: React.FC<TrendChartProps> = ({ data }) => {
                         />
                         <Tooltip
                             contentStyle={{
-                                borderRadius: '12px',
-                                border: 'none',
-                                boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1)',
-                                backgroundColor: '#fff'
+                                borderRadius: '4px',
+                                border: '1px solid #F1F5F9',
+                                boxShadow: '0 1px 2px 0 rgba(0, 0, 0, 0.05)',
+                                backgroundColor: '#fff',
+                                textTransform: 'uppercase',
+                                fontSize: '10px',
+                                fontWeight: '900',
+                                letterSpacing: '0.1em'
                             }}
                         />
                         <Area
                             type="monotone"
                             dataKey="count"
-                            stroke="#6366f1"
+                            stroke="#059669"
                             strokeWidth={3}
                             fillOpacity={1}
                             fill="url(#colorCount)"

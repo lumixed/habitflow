@@ -42,24 +42,24 @@ export default function UserSearch() {
             <form onSubmit={handleSearch} className="flex gap-2">
                 <input
                     type="text"
-                    placeholder="Search by name or email..."
+                    placeholder="FIND PEOPLE..."
                     value={query}
                     onChange={(e) => setQuery(e.target.value)}
-                    className="flex-1 px-4 py-2.5 bg-neutral-50 border border-neutral-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+                    className="flex-1 px-4 py-3 bg-neutral-50 border border-neutral-200 rounded-md text-[10px] font-bold uppercase tracking-widest focus:outline-none focus:ring-1 focus:ring-neutral-900 focus:border-transparent"
                 />
                 <button
                     type="submit"
                     disabled={isSearching}
-                    className="px-6 py-2.5 bg-primary-600 text-white font-semibold rounded-xl hover:bg-primary-700 disabled:opacity-50 transition-colors"
+                    className="px-8 py-3 bg-neutral-900 text-white text-[10px] font-black uppercase tracking-widest rounded-md hover:bg-neutral-800 disabled:opacity-50 transition-all shadow-sm"
                 >
-                    {isSearching ? 'Searching...' : 'Search'}
+                    {isSearching ? 'SEARCHING...' : 'SEARCH'}
                 </button>
             </form>
 
             <div className="space-y-3">
                 {results.length > 0 ? (
                     results.map((u) => (
-                        <div key={u.id} className="flex items-center justify-between p-4 rounded-xl border border-neutral-100 hover:border-primary-200 transition-colors">
+                        <div key={u.id} className="flex items-center justify-between p-4 rounded-md border border-neutral-100 hover:bg-neutral-50/50 transition-all">
                             <div className="flex items-center gap-3">
                                 <div className="w-12 h-12 rounded-full bg-neutral-100 flex items-center justify-center text-neutral-600 font-bold overflow-hidden">
                                     {u.avatar_url ? (
@@ -69,9 +69,15 @@ export default function UserSearch() {
                                     )}
                                 </div>
                                 <div>
-                                    <h4 className="font-bold text-neutral-900">{u.display_name}</h4>
-                                    <span className="text-xs text-neutral-400">Level {u.level}</span>
+                                    <h4 className="font-black text-neutral-900 uppercase tracking-tight leading-tight">{u.display_name}</h4>
+                                    <span className="text-[10px] font-bold text-neutral-400 uppercase tracking-widest">Level {u.level}</span>
                                 </div>
+                                # [ERROR] Target content not exactly matched.
+                                # Searching for:
+                                #                                 <div>
+                                    #                                     <h4 className="font-bold text-neutral-900">{u.display_name}</h4>
+                                    #                                     <span className="text-xs text-neutral-400">Level {u.level}</span>
+                                    #                                 </div>
                             </div>
 
                             {sentRequests.has(u.id) ? (
@@ -81,7 +87,7 @@ export default function UserSearch() {
                             ) : (
                                 <button
                                     onClick={() => handleAddFriend(u.id)}
-                                    className="px-4 py-2 bg-primary-50 text-primary-600 text-sm font-bold rounded-lg hover:bg-primary-100 transition-colors"
+                                    className="px-4 py-2 bg-emerald-50 text-emerald-600 text-[10px] font-black uppercase tracking-widest rounded-md hover:bg-emerald-100 transition-all border border-emerald-100"
                                 >
                                     Add Friend
                                 </button>

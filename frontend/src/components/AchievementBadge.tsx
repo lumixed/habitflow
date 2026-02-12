@@ -52,7 +52,7 @@ export default function AchievementBadge({
                 {/* Rewards */}
                 <div className="flex items-center justify-center gap-2 text-[10px] mt-3">
                     {xpReward && (
-                        <span className="bg-indigo-50 dark:bg-indigo-900/20 text-indigo-600 dark:text-indigo-400 px-2 py-0.5 rounded-md font-bold border border-indigo-100 dark:border-indigo-800/50 uppercase tracking-tighter">
+                        <span className="bg-emerald-50 dark:bg-emerald-900/20 text-emerald-600 dark:text-emerald-400 px-2 py-0.5 rounded-md font-bold border border-emerald-100 dark:border-emerald-800/50 uppercase tracking-tighter">
                             +{xpReward} XP
                         </span>
                     )}

@@ -11,13 +11,13 @@ module.exports = {
             colors: {
                 background: 'var(--background)',
                 foreground: 'var(--foreground)',
-                // Primary brand color
+                // Primary brand color (Sophisticated Emerald)
                 primary: {
-                    50: '#EEF2FF',
-                    100: '#E0E7FF',
-                    500: '#6366F1',
-                    600: '#4F46E5',
-                    700: '#4338CA',
+                    50: '#ECFDF5',
+                    100: '#D1FAE5',
+                    500: '#10B981',
+                    600: '#059669',
+                    700: '#047857',
                 },
                 // Success / completion
                 success: {

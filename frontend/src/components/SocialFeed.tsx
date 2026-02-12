@@ -58,7 +58,7 @@ export default function SocialFeed() {
                     <div className="flex gap-4">
                         {/* Avatar */}
                         <Link href={`/profile/${activity.user.id}`} className="hover:opacity-80 transition-opacity">
-                            <div className="w-10 h-10 rounded-full bg-primary-100 flex items-center justify-center text-primary-600 font-bold overflow-hidden">
+                            <div className="w-10 h-10 rounded-md bg-emerald-50 dark:bg-emerald-900/20 flex items-center justify-center text-emerald-600 dark:text-emerald-400 font-black border border-emerald-100 dark:border-emerald-800/50 overflow-hidden">
                                 {activity.user.avatar_url ? (
                                     <img src={activity.user.avatar_url} alt="" className="w-full h-full object-cover" />
                                 ) : (
@@ -69,7 +69,7 @@ export default function SocialFeed() {
 
                         <div className="flex-1">
                             <div className="flex items-center gap-2 mb-1">
-                                <Link href={`/profile/${activity.user.id}`} className="font-bold text-neutral-900 hover:text-primary-600 transition-colors">
+                                <Link href={`/profile/${activity.user.id}`} className="text-sm font-black text-neutral-900 hover:text-emerald-600 transition-colors uppercase tracking-tight">
                                     {activity.user.display_name}
                                 </Link>
                                 <span className="text-xs text-neutral-400">
@@ -83,7 +83,7 @@ export default function SocialFeed() {
                                     <>Completed habit <span className="font-semibold">{activity.content_text}</span></>
                                 )}
                                 {activity.type === 'LEVEL_UP' && (
-                                    <span className="font-semibold text-primary-600">{activity.content_text}</span>
+                                    <span className="font-black text-emerald-600 uppercase tracking-widest text-[10px]">{activity.content_text}</span>
                                 )}
                                 {activity.type === 'ACHIEVEMENT_UNLOCKED' && (
                                     <>Unlocked achievement <span className="font-semibold">"{activity.content_text}"</span></>
@@ -94,7 +94,7 @@ export default function SocialFeed() {
                             <div className="mt-4 flex items-center gap-6">
                                 <button
                                     onClick={() => reactToActivity(activity.id)}
-                                    className="flex items-center gap-1.5 text-sm text-neutral-500 hover:text-primary-600 transition-colors"
+                                    className="flex items-center gap-1.5 text-[10px] font-bold text-neutral-400 hover:text-emerald-600 uppercase tracking-widest transition-colors"
                                 >
                                     <span>👏</span>
                                     <span>{activity.reactions?.length || 0}</span>
@@ -109,17 +109,17 @@ export default function SocialFeed() {
                             <div className="mt-4 flex gap-2">
                                 <input
                                     type="text"
-                                    placeholder="Add a comment..."
+                                    placeholder="ADD A COMMENT..."
                                     value={commentTexts[activity.id] || ''}
                                     onChange={(e) => setCommentTexts({ ...commentTexts, [activity.id]: e.target.value })}
                                     onKeyDown={(e) => e.key === 'Enter' && handleCommentSubmit(activity.id)}
-                                    className="flex-1 bg-neutral-50 border border-neutral-200 rounded-lg px-3 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+                                    className="flex-1 bg-neutral-50 border border-neutral-200 rounded-md px-4 py-2 text-[10px] font-bold uppercase tracking-widest focus:outline-none focus:ring-1 focus:ring-neutral-900 focus:border-transparent"
                                 />
                                 <button
                                     onClick={() => handleCommentSubmit(activity.id)}
-                                    className="text-primary-600 font-semibold text-sm hover:text-primary-700"
+                                    className="text-[10px] font-black text-emerald-600 uppercase tracking-widest hover:text-emerald-700 px-2"
                                 >
-                                    Post
+                                    POST
                                 </button>
                             </div>
                         </div>

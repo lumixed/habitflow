@@ -61,7 +61,7 @@ export default function ProfilePage({ params }: { params: { id: string } }) {
             <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
                 <Navbar />
                 <div className="flex items-center justify-center h-[calc(100vh-64px)]">
-                    <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary-600"></div>
+                    <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-neutral-900 mx-auto"></div>
                 </div>
             </div>
         );
@@ -75,9 +75,9 @@ export default function ProfilePage({ params }: { params: { id: string } }) {
                     <h2 className="text-2xl font-bold">User not found</h2>
                     <button
                         onClick={() => router.back()}
-                        className="mt-4 text-primary-600 font-semibold active:scale-95 transition-transform"
+                        className="mt-6 text-[10px] font-black text-neutral-400 hover:text-neutral-900 uppercase tracking-widest active:scale-95 transition-all"
                     >
-                        Go Back
+                        GO BACK
                     </button>
                 </div>
             </div>
@@ -89,9 +89,9 @@ export default function ProfilePage({ params }: { params: { id: string } }) {
             <Navbar />
             <div className="max-w-4xl mx-auto p-6">
                 {/* Header Card */}
-                <div className="bg-white dark:bg-gray-800 rounded-3xl p-8 shadow-sm border border-neutral-100 dark:border-gray-700 mb-8">
+                <div className="bg-white dark:bg-gray-800 rounded-md p-10 shadow-sm border border-neutral-100 dark:border-gray-700 mb-8">
                     <div className="flex flex-col md:flex-row items-center gap-8">
-                        <div className="w-32 h-32 rounded-full bg-primary-100 flex items-center justify-center text-4xl font-bold text-primary-600 border-4 border-white shadow-lg overflow-hidden">
+                        <div className="w-32 h-32 rounded-md bg-emerald-50 dark:bg-emerald-900/20 flex items-center justify-center text-5xl font-black text-emerald-600 border border-emerald-100 dark:border-emerald-800/50 shadow-sm overflow-hidden">
                             {profile.avatarUrl ? (
                                 <img src={profile.avatarUrl} alt="" className="w-full h-full object-cover" />
                             ) : (
@@ -99,28 +99,28 @@ export default function ProfilePage({ params }: { params: { id: string } }) {
                             )}
                         </div>
                         <div className="flex-1 text-center md:text-left">
-                            <h1 className="text-3xl font-bold mb-2">{profile.displayName}</h1>
-                            <div className="flex flex-wrap justify-center md:justify-start gap-4 mb-4">
-                                <span className="px-3 py-1 bg-primary-50 text-primary-600 rounded-full text-sm font-bold">
-                                    Level {profile.level}
+                            <h1 className="text-3xl font-black mb-2 uppercase tracking-tight text-neutral-900 dark:text-white">{profile.displayName}</h1>
+                            <div className="flex flex-wrap justify-center md:justify-start gap-4 mb-6">
+                                <span className="px-3 py-1 bg-emerald-50 text-emerald-600 border border-emerald-100 rounded-md text-[10px] font-black uppercase tracking-widest">
+                                    LVL {profile.level}
                                 </span>
-                                <span className="px-3 py-1 bg-yellow-50 text-yellow-600 rounded-full text-sm font-bold whitespace-nowrap">
+                                <span className="px-3 py-1 bg-neutral-50 text-neutral-900 border border-neutral-100 rounded-md text-[10px] font-black uppercase tracking-widest whitespace-nowrap">
                                     ✨ {profile.xp} XP
                                 </span>
-                                <span className="px-3 py-1 bg-green-50 text-green-600 rounded-full text-sm font-bold">
-                                    💰 {profile.coins} Coins
+                                <span className="px-3 py-1 bg-neutral-900 text-white rounded-md text-[10px] font-black uppercase tracking-widest">
+                                    💰 {profile.coins} COINS
                                 </span>
                             </div>
 
                             {/* XP Progress Bar */}
                             <div className="w-full max-w-md mx-auto md:mx-0">
-                                <div className="flex justify-between text-xs text-neutral-500 mb-1 font-medium">
-                                    <span>XP Progress</span>
+                                <div className="flex justify-between text-[10px] font-black text-neutral-400 uppercase tracking-widest mb-2">
+                                    <span>XP PROGRESS</span>
                                     <span>{profile.xpProgress.currentLevelXP} / {profile.xpProgress.nextLevelXP}</span>
                                 </div>
-                                <div className="h-2 bg-neutral-100 dark:bg-gray-700 rounded-full overflow-hidden">
+                                <div className="h-1 bg-neutral-100 dark:bg-gray-700 rounded-full overflow-hidden">
                                     <div
-                                        className="h-full bg-primary-500 transition-all duration-1000 ease-out"
+                                        className="h-full bg-emerald-500 transition-all duration-1000 ease-out"
                                         style={{ width: `${profile.xpProgress.progress}%` }}
                                     />
                                 </div>

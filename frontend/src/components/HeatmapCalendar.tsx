@@ -17,11 +17,11 @@ const HeatmapCalendar: React.FC<HeatmapCalendarProps> = ({ data, year }) => {
     const daysOfWeek = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
     const intensityColors = [
-        'bg-gray-100 dark:bg-gray-800',
-        'bg-indigo-200 dark:bg-indigo-900/40',
-        'bg-indigo-400 dark:bg-indigo-700/60',
-        'bg-indigo-600 dark:bg-indigo-500/80',
-        'bg-indigo-800 dark:bg-indigo-400',
+        'bg-neutral-50 dark:bg-neutral-800',
+        'bg-emerald-100 dark:bg-emerald-900/30',
+        'bg-emerald-300 dark:bg-emerald-700/50',
+        'bg-emerald-500 dark:bg-emerald-500/70',
+        'bg-emerald-700 dark:bg-emerald-400',
     ];
 
     const heatmapCells = useMemo(() => {

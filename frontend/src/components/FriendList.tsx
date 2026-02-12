@@ -27,14 +27,14 @@ export default function FriendList() {
             {/* Pending Requests Section */}
             {requests.length > 0 && (
                 <div>
-                    <h3 className="text-sm font-semibold text-neutral-400 uppercase tracking-wider mb-4">
+                    <h3 className="text-[10px] font-black text-neutral-400 uppercase tracking-[0.2em] mb-6">
                         Pending Requests ({requests.length})
                     </h3>
                     <div className="grid grid-cols-1 gap-3">
                         {requests.map((request) => (
                             <div key={request.id} className="flex items-center justify-between p-4 rounded-xl bg-primary-50 border border-primary-100 shadow-sm">
-                                <div className="flex items-center gap-3">
-                                    <div className="w-10 h-10 rounded-full bg-white flex items-center justify-center text-primary-600 font-bold overflow-hidden border border-primary-200">
+                                <div className="flex items-center gap-4">
+                                    <div className="w-10 h-10 rounded-md bg-white flex items-center justify-center text-emerald-600 font-black overflow-hidden border border-emerald-100">
                                         {request.sender.avatar_url ? (
                                             <img src={request.sender.avatar_url} alt="" className="w-full h-full object-cover" />
                                         ) : (
@@ -49,13 +49,13 @@ export default function FriendList() {
                                 <div className="flex gap-2">
                                     <button
                                         onClick={() => handleRequest(request.id, 'ACCEPT')}
-                                        className="px-3 py-1.5 bg-primary-600 text-white text-xs font-bold rounded-lg hover:bg-primary-700 transition-colors"
+                                        className="px-4 py-2 bg-neutral-900 text-white text-[10px] font-black uppercase tracking-widest rounded-md hover:bg-neutral-800 transition-all"
                                     >
                                         Accept
                                     </button>
                                     <button
                                         onClick={() => handleRequest(request.id, 'DECLINE')}
-                                        className="px-3 py-1.5 bg-white text-neutral-600 text-xs font-bold rounded-lg border border-neutral-200 hover:bg-neutral-50 transition-colors"
+                                        className="px-4 py-2 bg-white text-neutral-400 text-[10px] font-black uppercase tracking-widest rounded-md border border-neutral-100 hover:bg-neutral-50 transition-all"
                                     >
                                         Decline
                                     </button>
@@ -69,15 +69,15 @@ export default function FriendList() {
             {/* Friend List Section */}
             <div>
                 {friends.length > 0 && (
-                    <h3 className="text-sm font-semibold text-neutral-400 uppercase tracking-wider mb-4">
+                    <h3 className="text-[10px] font-black text-neutral-400 uppercase tracking-[0.2em] mb-6">
                         Your Friends ({friends.length})
                     </h3>
                 )}
                 <div className="grid grid-cols-1 gap-3">
                     {friends.map((friend) => (
                         <div key={friend.id} className="flex items-center justify-between p-4 rounded-xl border border-neutral-100 hover:border-primary-200 transition-colors">
-                            <div className="flex items-center gap-3">
-                                <div className="w-12 h-12 rounded-full bg-neutral-100 flex items-center justify-center text-neutral-600 font-bold overflow-hidden border-2 border-white shadow-sm">
+                            <div className="flex items-center gap-4">
+                                <div className="w-12 h-12 rounded-md bg-neutral-100 flex items-center justify-center text-neutral-400 font-black overflow-hidden border border-neutral-100 shadow-sm">
                                     {friend.avatar_url ? (
                                         <img src={friend.avatar_url} alt="" className="w-full h-full object-cover" />
                                     ) : (
@@ -86,19 +86,19 @@ export default function FriendList() {
                                 </div>
                                 <div>
                                     <h4 className="font-bold text-neutral-900">{friend.display_name}</h4>
-                                    <div className="flex items-center gap-2">
-                                        <span className="bg-primary-50 text-primary-600 text-[10px] font-bold px-1.5 py-0.5 rounded uppercase">
+                                    <div className="flex items-center gap-3">
+                                        <span className="bg-emerald-50 text-emerald-600 text-[10px] font-black px-2 py-0.5 rounded-md border border-emerald-100 uppercase tracking-widest">
                                             Lvl {friend.level}
                                         </span>
-                                        <span className="text-xs text-neutral-400">{friend.xp} XP</span>
+                                        <span className="text-[10px] font-bold text-neutral-400 uppercase tracking-widest">{friend.xp} XP</span>
                                     </div>
                                 </div>
                             </div>
                             <Link
                                 href={`/profile/${friend.id}`}
-                                className="text-xs font-semibold text-primary-600 hover:bg-primary-50 px-3 py-1.5 rounded-lg transition-colors border border-transparent hover:border-primary-100"
+                                className="text-[10px] font-black text-neutral-900 uppercase tracking-widest hover:underline px-4 py-2"
                             >
-                                View Profile
+                                PROFILE
                             </Link>
                         </div>
                     ))}

@@ -77,18 +77,18 @@ export default function CelebrationModal({ isOpen, onClose, type, data }: Celebr
                     {/* Rewards */}
                     <div className="flex items-center justify-center gap-4 mb-6">
                         {data.xp && (
-                            <div className="bg-indigo-100 dark:bg-indigo-900/30 text-indigo-700 dark:text-indigo-300 px-6 py-3 rounded-full font-bold text-lg shadow-md">
+                            <div className="bg-emerald-50 dark:bg-emerald-900/20 text-emerald-700 dark:text-emerald-300 px-6 py-3 rounded-md font-black text-sm border border-emerald-100 dark:border-emerald-800/50 uppercase tracking-widest">
                                 +{data.xp} XP
                             </div>
                         )}
                         {data.coins && (
-                            <div className="bg-yellow-100 dark:bg-yellow-900/30 text-yellow-700 dark:text-yellow-300 px-6 py-3 rounded-full font-bold text-lg shadow-md">
+                            <div className="bg-emerald-50 dark:bg-emerald-900/20 text-emerald-700 dark:text-emerald-300 px-6 py-3 rounded-md font-black text-sm border border-emerald-100 dark:border-emerald-800/50 uppercase tracking-widest">
                                 +{data.coins} 🪙
                             </div>
                         )}
                         {data.level && (
-                            <div className="bg-purple-100 dark:bg-purple-900/30 text-purple-700 dark:text-purple-300 px-6 py-3 rounded-full font-bold text-lg shadow-md">
-                                Level {data.level}!
+                            <div className="bg-neutral-900 text-white px-6 py-3 rounded-md font-black text-sm uppercase tracking-widest">
+                                LEVEL {data.level}
                             </div>
                         )}
                     </div>
@@ -96,9 +96,9 @@ export default function CelebrationModal({ isOpen, onClose, type, data }: Celebr
                     {/* Close button */}
                     <button
                         onClick={onClose}
-                        className="w-full bg-gradient-to-r from-indigo-500 to-purple-600 text-white font-semibold py-3 px-6 rounded-lg hover:from-indigo-600 hover:to-purple-700 transition-all duration-200 shadow-lg hover:shadow-xl"
+                        className="w-full bg-neutral-900 dark:bg-white text-white dark:text-neutral-900 text-[10px] font-black uppercase tracking-[0.2em] py-4 px-6 rounded-md hover:bg-neutral-800 transition-all duration-200"
                     >
-                        Awesome! 🎉
+                        CONTINUE
                     </button>
                 </div>
             </div>

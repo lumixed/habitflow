@@ -41,10 +41,10 @@ export default function LeaderboardPage() {
     };
 
     const getRankColor = (rank: number) => {
-        if (rank === 1) return 'from-yellow-400 to-yellow-600';
-        if (rank === 2) return 'from-gray-300 to-gray-500';
-        if (rank === 3) return 'from-orange-400 to-orange-600';
-        return 'from-indigo-400 to-indigo-600';
+        if (rank === 1) return 'from-emerald-400 to-emerald-600';
+        if (rank === 2) return 'from-neutral-300 to-neutral-500';
+        if (rank === 3) return 'from-emerald-800 to-neutral-900';
+        return 'from-neutral-800 to-neutral-900';
     };
 
     const getRankEmoji = (rank: number) => {
@@ -58,9 +58,9 @@ export default function LeaderboardPage() {
         return (
             <div className="min-h-screen bg-gray-50 dark:bg-gray-900 p-6">
                 <div className="max-w-4xl mx-auto">
-                    <div className="text-center py-12">
-                        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-indigo-600 mx-auto"></div>
-                        <p className="mt-4 text-gray-600 dark:text-gray-400">Loading leaderboard...</p>
+                    <div className="text-center py-20">
+                        <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-neutral-900 mx-auto"></div>
+                        <p className="mt-4 text-[10px] font-bold text-neutral-400 uppercase tracking-widest">Loading leaderboard...</p>
                     </div>
                 </div>
             </div>
@@ -73,12 +73,12 @@ export default function LeaderboardPage() {
             <div className="p-6 text-gray-900 dark:text-gray-100">
                 <div className="max-w-4xl mx-auto">
                     {/* Header */}
-                    <div className="mb-8 text-center">
-                        <h1 className="text-4xl font-bold text-gray-900 dark:text-white mb-2">
-                            🏆 Leaderboard
+                    <div className="mb-12 text-center">
+                        <h1 className="text-3xl font-black text-neutral-900 dark:text-white mb-2 uppercase tracking-tight">
+                            Leaderboard
                         </h1>
-                        <p className="text-gray-600 dark:text-gray-400">
-                            See how you stack up against other habit builders
+                        <p className="text-[10px] font-bold text-neutral-400 uppercase tracking-widest">
+                            THE TOP HABIT BUILDERS
                         </p>
                     </div>
 
@@ -89,14 +89,14 @@ export default function LeaderboardPage() {
                                 key={tf}
                                 onClick={() => setTimeframe(tf)}
                                 className={`
-                px-6 py-2 rounded-lg font-medium transition-all duration-200
+                px-6 py-2 rounded-md font-black text-[10px] uppercase tracking-widest transition-all duration-200
                 ${timeframe === tf
-                                        ? 'bg-indigo-600 text-white shadow-lg'
-                                        : 'bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700'
+                                        ? 'bg-neutral-900 text-white shadow-sm'
+                                        : 'bg-white dark:bg-gray-800 text-neutral-400 dark:text-gray-500 hover:bg-neutral-50 border border-neutral-100 dark:border-gray-800'
                                     }
               `}
                             >
-                                {tf.charAt(0).toUpperCase() + tf.slice(1)}
+                                {tf}
                             </button>
                         ))}
                     </div>
@@ -109,29 +109,29 @@ export default function LeaderboardPage() {
                                 className={`
                 bg-white dark:bg-gray-800 rounded-lg shadow-md p-4 flex items-center gap-4
                 transition-all duration-200 hover:shadow-lg hover:scale-[1.02]
-                ${entry.rank <= 3 ? 'border-2 border-yellow-400 dark:border-yellow-600' : ''}
+                ${entry.rank <= 3 ? 'border-2 border-emerald-500/50 dark:border-emerald-500/30' : 'border border-neutral-100 dark:border-gray-700'}
               `}
                             >
                                 {/* Rank */}
-                                <div className={`flex-shrink-0 w-16 h-16 rounded-full bg-gradient-to-br ${getRankColor(entry.rank)} flex items-center justify-center shadow-lg`}>
-                                    <span className="text-3xl">{getRankEmoji(entry.rank)}</span>
+                                <div className={`flex-shrink-0 w-12 h-12 rounded-md bg-gradient-to-br ${getRankColor(entry.rank)} flex items-center justify-center shadow-sm`}>
+                                    <span className="text-2xl">{getRankEmoji(entry.rank)}</span>
                                 </div>
 
                                 {/* User info */}
                                 <div className="flex-1">
-                                    <div className="flex items-center gap-2 mb-1">
-                                        <h3 className="font-bold text-lg text-gray-900 dark:text-white">
+                                    <div className="flex items-center gap-3 mb-1">
+                                        <h3 className="font-black text-lg text-neutral-900 dark:text-white uppercase tracking-tight">
                                             {entry.displayName}
                                         </h3>
-                                        <span className="text-sm text-gray-500 dark:text-gray-400">
+                                        <span className="text-[10px] font-black text-neutral-400 uppercase tracking-widest">
                                             #{entry.rank}
                                         </span>
                                     </div>
-                                    <div className="flex items-center gap-4 text-sm">
-                                        <span className="bg-indigo-100 dark:bg-indigo-900/30 text-indigo-700 dark:text-indigo-300 px-3 py-1 rounded-full font-semibold">
-                                            Level {entry.level}
+                                    <div className="flex items-center gap-4 text-xs font-bold uppercase tracking-widest text-neutral-400">
+                                        <span className="bg-emerald-50 dark:bg-emerald-900/20 text-emerald-600 dark:text-emerald-400 px-3 py-1 rounded-md border border-emerald-100 dark:border-emerald-800/50">
+                                            Lvl {entry.level}
                                         </span>
-                                        <span className="text-gray-600 dark:text-gray-400">
+                                        <span>
                                             {entry.xp.toLocaleString()} XP
                                         </span>
                                     </div>
