@@ -124,7 +124,7 @@ export async function updateUserInsights(userId: string): Promise<UserInsights> 
     }
 
     // Update the Analytics table
-    await (prisma as any).analytics.upsert({
+    await prisma.analytics.upsert({
         where: { user_id: userId },
         create: {
             user_id: userId,

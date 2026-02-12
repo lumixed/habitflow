@@ -20,6 +20,16 @@ export function useSocial() {
         }
     };
 
+    const fetchRequests = async () => {
+        if (!token) return;
+        try {
+            const data = await api.get<{ requests: any[] }>('/api/social/requests', token);
+            setRequests(data.requests);
+        } catch (err: any) {
+            console.error('Failed to fetch requests:', err);
+        }
+    };
+
     const fetchFeed = async (limit = 20, offset = 0) => {
         if (!token) return;
         setIsLoading(true);
@@ -48,7 +58,7 @@ export function useSocial() {
         try {
             await api.put(`/api/social/request/${requestId}`, { action }, token);
             if (action === 'ACCEPT') fetchFriends();
-            // Refresh requests list if we had one
+            fetchRequests();
             return true;
         } catch (err: any) {
             throw err;
@@ -87,6 +97,7 @@ export function useSocial() {
         if (token) {
             fetchFriends();
             fetchFeed();
+            fetchRequests();
         }
     }, [token]);
 

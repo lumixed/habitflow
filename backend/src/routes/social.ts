@@ -40,6 +40,15 @@ router.get('/friends', async (req: Request, res: Response, next: NextFunction) =
     }
 });
 
+router.get('/requests', async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const requests = await socialService.getPendingRequests(req.user!.sub);
+        res.json({ requests });
+    } catch (error) {
+        next(error);
+    }
+});
+
 // Social feed
 router.get('/feed', async (req: Request, res: Response, next: NextFunction) => {
     try {

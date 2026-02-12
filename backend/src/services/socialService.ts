@@ -118,6 +118,29 @@ export async function getFriends(userId: string) {
 }
 
 /**
+ * Get pending friend requests for a user
+ */
+export async function getPendingRequests(userId: string) {
+    return await prisma.friendRequest.findMany({
+        where: {
+            receiver_id: userId,
+            status: 'PENDING'
+        },
+        include: {
+            sender: {
+                select: {
+                    id: true,
+                    display_name: true,
+                    avatar_url: true,
+                    level: true
+                }
+            }
+        },
+        orderBy: { created_at: 'desc' }
+    });
+}
+
+/**
  * Get social feed for a user
  */
 export async function getSocialFeed(userId: string, limit = 20, offset = 0) {
