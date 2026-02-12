@@ -67,6 +67,9 @@ export async function signup({ email, password, display_name }: SignupInput) {
         await tx.notificationPref.create({
             data: { user_id: newUser.id },
         });
+        await (tx as any).analytics.create({
+            data: { user_id: newUser.id },
+        });
 
         return newUser;
     });

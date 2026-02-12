@@ -1,6 +1,7 @@
 import prisma from '../config/prisma';
 import { AppError } from '../middleware/errorHandler';
 import { processCompletion } from './gamificationService';
+import { updateUserInsights } from './analyticsService';
 
 interface LogCompletionInput {
     habit_id: string;
@@ -37,6 +38,9 @@ export async function logCompletion(input: LogCompletionInput) {
             input.completed_date
         );
 
+        // Update analytics
+        updateUserInsights(input.user_id).catch(err => console.error('Failed to update analytics:', err));
+
         return {
             completion,
             rewards
@@ -72,6 +76,9 @@ export async function unlogCompletion(habit_id: string, user_id: string, complet
     if (result.count === 0) {
         throw new AppError('No completion found for this date', 404);
     }
+
+    // Update analytics
+    updateUserInsights(user_id).catch(err => console.error('Failed to update analytics:', err));
 
     return { message: 'Completion removed' };
 }
