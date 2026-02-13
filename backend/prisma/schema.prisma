@@ -38,6 +38,7 @@ model User {
   social_activities  SocialActivity[]
   reactions          Reaction[]
   comments           Comment[]
+  challenge_memberships ChallengeMember[]
 }
 
 model Habit {
@@ -86,6 +87,37 @@ model Group {
 
   creator     User          @relation("GroupCreator", fields: [created_by], references: [id], onDelete: Cascade)
   members     GroupMember[]
+  challenges  Challenge[]
+}
+
+// ... existing models ...
+
+model Challenge {
+  id                String            @id @default(uuid())
+  group_id          String
+  title             String
+  description       String?
+  start_date        DateTime
+  end_date          DateTime
+  target_habit_type String?           // e.g., "Any", "Fitness", "Reading"
+  goal_count        Int               @default(0) // target number of completions
+  created_at        DateTime          @default(now())
+
+  group             Group             @relation(fields: [group_id], references: [id], onDelete: Cascade)
+  participants      ChallengeMember[]
+}
+
+model ChallengeMember {
+  id             String    @id @default(uuid())
+  challenge_id   String
+  user_id        String
+  progress_count Int       @default(0)
+  joined_at      DateTime  @default(now())
+
+  challenge      Challenge @relation(fields: [challenge_id], references: [id], onDelete: Cascade)
+  user           User      @relation(fields: [user_id], references: [id], onDelete: Cascade)
+
+  @@unique([challenge_id, user_id])
 }
 
 model GroupMember {

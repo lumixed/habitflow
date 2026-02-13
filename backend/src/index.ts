@@ -9,6 +9,7 @@ import gamificationRoutes from './routes/gamification';
 import analyticsRoutes from './routes/analytics';
 import socialRoutes from './routes/social';
 import interactionRoutes from './routes/interactions';
+import challengeRoutes from './routes/challenges';
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -34,6 +35,7 @@ app.use('/api/gamification', gamificationRoutes);
 app.use('/api/analytics', analyticsRoutes);
 app.use('/api/social', socialRoutes);
 app.use('/api/interactions', interactionRoutes);
+app.use('/api/challenges', challengeRoutes);
 
 app.use(errorHandler);
 

@@ -42,6 +42,12 @@ export default function Navbar() {
                             Analytics
                         </Link>
                         <Link
+                            href="/groups"
+                            className="text-[10px] font-black text-neutral-400 hover:text-neutral-900 uppercase tracking-[0.15em] transition-colors"
+                        >
+                            Groups
+                        </Link>
+                        <Link
                             href="/social"
                             className="text-[10px] font-black text-neutral-400 hover:text-neutral-900 uppercase tracking-[0.15em] transition-colors"
                         >

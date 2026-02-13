@@ -171,6 +171,18 @@ export async function getSocialFeed(userId: string, limit = 20, offset = 0) {
                     }
                 }
             },
+            comments: {
+                include: {
+                    user: {
+                        select: {
+                            id: true,
+                            display_name: true,
+                            avatar_url: true
+                        }
+                    }
+                },
+                orderBy: { created_at: 'asc' }
+            },
             _count: {
                 select: { comments: true }
             }
@@ -211,6 +223,11 @@ export async function searchUsers(query: string, currentUserId: string) {
  * Log a social activity
  */
 export async function logActivity(userId: string, type: 'HABIT_COMPLETED' | 'LEVEL_UP' | 'ACHIEVEMENT_UNLOCKED' | 'STREAK_MILESTONE', contentId?: string, contentText?: string, metadata?: any) {
+    if (type === 'HABIT_COMPLETED') {
+        const { updateChallengeProgress } = require('./challengeService');
+        updateChallengeProgress(userId, contentId).catch((err: any) => console.error('Failed to update challenge progress:', err));
+    }
+
     return await prisma.socialActivity.create({
         data: {
             user_id: userId,

@@ -24,10 +24,8 @@ export interface GroupMember {
         title: string;
         color: string;
         icon: string;
-    }>;
-    recent_completions: Array<{
-        habit_id: string;
-        completed_date: string;
+        streak_days: number;
+        completions: any[];
     }>;
 }
 
@@ -38,7 +36,9 @@ export interface GroupDetails {
     invite_code: string;
     created_by: string;
     created_at: string;
+    role?: 'OWNER' | 'MEMBER';
     members: GroupMember[];
+    challenges?: any[];
 }
 
 
@@ -52,14 +52,14 @@ export function useGroups() {
         if (!token) return;
 
         const fetchGroups = async () => {
-        try {
-            const data = await api.get<{ groups: Group[] }>('/api/groups', token);
-            setGroups(data.groups);
-        } catch (err: any) {
-            setError(err.message || 'Failed to load groups');
-        } finally {
-            setIsLoading(false);
-        }
+            try {
+                const data = await api.get<{ groups: Group[] }>('/api/groups', token);
+                setGroups(data.groups);
+            } catch (err: any) {
+                setError(err.message || 'Failed to load groups');
+            } finally {
+                setIsLoading(false);
+            }
         };
 
         fetchGroups();
@@ -67,9 +67,9 @@ export function useGroups() {
 
     const createGroup = async (name: string, description?: string) => {
         const data = await api.post<{ group: Group }>(
-        '/api/groups',
-        { name, description },
-        token!
+            '/api/groups',
+            { name, description },
+            token!
         );
         setGroups((prev) => [data.group, ...prev]);
         return data.group;
@@ -77,9 +77,9 @@ export function useGroups() {
 
     const joinGroup = async (invite_code: string) => {
         const data = await api.post<{ group: any }>(
-        '/api/groups/join',
-        { invite_code },
-        token!
+            '/api/groups/join',
+            { invite_code },
+            token!
         );
 
         const refreshed = await api.get<{ groups: Group[] }>('/api/groups', token!);
@@ -106,14 +106,12 @@ export function useGroupDetails(group_id: string) {
     const [group, setGroup] = useState<GroupDetails | null>(null);
     const [isLoading, setIsLoading] = useState(true);
 
-    useEffect(() => {
+    const fetchGroup = async () => {
         if (!token || !group_id) return;
-
-        const fetchGroup = async () => {
         try {
             const data = await api.get<{ group: GroupDetails }>(
-            `/api/groups/${group_id}`,
-            token
+                `/api/groups/${group_id}`,
+                token
             );
             setGroup(data.group);
         } catch (err) {
@@ -121,10 +119,11 @@ export function useGroupDetails(group_id: string) {
         } finally {
             setIsLoading(false);
         }
-        };
+    };
 
+    useEffect(() => {
         fetchGroup();
     }, [token, group_id]);
 
-    return { group, isLoading };
+    return { group, isLoading, mutate: fetchGroup };
 }

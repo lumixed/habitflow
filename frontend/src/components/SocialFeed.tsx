@@ -99,11 +99,36 @@ export default function SocialFeed() {
                                     <span>👏</span>
                                     <span>{activity.reactions?.length || 0}</span>
                                 </button>
-                                <div className="flex items-center gap-1.5 text-sm text-neutral-500">
+                                <div className="flex items-center gap-1.5 text-[10px] font-bold text-neutral-400 uppercase tracking-widest">
                                     <span>💬</span>
                                     <span>{activity._count?.comments || 0}</span>
                                 </div>
                             </div>
+
+                            {/* Comments List */}
+                            {activity.comments && activity.comments.length > 0 && (
+                                <div className="mt-4 space-y-3 pl-4 border-l-2 border-neutral-50">
+                                    {activity.comments.map((comment: any) => (
+                                        <div key={comment.id} className="group">
+                                            <div className="flex items-start gap-2">
+                                                <div className="flex-1">
+                                                    <div className="flex items-center gap-2 mb-0.5">
+                                                        <span className="text-[10px] font-black text-neutral-900 uppercase tracking-tight">
+                                                            {comment.user.display_name}
+                                                        </span>
+                                                        <span className="text-[10px] text-neutral-400 font-medium">
+                                                            {formatDistanceToNow(new Date(comment.created_at), { addSuffix: true })}
+                                                        </span>
+                                                    </div>
+                                                    <p className="text-[11px] text-neutral-600 leading-relaxed font-medium">
+                                                        {comment.content}
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
+                            )}
 
                             {/* Comment Box */}
                             <div className="mt-4 flex gap-2">
