@@ -1,8 +1,9 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Habit } from '@/hooks/useHabits';
 import { useCompletions } from '@/hooks/useCompletions';
+import { useAI, HabitInsight } from '@/hooks/useAI';
 
 
 const ICON_MAP: Record<string, string> = {
@@ -35,10 +36,20 @@ interface HabitCardProps {
 export default function HabitCard({ habit, onToggleActive, onDelete, onEdit, onReward }: HabitCardProps) {
     const [confirmDelete, setConfirmDelete] = useState(false);
     const { streak, isDateCompleted, toggleCompletion } = useCompletions(habit.id);
+    const [insight, setInsight] = useState<HabitInsight | null>(null);
+    const { getHabitInsight } = useAI();
 
     const emoji = ICON_MAP[habit.icon] || '🎯';
     const today = new Date();
     const isTodayCompleted = isDateCompleted(today);
+
+    useEffect(() => {
+        if (habit.is_active) {
+            getHabitInsight(habit.id)
+                .then(setInsight)
+                .catch(err => console.error('Failed to fetch insight for habit:', habit.id, err));
+        }
+    }, [habit.id, habit.is_active]);
 
     const handleToggleToday = async (e: React.MouseEvent) => {
         e.stopPropagation();
@@ -169,6 +180,27 @@ export default function HabitCard({ habit, onToggleActive, onDelete, onEdit, onR
                 {/* Description (if present) */}
                 {habit.description && (
                     <p className="mt-2 text-sm text-neutral-500 ml-9">{habit.description}</p>
+                )}
+
+                {/* AI Insights Section */}
+                {habit.is_active && insight && (
+                    <div className="mt-4 pt-4 border-t border-neutral-50 dark:border-neutral-700/50 ml-9">
+                        <div className="flex items-center justify-between mb-2">
+                            <span className="text-[9px] font-black text-neutral-400 uppercase tracking-widest">Success Probability</span>
+                            <span className={`text-[10px] font-bold ${insight.success_probability > 70 ? 'text-green-600' : 'text-neutral-500'}`}>
+                                {insight.success_probability}%
+                            </span>
+                        </div>
+                        <div className="h-1 bg-neutral-100 dark:bg-neutral-800 rounded-full overflow-hidden">
+                            <div
+                                className="h-full bg-neutral-900 dark:bg-white transition-all duration-1000"
+                                style={{ width: `${insight.success_probability}%` }}
+                            />
+                        </div>
+                        <p className="mt-2 text-[10px] italic text-neutral-500 leading-tight">
+                            “{insight.insight_text}”
+                        </p>
+                    </div>
                 )}
             </div>
         </div>

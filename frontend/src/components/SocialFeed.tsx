@@ -57,20 +57,20 @@ export default function SocialFeed() {
                 <div key={activity.id} className="border-b border-neutral-100 pb-6 last:border-0 last:pb-0">
                     <div className="flex gap-4">
                         {/* Avatar */}
-                        <Link href={`/profile/${activity.user.id}`} className="hover:opacity-80 transition-opacity">
+                        <Link href={`/profile/${activity.user?.id || '#'}`} className="hover:opacity-80 transition-opacity">
                             <div className="w-10 h-10 rounded-md bg-emerald-50 dark:bg-emerald-900/20 flex items-center justify-center text-emerald-600 dark:text-emerald-400 font-black border border-emerald-100 dark:border-emerald-800/50 overflow-hidden">
-                                {activity.user.avatar_url ? (
+                                {activity.user?.avatar_url ? (
                                     <img src={activity.user.avatar_url} alt="" className="w-full h-full object-cover" />
                                 ) : (
-                                    activity.user.display_name[0]
+                                    (activity.user?.display_name || '?')[0]
                                 )}
                             </div>
                         </Link>
 
                         <div className="flex-1">
                             <div className="flex items-center gap-2 mb-1">
-                                <Link href={`/profile/${activity.user.id}`} className="text-sm font-black text-neutral-900 hover:text-emerald-600 transition-colors uppercase tracking-tight">
-                                    {activity.user.display_name}
+                                <Link href={`/profile/${activity.user?.id || '#'}`} className="text-sm font-black text-neutral-900 hover:text-emerald-600 transition-colors uppercase tracking-tight">
+                                    {activity.user?.display_name || 'Anonymous'}
                                 </Link>
                                 <span className="text-xs text-neutral-400">
                                     {formatDistanceToNow(new Date(activity.created_at), { addSuffix: true })}
@@ -114,7 +114,7 @@ export default function SocialFeed() {
                                                 <div className="flex-1">
                                                     <div className="flex items-center gap-2 mb-0.5">
                                                         <span className="text-[10px] font-black text-neutral-900 uppercase tracking-tight">
-                                                            {comment.user.display_name}
+                                                            {comment.user?.display_name || 'Anonymous'}
                                                         </span>
                                                         <span className="text-[10px] text-neutral-400 font-medium">
                                                             {formatDistanceToNow(new Date(comment.created_at), { addSuffix: true })}

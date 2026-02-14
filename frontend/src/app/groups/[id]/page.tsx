@@ -166,35 +166,30 @@ export default function GroupDetailPage({ params }: { params: { id: string } }) 
                 <h2 className="text-lg font-bold text-neutral-900 mb-4">Member Activity</h2>
                 <div className="space-y-6">
                     {group.members.map((member: any) => {
-                        const weekCompletions = member.user?.completions?.filter((c: any) => {
-                            const date = new Date(c.completed_at);
-                            const sevenDaysAgo = new Date();
-                            sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
-                            return date >= sevenDaysAgo;
-                        }).length || 0;
+                        const weekCompletions = member.recent_completions?.length || 0;
 
                         return (
-                            <div key={member.user.id} className="bg-white rounded-xl border border-neutral-200 p-5 shadow-sm">
+                            <div key={member.id} className="bg-white rounded-xl border border-neutral-200 p-5 shadow-sm">
                                 <div className="flex items-center justify-between mb-4">
                                     <div className="flex items-center gap-3">
                                         <div className="h-10 w-10 rounded-full bg-primary-100 flex items-center justify-center text-primary-700 font-bold">
-                                            {member.user.display_name.charAt(0).toUpperCase()}
+                                            {member?.display_name?.charAt(0).toUpperCase() || '?'}
                                         </div>
                                         <div>
-                                            <h3 className="font-bold text-neutral-900">{member.user.display_name}</h3>
+                                            <h3 className="font-bold text-neutral-900">{member?.display_name || 'Anonymous'}</h3>
                                             <p className="text-xs text-neutral-500">
-                                                {member.role} • {weekCompletions} completions this week
+                                                {member?.role} • {weekCompletions} completions this week
                                             </p>
                                         </div>
                                     </div>
                                     <div className="text-right">
-                                        <span className="block text-xs font-bold text-primary-600">Level {member.user.level}</span>
+                                        <span className="block text-xs font-bold text-primary-600">Level {member.level}</span>
                                     </div>
                                 </div>
 
                                 <div className="space-y-4">
-                                    {member.user.habits && member.user.habits.length > 0 ? (
-                                        member.user.habits.map((habit: any) => (
+                                    {member.habits && member.habits.length > 0 ? (
+                                        member.habits.map((habit: any) => (
                                             <div key={habit.id} className="flex items-center justify-between gap-4">
                                                 <div className="flex items-center gap-2 flex-1 min-w-0">
                                                     <span className="text-lg flex-shrink-0">{ICON_MAP[habit.icon] || '✨'}</span>
@@ -206,8 +201,8 @@ export default function GroupDetailPage({ params }: { params: { id: string } }) 
                                                 <div className="flex gap-1 flex-shrink-0">
                                                     {last7Days.map((day) => {
                                                         const dateStr = day.toISOString().split('T')[0];
-                                                        const isCompleted = habit.completions?.some((c: any) =>
-                                                            new Date(c.completed_at).toISOString().split('T')[0] === dateStr
+                                                        const isCompleted = member.recent_completions?.some((c: any) =>
+                                                            new Date(c.completed_date).toISOString().split('T')[0] === dateStr && c.habit_id === habit.id
                                                         );
 
                                                         return (
@@ -216,6 +211,7 @@ export default function GroupDetailPage({ params }: { params: { id: string } }) 
                                                                 className={`w-6 h-6 rounded border transition-colors ${isCompleted ? 'bg-primary-500 border-primary-600' : 'bg-white border-neutral-200'
                                                                     }`}
                                                                 title={`${day.toLocaleDateString()}: ${isCompleted ? 'Completed' : 'Not completed'}`}
+                                                                style={{ backgroundColor: isCompleted ? habit.color : undefined }}
                                                             />
                                                         );
                                                     })}

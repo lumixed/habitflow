@@ -35,14 +35,14 @@ export default function FriendList() {
                             <div key={request.id} className="flex items-center justify-between p-4 rounded-xl bg-primary-50 border border-primary-100 shadow-sm">
                                 <div className="flex items-center gap-4">
                                     <div className="w-10 h-10 rounded-md bg-white flex items-center justify-center text-emerald-600 font-black overflow-hidden border border-emerald-100">
-                                        {request.sender.avatar_url ? (
+                                        {request.sender?.avatar_url ? (
                                             <img src={request.sender.avatar_url} alt="" className="w-full h-full object-cover" />
                                         ) : (
-                                            request.sender.display_name[0]
+                                            (request.sender?.display_name || '?')[0]
                                         )}
                                     </div>
                                     <div>
-                                        <h4 className="font-bold text-neutral-900 leading-tight">{request.sender.display_name}</h4>
+                                        <h4 className="font-bold text-neutral-900 leading-tight">{request.sender?.display_name || 'Anonymous'}</h4>
                                         <p className="text-xs text-neutral-500">wants to be your friend</p>
                                     </div>
                                 </div>
@@ -78,14 +78,14 @@ export default function FriendList() {
                         <div key={friend.id} className="flex items-center justify-between p-4 rounded-xl border border-neutral-100 hover:border-primary-200 transition-colors">
                             <div className="flex items-center gap-4">
                                 <div className="w-12 h-12 rounded-md bg-neutral-100 flex items-center justify-center text-neutral-400 font-black overflow-hidden border border-neutral-100 shadow-sm">
-                                    {friend.avatar_url ? (
+                                    {friend?.avatar_url ? (
                                         <img src={friend.avatar_url} alt="" className="w-full h-full object-cover" />
                                     ) : (
-                                        friend.display_name[0]
+                                        (friend?.display_name || '?')[0]
                                     )}
                                 </div>
                                 <div>
-                                    <h4 className="font-bold text-neutral-900">{friend.display_name}</h4>
+                                    <h4 className="font-bold text-neutral-900">{friend?.display_name || 'Anonymous'}</h4>
                                     <div className="flex items-center gap-3">
                                         <span className="bg-emerald-50 text-emerald-600 text-[10px] font-black px-2 py-0.5 rounded-md border border-emerald-100 uppercase tracking-widest">
                                             Lvl {friend.level}

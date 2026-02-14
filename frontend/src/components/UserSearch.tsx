@@ -65,12 +65,12 @@ export default function UserSearch() {
                                     {u.avatar_url ? (
                                         <img src={u.avatar_url} alt="" className="w-full h-full object-cover" />
                                     ) : (
-                                        u.display_name[0]
+                                        (u.display_name || '?')[0]
                                     )}
                                 </div>
                                 <div>
-                                    <h4 className="font-black text-neutral-900 uppercase tracking-tight leading-tight">{u.display_name}</h4>
-                                    <span className="text-[10px] font-bold text-neutral-400 uppercase tracking-widest">Level {u.level}</span>
+                                    <h4 className="font-black text-neutral-900 uppercase tracking-tight leading-tight">{u.display_name || 'Anonymous'}</h4>
+                                    <span className="text-[10px] font-bold text-neutral-400 uppercase tracking-widest">Level {u.level || 1}</span>
                                 </div>
                                 # [ERROR] Target content not exactly matched.
                                 # Searching for:

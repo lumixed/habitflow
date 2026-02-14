@@ -34,9 +34,9 @@ interface ChallengeCardProps {
 
 export default function ChallengeCard({ challenge, currentUserId, onJoin }: ChallengeCardProps) {
     const [isJoining, setIsJoining] = useState(false);
-    const isParticipating = challenge.participants.some(p => p.user.id === currentUserId);
+    const isParticipating = challenge.participants.some(p => p.user?.id === currentUserId);
 
-    const userProgress = challenge.participants.find(p => p.user.id === currentUserId)?.progress_count || 0;
+    const userProgress = challenge.participants.find(p => p.user?.id === currentUserId)?.progress_count || 0;
     const progressPercent = Math.min(100, (userProgress / challenge.goal_count) * 100);
 
     const handleJoin = async () => {
@@ -103,11 +103,11 @@ export default function ChallengeCard({ challenge, currentUserId, onJoin }: Chal
                 <div className="flex -space-x-2 overflow-hidden py-1">
                     {challenge.participants.slice(0, 5).map((p) => (
                         <div
-                            key={p.user.id}
+                            key={p.user?.id || Math.random().toString()}
                             className="inline-block h-6 w-6 rounded-full ring-2 ring-white bg-primary-100 flex items-center justify-center text-[10px] font-bold text-primary-700"
-                            title={p.user.display_name}
+                            title={p.user?.display_name || 'Anonymous'}
                         >
-                            {p.user.display_name.charAt(0).toUpperCase()}
+                            {(p.user?.display_name || '?').charAt(0).toUpperCase()}
                         </div>
                     ))}
                     {challenge.participants.length > 5 && (

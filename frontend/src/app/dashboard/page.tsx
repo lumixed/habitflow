@@ -13,6 +13,8 @@ import XPBar from '@/components/XPBar';
 import CelebrationModal from '@/components/CelebrationModal';
 import { useGamification } from '@/hooks/useGamification';
 import { useCelebration } from '@/hooks/useCelebration';
+import SmartSuggestions from '@/components/SmartSuggestions';
+import VoiceControl from '@/components/VoiceControl';
 
 export default function DashboardPage() {
     const router = useRouter();
@@ -137,6 +139,12 @@ export default function DashboardPage() {
                         progress={stats.xpProgress.progress}
                     />
                 )}
+
+                <div className="mb-8">
+                    <SmartSuggestions />
+                </div>
+
+                <VoiceControl />
 
                 {/* Header row */}
                 <div className="flex items-center justify-between mb-8">
