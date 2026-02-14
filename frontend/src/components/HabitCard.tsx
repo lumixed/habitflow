@@ -99,18 +99,18 @@ export default function HabitCard({ habit, onToggleActive, onDelete, onEdit, onR
                     </div>
 
                     {/* Actions */}
-                    <div className="flex items-center gap-1">
+                    <div className="flex items-center gap-2 md:gap-1">
                         {/* Today's checkmark */}
                         {habit.is_active && (
                             <button
                                 onClick={handleToggleToday}
-                                className={`p-1.5 rounded-md transition-all ${isTodayCompleted
+                                className={`p-3 md:p-1.5 rounded-md transition-all ${isTodayCompleted
                                     ? 'text-white bg-neutral-900 dark:bg-white dark:text-neutral-900'
                                     : 'text-neutral-400 hover:text-neutral-900 dark:hover:text-white border border-neutral-100 dark:border-neutral-700'
                                     }`}
                                 title={isTodayCompleted ? 'Completed today' : 'Mark as done today'}
                             >
-                                <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <svg className="w-5 h-5 md:w-3.5 md:h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
                                 </svg>
                             </button>
@@ -122,10 +122,10 @@ export default function HabitCard({ habit, onToggleActive, onDelete, onEdit, onR
                                 e.stopPropagation();
                                 onEdit(habit);
                             }}
-                            className="p-1.5 text-neutral-400 hover:text-neutral-600 hover:bg-neutral-100 rounded-lg transition-colors"
+                            className="p-3 md:p-1.5 text-neutral-400 hover:text-neutral-600 hover:bg-neutral-100 rounded-lg transition-colors"
                             title="Edit"
                         >
-                            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <svg className="w-5 h-5 md:w-4 md:h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
                             </svg>
                         </button>
@@ -136,18 +136,18 @@ export default function HabitCard({ habit, onToggleActive, onDelete, onEdit, onR
                                 e.stopPropagation();
                                 onToggleActive(habit.id, !habit.is_active);
                             }}
-                            className={`p-1.5 rounded-lg transition-colors ${habit.is_active
+                            className={`p-3 md:p-1.5 rounded-lg transition-colors ${habit.is_active
                                 ? 'text-success-600 hover:bg-success-50'
                                 : 'text-neutral-400 hover:bg-neutral-100'
                                 }`}
                             title={habit.is_active ? 'Pause habit' : 'Resume habit'}
                         >
                             {habit.is_active ? (
-                                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <svg className="w-5 h-5 md:w-4 md:h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 9v6m4-6v6m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
                                 </svg>
                             ) : (
-                                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <svg className="w-5 h-5 md:w-4 md:h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14.752 11.168l-3.196-2.131A1 1 0 0110 10.07v3.86a1 1 0 001.552.894l3.196-2.131a1 1 0 000-1.786zM21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                                 </svg>
                             )}
@@ -164,17 +164,18 @@ export default function HabitCard({ habit, onToggleActive, onDelete, onEdit, onR
                                     setTimeout(() => setConfirmDelete(false), 2000);
                                 }
                             }}
-                            className={`p-1.5 rounded-lg transition-colors ${confirmDelete
+                            className={`p-3 md:p-1.5 rounded-lg transition-colors ${confirmDelete
                                 ? 'text-white bg-red-500 hover:bg-red-600'
                                 : 'text-neutral-400 hover:text-red-500 hover:bg-red-50'
                                 }`}
                             title={confirmDelete ? 'Click again to confirm delete' : 'Delete'}
                         >
-                            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <svg className="w-5 h-5 md:w-4 md:h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
                             </svg>
                         </button>
                     </div>
+
                 </div>
 
                 {/* Description (if present) */}

@@ -22,7 +22,7 @@ export default function Navbar() {
                     <Link href="/dashboard" className="text-lg font-black text-neutral-900 uppercase tracking-tight">
                         Habit<span className="text-primary-500 ml-0.5">Flow</span>
                     </Link>
-                    <div className="flex items-center gap-8">
+                    <div className="hidden md:flex items-center gap-8">
                         <Link
                             href="/dashboard"
                             className="text-[10px] font-black text-neutral-400 hover:text-neutral-900 uppercase tracking-[0.15em] transition-colors"
@@ -67,6 +67,16 @@ export default function Navbar() {
                             Logout
                         </button>
                     </div>
+                    {/* Logout only on mobile if icons are too much */}
+                    <div className="md:hidden">
+                        <button
+                            onClick={handleLogout}
+                            className="text-[10px] font-black text-neutral-400 hover:text-red-600 uppercase tracking-[0.15em] transition-colors"
+                        >
+                            Exit
+                        </button>
+                    </div>
+
                 </div>
             </div>
         </nav>

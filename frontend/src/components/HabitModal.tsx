@@ -91,41 +91,41 @@ export default function HabitModal({ isOpen, onClose, onSave, editHabit }: Habit
             />
 
             {/* Modal */}
-            <div className="fixed inset-0 z-50 flex items-center justify-center px-4">
-                <div className="bg-white rounded-md shadow-xl w-full max-w-md max-h-[90vh] overflow-y-auto border border-neutral-200">
+            <div className="fixed inset-0 z-50 flex items-center justify-center px-4 md:px-0">
+                <div className="bg-white rounded-md shadow-xl w-full max-w-md max-h-[85vh] md:max-h-[90vh] overflow-y-auto border border-neutral-200">
                     {/* Header */}
-                    <div className="flex items-center justify-between p-6 pb-2">
+                    <div className="flex items-center justify-between p-6 pb-4">
                         <h2 className="text-sm font-black text-neutral-900 uppercase tracking-widest">
                             {editHabit ? 'Edit habit' : 'New habit'}
                         </h2>
                         <button
                             onClick={onClose}
-                            className="p-1 text-neutral-400 hover:text-neutral-900 hover:bg-neutral-50 rounded-md transition-colors"
+                            className="p-3 -mr-2 text-neutral-400 hover:text-neutral-900 hover:bg-neutral-50 rounded-md transition-colors"
                         >
-                            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <svg className="w-5 h-5 md:w-4 md:h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M6 18L18 6M6 6l12 12" />
                             </svg>
                         </button>
                     </div>
 
                     {/* Form */}
-                    <form onSubmit={handleSubmit} className="px-6 pb-6 space-y-5">
+                    <form onSubmit={handleSubmit} className="px-6 pb-6 space-y-6">
                         {/* Title */}
                         <div>
-                            <label className="block text-[10px] font-black text-neutral-400 uppercase tracking-[0.2em] mb-1.5">Title</label>
+                            <label className="block text-[10px] font-black text-neutral-400 uppercase tracking-[0.2em] mb-2">Title</label>
                             <input
                                 type="text"
                                 value={title}
                                 onChange={(e) => setTitle(e.target.value)}
                                 required
                                 placeholder="e.g. MORNING RUN"
-                                className="w-full px-4 py-2.5 bg-neutral-50 border border-neutral-200 rounded-md text-sm text-neutral-900 placeholder-neutral-300 focus:outline-none focus:ring-1 focus:ring-neutral-900 focus:border-transparent transition-all"
+                                className="w-full px-4 py-3 bg-neutral-50 border border-neutral-200 rounded-md text-sm text-neutral-900 placeholder-neutral-300 focus:outline-none focus:ring-1 focus:ring-neutral-900 focus:border-transparent transition-all"
                             />
                         </div>
 
                         {/* Description */}
                         <div>
-                            <label className="block text-[10px] font-black text-neutral-400 uppercase tracking-[0.2em] mb-1.5">
+                            <label className="block text-[10px] font-black text-neutral-400 uppercase tracking-[0.2em] mb-2">
                                 Description <span className="text-neutral-300 font-bold">(OPTIONAL)</span>
                             </label>
                             <input
@@ -133,22 +133,22 @@ export default function HabitModal({ isOpen, onClose, onSave, editHabit }: Habit
                                 value={description}
                                 onChange={(e) => setDescription(e.target.value)}
                                 placeholder="A short note..."
-                                className="w-full px-4 py-2.5 bg-neutral-50 border border-neutral-200 rounded-md text-sm text-neutral-900 placeholder-neutral-300 focus:outline-none focus:ring-1 focus:ring-neutral-900 focus:border-transparent transition-all"
+                                className="w-full px-4 py-3 bg-neutral-50 border border-neutral-200 rounded-md text-sm text-neutral-900 placeholder-neutral-300 focus:outline-none focus:ring-1 focus:ring-neutral-900 focus:border-transparent transition-all"
                             />
                         </div>
 
                         {/* Frequency */}
                         <div>
-                            <label className="block text-[10px] font-black text-neutral-400 uppercase tracking-[0.2em] mb-1.5">Frequency</label>
+                            <label className="block text-[10px] font-black text-neutral-400 uppercase tracking-[0.2em] mb-2">Frequency</label>
                             <div className="flex gap-2">
                                 {FREQUENCIES.map((f) => (
                                     <button
                                         key={f.value}
                                         type="button"
                                         onClick={() => setFrequency(f.value)}
-                                        className={`flex-1 px-3 py-2 text-[10px] font-black uppercase tracking-widest rounded-md border transition-all ${frequency === f.value
-                                                ? 'border-neutral-900 bg-neutral-900 text-white'
-                                                : 'border-neutral-200 text-neutral-400 hover:bg-neutral-50'
+                                        className={`flex-1 px-2 py-3 text-[9px] font-black uppercase tracking-widest rounded-md border transition-all ${frequency === f.value
+                                            ? 'border-neutral-900 bg-neutral-900 text-white'
+                                            : 'border-neutral-200 text-neutral-400 hover:bg-neutral-50'
                                             }`}
                                     >
                                         {f.label}
@@ -159,14 +159,14 @@ export default function HabitModal({ isOpen, onClose, onSave, editHabit }: Habit
 
                         {/* Color */}
                         <div>
-                            <label className="block text-[10px] font-black text-neutral-400 uppercase tracking-[0.2em] mb-1.5">Color</label>
-                            <div className="flex gap-2 flex-wrap">
+                            <label className="block text-[10px] font-black text-neutral-400 uppercase tracking-[0.2em] mb-2">Color</label>
+                            <div className="flex gap-3 flex-wrap">
                                 {COLORS.map((c) => (
                                     <button
                                         key={c.value}
                                         type="button"
                                         onClick={() => setColor(c.value)}
-                                        className={`w-6 h-6 rounded-md border-2 transition-all ${color === c.value ? 'border-neutral-900 scale-110 shadow-sm' : 'border-transparent'
+                                        className={`w-8 h-8 md:w-6 md:h-6 rounded-md border-2 transition-all ${color === c.value ? 'border-neutral-900 scale-110 shadow-sm' : 'border-transparent'
                                             }`}
                                         style={{ backgroundColor: c.value }}
                                         title={c.name}
@@ -175,18 +175,19 @@ export default function HabitModal({ isOpen, onClose, onSave, editHabit }: Habit
                             </div>
                         </div>
 
+
                         {/* Icon */}
                         <div>
-                            <label className="block text-[10px] font-black text-neutral-400 uppercase tracking-[0.2em] mb-1.5">Icon</label>
-                            <div className="grid grid-cols-5 gap-1.5">
+                            <label className="block text-[10px] font-black text-neutral-400 uppercase tracking-[0.2em] mb-2">Icon</label>
+                            <div className="grid grid-cols-5 gap-2">
                                 {ICONS.map((i) => (
                                     <button
                                         key={i.key}
                                         type="button"
                                         onClick={() => setIcon(i.key)}
-                                        className={`p-2 text-base rounded-md border transition-all ${icon === i.key
-                                                ? 'border-neutral-900 bg-neutral-900 text-white'
-                                                : 'border-neutral-200 hover:bg-neutral-50'
+                                        className={`p-3 text-lg rounded-md border transition-all ${icon === i.key
+                                            ? 'border-neutral-900 bg-neutral-900 text-white'
+                                            : 'border-neutral-200 hover:bg-neutral-50'
                                             }`}
                                         title={i.label}
                                     >
@@ -195,6 +196,7 @@ export default function HabitModal({ isOpen, onClose, onSave, editHabit }: Habit
                                 ))}
                             </div>
                         </div>
+
 
                         {/* Error */}
                         {error && (
