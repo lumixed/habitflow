@@ -5,9 +5,17 @@
     "scripts": {
         "dev": "next dev",
         "build": "next build",
-        "start": "next start"
+        "start": "next start",
+        "mobile:build": "STATIC_BUILD=true next build && npx cap sync",
+        "mobile:ios": "npx cap open ios",
+        "mobile:android": "npx cap open android"
     },
     "dependencies": {
+        "@capacitor/android": "^6.2.1",
+        "@capacitor/cli": "^6.2.1",
+        "@capacitor/core": "^6.2.1",
+        "@capacitor/haptics": "^6.0.3",
+        "@capacitor/ios": "^6.2.1",
         "canvas-confetti": "^1.9.4",
         "date-fns": "^4.1.0",
         "lucide-react": "^0.563.0",

@@ -7,12 +7,14 @@ const withPWA = require('next-pwa')({
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-    // Tells Next.js to produce a standalone build (single server.js file).
-    // This is what the Dockerfile expects when it copies .next/standalone.
-    output: 'standalone',
+    // Static export for Capacitor (only when STATIC_BUILD=true)
+    output: process.env.STATIC_BUILD === 'true' ? 'export' : 'standalone',
+    images: {
+        unoptimized: true,
+    },
     // Expose the API URL to the client
     env: {
-        NEXT_PUBLIC_API_URL: process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001',
+        NEXT_PUBLIC_API_URL: process.env.NEXT_PUBLIC_API_URL || 'http://192.168.1.85:3001',
     },
 };
 

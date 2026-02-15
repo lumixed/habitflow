@@ -120,6 +120,9 @@ export default function SignupPage() {
                         {error && (
                             <div className="p-3 bg-red-50 border border-red-200 rounded-lg text-sm text-red-700">
                                 {error}
+                                <div className="mt-2 text-[8px] opacity-50 uppercase">
+                                    Target: 192.168.1.85:3001
+                                </div>
                             </div>
                         )}
 

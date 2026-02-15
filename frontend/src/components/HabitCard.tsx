@@ -4,6 +4,8 @@ import { useState, useEffect } from 'react';
 import { Habit } from '@/hooks/useHabits';
 import { useCompletions } from '@/hooks/useCompletions';
 import { useAI, HabitInsight } from '@/hooks/useAI';
+import { Haptics, ImpactStyle } from '@capacitor/haptics';
+
 
 
 const ICON_MAP: Record<string, string> = {
@@ -55,7 +57,16 @@ export default function HabitCard({ habit, onToggleActive, onDelete, onEdit, onR
         e.stopPropagation();
         try {
             const rewards = await toggleCompletion(today);
+
+            // Trigger haptic feedback for a premium native feel
+            try {
+                await Haptics.impact({ style: ImpactStyle.Heavy });
+            } catch (hapticErr) {
+                // Ignore haptic errors (e.g. running on web)
+            }
+
             if (onReward) {
+
                 onReward(rewards);
             }
         } catch (err) {

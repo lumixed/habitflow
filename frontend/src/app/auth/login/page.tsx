@@ -101,6 +101,9 @@ export default function LoginPage() {
                         {error && (
                             <div className="p-3 bg-red-50 border border-red-200 rounded-lg text-sm text-red-700">
                                 {error}
+                                <div className="mt-2 text-[8px] opacity-50 uppercase">
+                                    Target: 192.168.1.85:3001
+                                </div>
                             </div>
                         )}
 
@@ -111,6 +114,22 @@ export default function LoginPage() {
                             className="w-full py-3 bg-neutral-900 dark:bg-white text-white dark:text-neutral-900 text-[10px] font-black uppercase tracking-[0.2em] rounded-md hover:bg-neutral-800 disabled:opacity-50 disabled:cursor-not-allowed transition-all"
                         >
                             {isSubmitting ? 'LOGGING IN...' : 'LOG IN'}
+                        </button>
+
+                        <button
+                            type="button"
+                            onClick={async () => {
+                                try {
+                                    const res = await fetch('http://192.168.1.85:3001/api/health');
+                                    const data = await res.json();
+                                    alert('Success! Connected to API: ' + JSON.stringify(data));
+                                } catch (err: any) {
+                                    alert('Connection Failed: ' + err.message);
+                                }
+                            }}
+                            className="w-full py-2 text-[8px] font-bold text-neutral-400 uppercase tracking-widest hover:text-neutral-600 transition-colors"
+                        >
+                            Test Connection
                         </button>
                     </form>
 

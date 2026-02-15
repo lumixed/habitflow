@@ -16,8 +16,22 @@ import aiRoutes from './routes/ai';
 const app = express();
 const PORT = process.env.PORT || 3001;
 const CORS_ORIGIN = process.env.CORS_ORIGIN || 'http://localhost:3000';
+const ALLOWED_ORIGINS = [
+    CORS_ORIGIN,
+    'capacitor://localhost',
+    'http://localhost',
+    'http://localhost:3000',
+    'http://localhost:3001'
+];
 
-app.use(cors({ origin: CORS_ORIGIN, credentials: true }));
+app.use(cors({
+    origin: (origin, callback) => {
+        // Allow requests with no origin (like mobile apps or curl requests)
+        // Allow everything for debugging
+        callback(null, true);
+    },
+    credentials: true
+}));
 app.use(express.json());
 
 app.get('/api/health', (req, res) => {
@@ -43,7 +57,7 @@ app.use('/api/ai', aiRoutes);
 
 app.use(errorHandler);
 
-app.listen(PORT, () => {
+app.listen(Number(PORT), '0.0.0.0', () => {
     console.log(`✅ HabitFlow API running on port ${PORT}`);
     console.log(`   Health check: http://localhost:${PORT}/api/health`);
 });
