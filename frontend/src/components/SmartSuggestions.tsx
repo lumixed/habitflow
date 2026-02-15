@@ -3,7 +3,11 @@
 import { useState, useEffect } from 'react';
 import { useAI, WeatherSuggestions, HabitStack } from '@/hooks/useAI';
 
-export default function SmartSuggestions() {
+interface SmartSuggestionsProps {
+    onAddHabit?: (title: string, description: string) => void;
+}
+
+export default function SmartSuggestions({ onAddHabit }: SmartSuggestionsProps) {
     const { getWeatherSuggestions, getHabitRecommendations, getHabitStacks, isLoading, error } = useAI();
     const [data, setData] = useState<WeatherSuggestions | null>(null);
     const [recommendations, setRecommendations] = useState<string[]>([]);
@@ -76,6 +80,7 @@ export default function SmartSuggestions() {
                         {data.suggestions.map((suggestion, i) => (
                             <div
                                 key={i}
+                                onClick={() => onAddHabit?.(suggestion, `Based on current weather: ${data.weather.condition}`)}
                                 className="flex items-center justify-between p-3 bg-white border border-primary-100 rounded-lg hover:border-primary-300 transition-all cursor-pointer group"
                             >
                                 <span className="text-sm font-medium text-neutral-700">{suggestion}</span>
@@ -101,6 +106,7 @@ export default function SmartSuggestions() {
                         {recommendations.map((rec, i) => (
                             <div
                                 key={i}
+                                onClick={() => onAddHabit?.(rec, 'AI Recommended habit')}
                                 className="p-3 bg-white border border-indigo-100 rounded-lg hover:border-indigo-300 transition-all cursor-pointer group flex flex-col items-center justify-center text-center"
                             >
                                 <span className="text-xs font-bold text-neutral-700">{rec}</span>
@@ -126,6 +132,7 @@ export default function SmartSuggestions() {
                         {stacks.map((stack, i) => (
                             <div
                                 key={i}
+                                onClick={() => onAddHabit?.(`I will ${stack.suggestion}`, `After I ${stack.trigger}`)}
                                 className="p-3 bg-white border border-emerald-100 rounded-lg hover:border-emerald-300 transition-all cursor-pointer group flex items-center justify-between"
                             >
                                 <div className="flex-1">

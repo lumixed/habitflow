@@ -50,11 +50,23 @@ export default function DashboardPage() {
     };
 
     const handleSave = async (data: any) => {
-        if (editingHabit) {
+        if (editingHabit && editingHabit.id) {
             await updateHabit(editingHabit.id, data);
         } else {
             await createHabit(data);
         }
+    };
+
+    const handleSuggestionAdd = (title: string, description: string) => {
+        setEditingHabit({
+            title,
+            description,
+            frequency: 'DAILY',
+            color: '#6366F1',
+            icon: 'target',
+            is_active: true
+        } as Habit);
+        setModalOpen(true);
     };
 
     const handleToggleActive = async (id: string, is_active: boolean) => {
@@ -141,7 +153,7 @@ export default function DashboardPage() {
                 )}
 
                 <div className="mb-8">
-                    <SmartSuggestions />
+                    <SmartSuggestions onAddHabit={handleSuggestionAdd} />
                 </div>
 
                 <VoiceControl />
