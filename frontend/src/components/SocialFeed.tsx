@@ -113,9 +113,9 @@ export default function SocialFeed() {
                                             <div className="flex items-start gap-2">
                                                 <div className="flex-1">
                                                     <div className="flex items-center gap-2 mb-0.5">
-                                                        <span className="text-[10px] font-black text-neutral-900 uppercase tracking-tight">
+                                                        <Link href={`/profile/${comment.user?.id || '#'}`} className="text-[10px] font-black text-neutral-900 uppercase tracking-tight hover:text-emerald-600 transition-colors">
                                                             {comment.user?.display_name || 'Anonymous'}
-                                                        </span>
+                                                        </Link>
                                                         <span className="text-[10px] text-neutral-400 font-medium">
                                                             {formatDistanceToNow(new Date(comment.created_at), { addSuffix: true })}
                                                         </span>

@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import Link from 'next/link';
 import { useAuth } from '@/contexts/AuthContext';
 import api from '@/lib/api';
 import Navbar from '@/components/Navbar';
@@ -104,13 +105,14 @@ export default function LeaderboardPage() {
                     {/* Leaderboard list */}
                     <div className="space-y-3">
                         {leaderboard.map((entry) => (
-                            <div
+                            <Link
+                                href={`/profile/${entry.userId}`}
                                 key={entry.userId}
                                 className={`
-                bg-white dark:bg-gray-800 rounded-lg shadow-md p-4 flex items-center gap-4
-                transition-all duration-200 hover:shadow-lg hover:scale-[1.02]
-                ${entry.rank <= 3 ? 'border-2 border-emerald-500/50 dark:border-emerald-500/30' : 'border border-neutral-100 dark:border-gray-700'}
-              `}
+                                    bg-white dark:bg-gray-800 rounded-lg shadow-md p-4 flex items-center gap-4
+                                    transition-all duration-200 hover:shadow-lg hover:scale-[1.02]
+                                    ${entry.rank <= 3 ? 'border-2 border-emerald-500/50 dark:border-emerald-500/30' : 'border border-neutral-100 dark:border-gray-700'}
+                                `}
                             >
                                 {/* Rank */}
                                 <div className={`flex-shrink-0 w-12 h-12 rounded-md bg-gradient-to-br ${getRankColor(entry.rank)} flex items-center justify-center shadow-sm`}>
@@ -143,7 +145,7 @@ export default function LeaderboardPage() {
                                         🏆
                                     </div>
                                 )}
-                            </div>
+                            </Link>
                         ))}
                     </div>
 

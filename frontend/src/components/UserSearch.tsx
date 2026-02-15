@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import Link from 'next/link';
 import api from '@/lib/api';
 import { useAuth } from '@/contexts/AuthContext';
 import { useSocial } from '@/hooks/useSocial';
@@ -59,30 +60,28 @@ export default function UserSearch() {
             <div className="space-y-3">
                 {results.length > 0 ? (
                     results.map((u) => (
-                        <div key={u.id} className="flex items-center justify-between p-4 rounded-md border border-neutral-100 hover:bg-neutral-50/50 transition-all">
-                            <div className="flex items-center gap-3">
-                                <div className="w-12 h-12 rounded-full bg-neutral-100 flex items-center justify-center text-neutral-600 font-bold overflow-hidden">
+                        <div key={u.id} className="flex items-center justify-between p-4 rounded-xl border border-neutral-100 hover:border-primary-200 transition-all shadow-sm bg-white">
+                            <Link href={`/profile/${u.id}`} className="flex items-center gap-3 group">
+                                <div className="w-12 h-12 rounded-md bg-neutral-100 flex items-center justify-center text-neutral-400 font-black overflow-hidden border border-neutral-100 shadow-sm transition-transform group-hover:scale-105">
                                     {u.avatar_url ? (
                                         <img src={u.avatar_url} alt="" className="w-full h-full object-cover" />
                                     ) : (
                                         (u.display_name || '?')[0]
                                     )}
                                 </div>
-                                <div>
-                                    <h4 className="font-black text-neutral-900 uppercase tracking-tight leading-tight">{u.display_name || 'Anonymous'}</h4>
-                                    <span className="text-[10px] font-bold text-neutral-400 uppercase tracking-widest">Level {u.level || 1}</span>
+                                <div className="flex-1">
+                                    <h4 className="font-black text-neutral-900 uppercase tracking-tight leading-tight group-hover:text-primary-600 transition-colors">
+                                        {u.display_name || 'Anonymous'}
+                                    </h4>
+                                    <span className="text-[10px] font-black text-neutral-400 uppercase tracking-widest">
+                                        Level {u.level || 1}
+                                    </span>
                                 </div>
-                                # [ERROR] Target content not exactly matched.
-                                # Searching for:
-                                #                                 <div>
-                                    #                                     <h4 className="font-bold text-neutral-900">{u.display_name}</h4>
-                                    #                                     <span className="text-xs text-neutral-400">Level {u.level}</span>
-                                    #                                 </div>
-                            </div>
+                            </Link>
 
                             {sentRequests.has(u.id) ? (
-                                <span className="text-xs font-semibold text-neutral-400 bg-neutral-50 px-3 py-1.5 rounded-lg border border-neutral-200">
-                                    Request Sent
+                                <span className="text-[10px] font-black text-neutral-400 bg-neutral-50 px-4 py-2 rounded-md border border-neutral-100 uppercase tracking-widest">
+                                    Requested
                                 </span>
                             ) : (
                                 <button

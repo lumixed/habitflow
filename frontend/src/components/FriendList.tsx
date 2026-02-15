@@ -75,9 +75,9 @@ export default function FriendList() {
                 )}
                 <div className="grid grid-cols-1 gap-3">
                     {friends.map((friend) => (
-                        <div key={friend.id} className="flex items-center justify-between p-4 rounded-xl border border-neutral-100 hover:border-primary-200 transition-colors">
-                            <div className="flex items-center gap-4">
-                                <div className="w-12 h-12 rounded-md bg-neutral-100 flex items-center justify-center text-neutral-400 font-black overflow-hidden border border-neutral-100 shadow-sm">
+                        <div key={friend.id} className="flex items-center justify-between p-4 rounded-xl border border-neutral-100 hover:border-primary-200 transition-colors bg-white">
+                            <Link href={`/profile/${friend.id}`} className="flex items-center gap-4 group">
+                                <div className="w-12 h-12 rounded-md bg-neutral-100 flex items-center justify-center text-neutral-400 font-black overflow-hidden border border-neutral-100 shadow-sm transition-transform group-hover:scale-105">
                                     {friend?.avatar_url ? (
                                         <img src={friend.avatar_url} alt="" className="w-full h-full object-cover" />
                                     ) : (
@@ -85,18 +85,20 @@ export default function FriendList() {
                                     )}
                                 </div>
                                 <div>
-                                    <h4 className="font-bold text-neutral-900">{friend?.display_name || 'Anonymous'}</h4>
+                                    <h4 className="font-black text-neutral-900 uppercase tracking-tight group-hover:text-primary-600 transition-colors">
+                                        {friend?.display_name || 'Anonymous'}
+                                    </h4>
                                     <div className="flex items-center gap-3">
-                                        <span className="bg-emerald-50 text-emerald-600 text-[10px] font-black px-2 py-0.5 rounded-md border border-emerald-100 uppercase tracking-widest">
+                                        <span className="bg-emerald-50 text-emerald-600 text-[10px] font-black px-2 py-0.5 rounded-md border border-emerald-100 uppercase tracking-widest leading-none">
                                             Lvl {friend.level}
                                         </span>
-                                        <span className="text-[10px] font-bold text-neutral-400 uppercase tracking-widest">{friend.xp} XP</span>
+                                        <span className="text-[10px] font-black text-neutral-400 uppercase tracking-widest">{friend.xp} XP</span>
                                     </div>
                                 </div>
-                            </div>
+                            </Link>
                             <Link
                                 href={`/profile/${friend.id}`}
-                                className="text-[10px] font-black text-neutral-900 uppercase tracking-widest hover:underline px-4 py-2"
+                                className="text-[10px] font-black text-neutral-900 uppercase tracking-widest hover:underline px-4 py-2 border border-neutral-200 rounded-md hover:bg-neutral-50"
                             >
                                 PROFILE
                             </Link>
