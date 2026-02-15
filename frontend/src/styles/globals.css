@@ -12,16 +12,21 @@
         -webkit-tap-highlight-color: transparent;
         width: 100%;
         overflow-x: hidden;
+        color-scheme: light;
+        background-color: white !important;
     }
 
     body {
-        width: 100%;
-        overflow-x: hidden;
+        width: 100% !important;
+        max-width: 100% !important;
+        overflow-x: hidden !important;
         overflow-y: auto;
         -webkit-overflow-scrolling: touch;
         min-height: 100vh;
-        /* Prevent elastic bounce pulling page away from edges */
-        overscroll-behavior-y: none;
+        /* Force only vertical scrolling, block horizontal swipe/bounce */
+        touch-action: pan-y;
+        overscroll-behavior: none;
+        position: relative;
     }
 
     .safe-area-pb {
@@ -30,6 +35,13 @@
 
     .safe-area-pt {
         padding-top: env(safe-area-inset-top);
+    }
+
+    /* Prevent iOS auto-zoom on focus by ensuring font-size is at least 16px */
+    input,
+    textarea,
+    select {
+        font-size: 16px !important;
     }
 
     *:focus-visible {

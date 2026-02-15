@@ -1,7 +1,7 @@
 import { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
-    appId: 'com.habitflow.app',
+    appId: 'com.jep.habitflow.dev',
     appName: 'HabitFlow',
     webDir: 'out',
     server: {
