@@ -12,7 +12,7 @@ export const metadata: Metadata = {
     description: 'Build habits, stay accountable, achieve your goals.',
     manifest: '/manifest.json',
     themeColor: '#000000',
-    viewport: 'width=device-width, initial-scale=1, maximum-scale=1',
+    viewport: 'width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover',
 };
 
 
@@ -23,7 +23,7 @@ export default function RootLayout({
 }) {
     return (
         <html lang="en">
-            <body className={`${inter.className} min-h-screen bg-neutral-50 text-neutral-800 pb-20 md:pb-0`}>
+            <body className={`${inter.className} min-h-screen bg-neutral-50 text-neutral-800 pb-20 md:pb-0 safe-area-pt safe-area-pb`}>
                 <AuthProvider>
                     {children}
                     <MobileNav />
