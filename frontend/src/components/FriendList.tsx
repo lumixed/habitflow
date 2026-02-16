@@ -32,7 +32,7 @@ export default function FriendList() {
                     </h3>
                     <div className="grid grid-cols-1 gap-3">
                         {requests.map((request) => (
-                            <div key={request.id} className="flex items-center justify-between p-4 rounded-xl bg-primary-50 border border-primary-100 shadow-sm">
+                            <div key={request.id} className="flex items-center justify-between p-4 rounded-xl bg-white border border-neutral-200 shadow-sm">
                                 <div className="flex items-center gap-4">
                                     <div className="w-10 h-10 rounded-md bg-white flex items-center justify-center text-emerald-600 font-black overflow-hidden border border-emerald-100">
                                         {request.sender?.avatar_url ? (
@@ -89,7 +89,7 @@ export default function FriendList() {
                                         {friend?.display_name || 'Anonymous'}
                                     </h4>
                                     <div className="flex items-center gap-3">
-                                        <span className="bg-emerald-50 text-emerald-600 text-[10px] font-black px-2 py-0.5 rounded-md border border-emerald-100 uppercase tracking-widest leading-none">
+                                        <span className="bg-white border border-neutral-300 text-neutral-700 text-[10px] font-black px-2 py-0.5 rounded-md uppercase tracking-widest leading-none">
                                             Lvl {friend.level}
                                         </span>
                                         <span className="text-[10px] font-black text-neutral-400 uppercase tracking-widest">{friend.xp} XP</span>

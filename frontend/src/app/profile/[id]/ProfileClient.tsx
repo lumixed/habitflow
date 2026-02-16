@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
+import { Trophy } from 'lucide-react';
 import Navbar from '@/components/Navbar';
 import api from '@/lib/api';
 import { useAuth } from '@/contexts/AuthContext';
@@ -108,10 +109,10 @@ export default function ProfileClient({ id }: { id: string }) {
                                     LVL {profile.level}
                                 </span>
                                 <span className="px-3 py-1 bg-neutral-50 text-neutral-900 border border-neutral-100 rounded-md text-[10px] font-black uppercase tracking-widest whitespace-nowrap">
-                                    ✨ {profile.xp} XP
+                                    {profile.xp} XP
                                 </span>
                                 <span className="px-3 py-1 bg-neutral-900 text-white rounded-md text-[10px] font-black uppercase tracking-widest">
-                                    💰 {profile.coins} COINS
+                                    {profile.coins} COINS
                                 </span>
                             </div>
 
@@ -179,7 +180,9 @@ export default function ProfileClient({ id }: { id: string }) {
                                 </div>
                             ) : (
                                 <div className="text-center py-20 text-neutral-300">
-                                    <div className="text-3xl mb-3 opacity-10">🏆</div>
+                                    <div className="text-3xl mb-3 opacity-10">
+                                        <Trophy size={40} className="text-neutral-400" />
+                                    </div>
                                     <p className="text-[10px] font-black uppercase tracking-widest">No achievements yet</p>
                                 </div>
                             )}

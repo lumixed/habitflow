@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { ArrowUp, Target, Trophy } from 'lucide-react';
 import Confetti from './Confetti';
 import ShareButton from './ShareButton';
 
@@ -56,10 +57,14 @@ export default function CelebrationModal({ isOpen, onClose, type, data }: Celebr
                 <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-2xl max-w-md w-full p-8 text-center animate-scaleIn">
                     {/* Icon/Emoji */}
                     <div className="mb-4">
-                        <div className={`inline-block bg-gradient-to-br ${getGradient()} p-6 rounded-full shadow-lg animate-bounce`}>
-                            <span className="text-6xl filter drop-shadow-lg">
-                                {data.icon || (type === 'levelUp' ? '⬆️' : type === 'milestone' ? '🎯' : '🏆')}
-                            </span>
+                        <div className={`inline-block bg-gradient-to-br ${getGradient()} p-6 rounded-full shadow-lg`}>
+                            {type === 'levelUp' ? (
+                                <ArrowUp size={60} className="text-white" />
+                            ) : type === 'milestone' ? (
+                                <Target size={60} className="text-white" />
+                            ) : (
+                                <Trophy size={60} className="text-white" />
+                            )}
                         </div>
                     </div>
 

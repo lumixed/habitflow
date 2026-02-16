@@ -1,38 +1,39 @@
 'use client';
 
+import { Flame, Zap } from 'lucide-react';
+
 interface StreakDisplayProps {
     count: number;
-    milestone?: number;
 }
 
-export default function StreakDisplay({ count, milestone }: StreakDisplayProps) {
-    const getStreakColor = (count: number) => {
-        if (count >= 100) return 'from-purple-500 to-pink-500';
-        if (count >= 30) return 'from-orange-500 to-red-500';
-        if (count >= 7) return 'from-yellow-500 to-orange-500';
-        return 'from-gray-400 to-gray-500';
+export default function StreakDisplay({ count }: StreakDisplayProps) {
+    const getStreakIcon = () => {
+        if (count >= 30) return <Flame size={20} className="text-orange-500" />;
+        if (count >= 7) return <Flame size={18} className="text-orange-400" />;
+        return <Zap size={16} className="text-yellow-500" />;
     };
 
-    const getStreakEmoji = (count: number) => {
-        if (count >= 100) return '👑';
-        if (count >= 30) return '💪';
-        if (count >= 7) return '🔥';
-        return '⭐';
+    const getStreakColor = () => {
+        if (count >= 30) return 'text-orange-600';
+        if (count >= 7) return 'text-orange-500';
+        return 'text-yellow-600';
     };
+
+    if (count === 0) return null;
 
     return (
-        <div className="inline-flex items-center gap-2">
-            <div className={`bg-gradient-to-r ${getStreakColor(count)} text-white px-3 py-1 rounded-full shadow-md flex items-center gap-2`}>
-                <span className="text-lg">{getStreakEmoji(count)}</span>
-                <span className="font-bold">{count}</span>
-                <span className="text-sm opacity-90">day{count !== 1 ? 's' : ''}</span>
+        <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-white rounded-lg border border-neutral-200">
+            {getStreakIcon()}
+            <div>
+                <span className={`text-sm font-bold ${getStreakColor()}`}>
+                    {count} day{count !== 1 ? 's' : ''}
+                </span>
+                {count >= 7 && (
+                    <span className="ml-1.5 text-xs text-orange-600/70">
+                        Keep it up!
+                    </span>
+                )}
             </div>
-
-            {milestone && (
-                <div className="animate-bounce">
-                    <span className="text-2xl">🎉</span>
-                </div>
-            )}
         </div>
     );
 }

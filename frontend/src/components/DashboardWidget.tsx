@@ -30,31 +30,28 @@ export default function DashboardWidget({ id, title, children, icon }: Dashboard
     return (
         <div
             ref={setNodeRef}
+            className="relative bg-white dark:bg-neutral-900 p-5
+                rounded-xl border border-neutral-200 dark:border-neutral-800 
+                shadow-sm 
+                hover:shadow-md hover:border-neutral-300 dark:hover:border-neutral-700
+                transition-all duration-200 group
+                cursor-grab active:cursor-grabbing"
+            {...attributes}
+            {...listeners}
             style={style}
-            className={`
-                group relative bg-white/80 dark:bg-neutral-800/80 backdrop-blur-xl 
-                rounded-[2.5rem] border border-white/20 dark:border-neutral-700/50 
-                shadow-[0_8px_32px_0_rgba(31,38,135,0.07)] dark:shadow-none 
-                transition-all duration-300 animate-in fade-in slide-in-from-bottom-4 duration-1000
-                ${isDragging ? 'shadow-2xl opacity-80 scale-[1.02] z-50' : 'hover:shadow-lg hover:-translate-y-1'}
-            `}
         >
-            <div className="absolute inset-0 rounded-[2.5rem] bg-gradient-to-br from-white/20 to-transparent pointer-events-none" />
 
-            <div className="p-8 relative z-10">
-                <div className="flex items-center justify-between mb-8">
-                    <div className="flex items-center gap-4">
+            <div className="relative z-10">
+                <div className="flex items-center justify-between mb-4">
+                    <div className="flex items-center gap-3">
                         {icon && (
-                            <div className="w-10 h-10 rounded-2xl bg-neutral-50 dark:bg-neutral-900 flex items-center justify-center text-xl shadow-inner group-hover:scale-110 transition-transform">
+                            <div className="text-lg">
                                 {icon}
                             </div>
                         )}
-                        <div>
-                            <h3 className="text-[11px] font-black text-neutral-400 uppercase tracking-[0.25em] leading-none mb-1">
-                                {title}
-                            </h3>
-                            <div className="h-0.5 w-4 bg-primary-500 rounded-full" />
-                        </div>
+                        <h3 className="text-sm font-semibold text-neutral-700 uppercase tracking-wide">
+                            {title}
+                        </h3>
                     </div>
                     <div
                         {...attributes}

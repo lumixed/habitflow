@@ -20,9 +20,9 @@ export default function Navbar() {
             <div className="max-w-5xl mx-auto px-6">
                 <div className="flex justify-between items-center h-16">
                     <Link href="/dashboard" className="text-lg font-black text-neutral-900 uppercase tracking-tight" aria-label="HabitFlow home">
-                        Habit<span className="text-primary-500 ml-0.5">Flow</span>
+                        Habit<span className="text-primary-500 ml-1">Flow</span>
                     </Link>
-                    <div className="hidden md:flex items-center gap-8">
+                    <div className="hidden md:flex items-center gap-8 ml-12">
                         <Link
                             href="/dashboard"
                             className="text-[10px] font-black text-neutral-400 hover:text-neutral-900 uppercase tracking-[0.15em] transition-colors"

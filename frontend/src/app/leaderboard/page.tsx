@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import { Trophy } from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext';
 import api from '@/lib/api';
 import Navbar from '@/components/Navbar';
@@ -142,7 +143,7 @@ export default function LeaderboardPage() {
                                 {/* Trophy for top 3 */}
                                 {entry.rank <= 3 && (
                                     <div className="flex-shrink-0 text-4xl animate-bounce">
-                                        🏆
+                                        <Trophy size={20} className="text-yellow-500" />
                                     </div>
                                 )}
                             </Link>

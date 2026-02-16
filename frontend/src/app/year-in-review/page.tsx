@@ -6,7 +6,7 @@ import api from '@/lib/api';
 import Navbar from '@/components/Navbar';
 import MobileNav from '@/components/MobileNav';
 import ShareButton from '@/components/ShareButton';
-import { Download } from 'lucide-react';
+import { Download, Trophy } from 'lucide-react';
 
 interface YearInReviewData {
     year: number;
@@ -55,7 +55,7 @@ export default function YearInReviewPage() {
 
     if (loading) {
         return (
-            <div className="min-h-screen bg-gradient-to-br from-purple-900 via-indigo-900 to-blue-900 flex items-center justify-center">
+            <div className="min-h-screen bg-gradient-to-br from-purple-900 via-purple-800 to-purple-900 flex items-center justify-center">
                 <div className="text-white text-2xl font-bold">Loading your {currentYear} wrapped...</div>
             </div>
         );
@@ -85,25 +85,25 @@ export default function YearInReviewPage() {
         <div key="completions" className="h-screen flex flex-col items-center justify-center p-8 bg-gradient-to-br from-emerald-600 to-teal-600">
             <div className="text-8xl md:text-9xl font-black text-white mb-4 animate-scaleIn">{data.totalCompletions}</div>
             <p className="text-2xl md:text-3xl font-bold text-white/90">Total Completions</p>
-            <p className="text-lg text-white/70 mt-4">You showed up and crushed it! 🎯</p>
+            <p className="text-lg text-white/70 mt-4">You showed up and crushed it!</p>
         </div>,
 
         // Slide 3: Days Active
         <div key="days" className="h-screen flex flex-col items-center justify-center p-8 bg-gradient-to-br from-orange-600 to-red-600">
             <div className="text-8xl md:text-9xl font-black text-white mb-4 animate-scaleIn">{data.totalDaysActive}</div>
             <p className="text-2xl md:text-3xl font-bold text-white/90">Days Active</p>
-            <p className="text-lg text-white/70 mt-4">{Math.round((data.totalDaysActive / 365) * 100)}% of the year! 🔥</p>
+            <p className="text-lg text-white/70 mt-4">{Math.round((data.totalDaysActive / 365) * 100)}% of the year!</p>
         </div>,
 
         // Slide 4: Longest Streak
         <div key="streak" className="h-screen flex flex-col items-center justify-center p-8 bg-gradient-to-br from-pink-600 to-purple-600">
             <div className="text-8xl md:text-9xl font-black text-white mb-4 animate-scaleIn">{data.longestStreak}</div>
             <p className="text-2xl md:text-3xl font-bold text-white/90">Day Streak</p>
-            <p className="text-lg text-white/70 mt-4">Unstoppable! ⚡</p>
+            <p className="text-lg text-white/70 mt-4">Unstoppable!</p>
         </div>,
 
         // Slide 5: Top Habits
-        <div key="top-habits" className="h-screen flex flex-col items-center justify-center p-8 bg-gradient-to-br from-indigo-600 to-violet-600">
+        <div key="top-habits" className="h-screen flex flex-col items-center justify-center p-8 bg-gradient-to-br from-purple-600 to-pink-600">
             <h2 className="text-4xl md:text-5xl font-black text-white mb-8">Your Top Habits</h2>
             <div className="w-full max-w-md space-y-4">
                 {data.topHabits.slice(0, 3).map((habit, idx) => (
@@ -122,10 +122,12 @@ export default function YearInReviewPage() {
 
         // Slide 6: Achievements
         <div key="achievements" className="h-screen flex flex-col items-center justify-center p-8 bg-gradient-to-br from-yellow-600 to-orange-600">
-            <div className="text-8xl mb-4">🏆</div>
+            <div className="mb-4">
+                <Trophy size={80} className="text-white" />
+            </div>
             <div className="text-7xl md:text-8xl font-black text-white mb-4">{data.achievementsUnlocked}</div>
             <p className="text-2xl md:text-3xl font-bold text-white/90">Achievements Unlocked</p>
-            <p className="text-lg text-white/70 mt-4">You're a legend! 👑</p>
+            <p className="text-lg text-white/70 mt-4">You're a legend!</p>
         </div>,
 
         // Slide 7: Insights

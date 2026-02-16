@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
+import { Users } from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext';
 import { useGroups } from '@/hooks/useGroups';
 import Navbar from '@/components/Navbar';
@@ -107,7 +108,9 @@ export default function GroupsPage() {
                 {/* Empty state */}
                 {!isLoading && groups.length === 0 && (
                     <div className="text-center py-20 px-6">
-                        <div className="text-5xl mb-4">👥</div>
+                        <div className="mb-4">
+                            <Users size={40} className="text-neutral-300 mx-auto" />
+                        </div>
                         <h3 className="text-lg font-semibold text-neutral-800 mb-2">No groups yet</h3>
                         <p className="text-neutral-500 mb-6 max-w-sm mx-auto">
                             Create or join a group to stay accountable with friends.

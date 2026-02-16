@@ -1,0 +1,73 @@
+{
+    "common": {
+        "appName": "HabitFlow",
+        "loading": "Chargement...",
+        "error": "Erreur",
+        "save": "Enregistrer",
+        "cancel": "Annuler",
+        "delete": "Supprimer",
+        "edit": "Modifier",
+        "close": "Fermer",
+        "confirm": "Confirmer"
+    },
+    "nav": {
+        "dashboard": "Tableau de Bord",
+        "habits": "Habitudes",
+        "analytics": "Analytiques",
+        "groups": "Groupes",
+        "leaderboard": "Classement",
+        "shop": "Boutique",
+        "challenges": "Défis",
+        "settings": "Paramètres",
+        "profile": "Profil"
+    },
+    "dashboard": {
+        "title": "Tableau de Bord",
+        "welcome": "Bon retour",
+        "todayHabits": "Habitudes du Jour",
+        "streak": "Série",
+        "xp": "XP",
+        "level": "Niveau",
+        "coins": "Pièces"
+    },
+    "habits": {
+        "title": "Habitudes",
+        "createNew": "Créer une Nouvelle Habitude",
+        "editHabit": "Modifier l'Habitude",
+        "habitName": "Nom de l'Habitude",
+        "description": "Description",
+        "frequency": "Fréquence",
+        "category": "Catégorie",
+        "daily": "Quotidien",
+        "weekly": "Hebdomadaire",
+        "custom": "Personnalisé"
+    },
+    "analytics": {
+        "title": "Analytiques",
+        "insights": "Aperçus",
+        "trends": "Tendances",
+        "totalCompletions": "Complétions Totales",
+        "bestStreak": "Meilleure Série",
+        "correlations": "Corrélations d'Habitudes"
+    },
+    "settings": {
+        "title": "Paramètres",
+        "appearance": "Apparence",
+        "theme": "Thème",
+        "accentColor": "Couleur d'Accent",
+        "font": "Police",
+        "language": "Langue",
+        "notifications": "Notifications",
+        "privacy": "Confidentialité",
+        "account": "Compte"
+    },
+    "auth": {
+        "login": "Se Connecter",
+        "signup": "S'Inscrire",
+        "logout": "Se Déconnecter",
+        "email": "Email",
+        "password": "Mot de Passe",
+        "displayName": "Nom d'Affichage",
+        "forgotPassword": "Mot de Passe Oublié?"
+    }
+}

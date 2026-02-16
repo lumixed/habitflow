@@ -1,0 +1,73 @@
+{
+    "common": {
+        "appName": "HabitFlow",
+        "loading": "Cargando...",
+        "error": "Error",
+        "save": "Guardar",
+        "cancel": "Cancelar",
+        "delete": "Eliminar",
+        "edit": "Editar",
+        "close": "Cerrar",
+        "confirm": "Confirmar"
+    },
+    "nav": {
+        "dashboard": "Tablero",
+        "habits": "Hábitos",
+        "analytics": "Analíticas",
+        "groups": "Grupos",
+        "leaderboard": "Clasificación",
+        "shop": "Tienda",
+        "challenges": "Desafíos",
+        "settings": "Configuración",
+        "profile": "Perfil"
+    },
+    "dashboard": {
+        "title": "Tablero",
+        "welcome": "Bienvenido de nuevo",
+        "todayHabits": "Hábitos de Hoy",
+        "streak": "Racha",
+        "xp": "XP",
+        "level": "Nivel",
+        "coins": "Monedas"
+    },
+    "habits": {
+        "title": "Hábitos",
+        "createNew": "Crear Nuevo Hábito",
+        "editHabit": "Editar Hábito",
+        "habitName": "Nombre del Hábito",
+        "description": "Descripción",
+        "frequency": "Frecuencia",
+        "category": "Categoría",
+        "daily": "Diario",
+        "weekly": "Semanal",
+        "custom": "Personalizado"
+    },
+    "analytics": {
+        "title": "Analíticas",
+        "insights": "Perspectivas",
+        "trends": "Tendencias",
+        "totalCompletions": "Completaciones Totales",
+        "bestStreak": "Mejor Racha",
+        "correlations": "Correlaciones de Hábitos"
+    },
+    "settings": {
+        "title": "Configuración",
+        "appearance": "Apariencia",
+        "theme": "Tema",
+        "accentColor": "Color de Acento",
+        "font": "Fuente",
+        "language": "Idioma",
+        "notifications": "Notificaciones",
+        "privacy": "Privacidad",
+        "account": "Cuenta"
+    },
+    "auth": {
+        "login": "Iniciar Sesión",
+        "signup": "Registrarse",
+        "logout": "Cerrar Sesión",
+        "email": "Correo Electrónico",
+        "password": "Contraseña",
+        "displayName": "Nombre para Mostrar",
+        "forgotPassword": "¿Olvidaste tu Contraseña?"
+    }
+}

@@ -111,7 +111,7 @@ export default function GroupDetailClient({ id }: { id: string }) {
                     </div>
 
                     {showInviteCode && (
-                        <div className="mt-4 p-4 bg-primary-50 border border-primary-200 rounded-lg">
+                        <div className="mt-4 p-4 bg-white border border-neutral-200 rounded-lg">
                             <p className="text-sm text-primary-900 font-medium mb-2">Invite code:</p>
                             <div className="flex items-center gap-2">
                                 <code className="flex-1 px-3 py-2 bg-white border border-primary-300 rounded font-mono text-lg tracking-wider text-primary-700">
@@ -194,7 +194,7 @@ export default function GroupDetailClient({ id }: { id: string }) {
                                                 <div className="flex items-center gap-2 flex-1 min-w-0">
                                                     <span className="text-lg flex-shrink-0">{ICON_MAP[habit.icon] || '✨'}</span>
                                                     <span className="text-sm font-medium text-neutral-700 truncate">{habit.title}</span>
-                                                    <span className="text-[10px] font-bold text-primary-500 bg-primary-50 px-1.5 py-0.5 rounded ml-1">
+                                                    <span className="text-[10px] font-black text-neutral-600 bg-white border border-neutral-300 px-1.5 py-0.5 rounded ml-1">
                                                         {habit.streak_days}d
                                                     </span>
                                                 </div>

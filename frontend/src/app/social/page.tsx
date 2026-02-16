@@ -40,8 +40,8 @@ export default function SocialPage() {
                         <button
                             onClick={() => setActiveTab('feed')}
                             className={`w-full text-left px-4 py-3 rounded-xl font-semibold transition-all ${activeTab === 'feed'
-                                    ? 'bg-primary-50 text-primary-600 shadow-sm'
-                                    : 'text-neutral-500 hover:bg-neutral-100'
+                                ? 'bg-white border-2 border-primary-500 text-primary-600 shadow-sm'
+                                : 'text-neutral-500 hover:bg-neutral-100'
                                 }`}
                         >
                             Social Feed
@@ -49,8 +49,8 @@ export default function SocialPage() {
                         <button
                             onClick={() => setActiveTab('friends')}
                             className={`w-full text-left px-4 py-3 rounded-xl font-semibold transition-all ${activeTab === 'friends'
-                                    ? 'bg-primary-50 text-primary-600 shadow-sm'
-                                    : 'text-neutral-500 hover:bg-neutral-100'
+                                ? 'bg-white border-2 border-primary-500 text-primary-600 shadow-sm'
+                                : 'text-neutral-500 hover:bg-neutral-100'
                                 }`}
                         >
                             Friends
@@ -58,8 +58,8 @@ export default function SocialPage() {
                         <button
                             onClick={() => setActiveTab('search')}
                             className={`w-full text-left px-4 py-3 rounded-xl font-semibold transition-all ${activeTab === 'search'
-                                    ? 'bg-primary-50 text-primary-600 shadow-sm'
-                                    : 'text-neutral-500 hover:bg-neutral-100'
+                                ? 'bg-white border-2 border-primary-500 text-primary-600 shadow-sm'
+                                : 'text-neutral-500 hover:bg-neutral-100'
                                 }`}
                         >
                             Find People

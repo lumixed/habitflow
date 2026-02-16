@@ -51,7 +51,7 @@ export default function CorrelationMatrix() {
 
     if (loading) {
         return (
-            <div className="bg-white/50 border border-neutral-200 rounded-[2.5rem] p-8">
+            <div className="bg-white border border-neutral-200 rounded-lg p-5">
                 <div className="animate-pulse">
                     <div className="h-6 bg-neutral-200 rounded w-1/3 mb-4"></div>
                     <div className="h-4 bg-neutral-200 rounded w-full mb-2"></div>
@@ -63,7 +63,7 @@ export default function CorrelationMatrix() {
 
     if (!data || data.correlations.length === 0) {
         return (
-            <div className="bg-white/50 border border-neutral-200 rounded-[2.5rem] p-8">
+            <div className="bg-white border border-neutral-200 rounded-lg p-5">
                 <h3 className="text-xl font-black mb-4">Habit Correlations</h3>
                 <p className="text-neutral-600">
                     Not enough data to show correlations. Keep tracking your habits for at least a week!
@@ -83,9 +83,9 @@ export default function CorrelationMatrix() {
 
     const getStrengthLabel = (strength: string) => {
         const labels = {
-            strong: '💪 Strong',
-            moderate: '👍 Moderate',
-            weak: '🤏 Weak'
+            strong: 'Strong',
+            moderate: 'Moderate',
+            weak: 'Weak'
         };
         return labels[strength as keyof typeof labels] || strength;
     };
@@ -93,7 +93,7 @@ export default function CorrelationMatrix() {
     return (
         <div className="space-y-6">
             {/* Time Period Selector */}
-            <div className="bg-white/50 border border-neutral-200 rounded-[2.5rem] p-6">
+            <div className="bg-white border border-neutral-200 rounded-lg p-5">
                 <div className="flex items-center justify-between">
                     <h3 className="text-xl font-black">Habit Correlations</h3>
                     <select
@@ -110,7 +110,7 @@ export default function CorrelationMatrix() {
 
             {/* Insights */}
             {data.insights.length > 0 && (
-                <div className="bg-blue-50 border border-blue-200 rounded-[2.5rem] p-6">
+                <div className="bg-blue-50 border border-blue-200 rounded-lg p-5">
                     <h4 className="text-sm font-black uppercase tracking-widest opacity-50 mb-4">Key Insights</h4>
                     <div className="space-y-2">
                         {data.insights.map((insight, idx) => (
@@ -125,7 +125,7 @@ export default function CorrelationMatrix() {
 
             {/* Recommendations */}
             {data.recommendations.length > 0 && (
-                <div className="bg-purple-50 border border-purple-200 rounded-[2.5rem] p-6">
+                <div className="bg-purple-50 border border-purple-200 rounded-lg p-5">
                     <h4 className="text-sm font-black uppercase tracking-widest opacity-50 mb-4">Recommendations</h4>
                     <div className="space-y-2">
                         {data.recommendations.map((rec, idx) => (
@@ -138,7 +138,7 @@ export default function CorrelationMatrix() {
             )}
 
             {/* Correlation List */}
-            <div className="bg-white/50 border border-neutral-200 rounded-[2.5rem] p-8">
+            <div className="bg-white border border-neutral-200 rounded-lg p-5">
                 <h4 className="text-sm font-black uppercase tracking-widest opacity-50 mb-6">Correlations Found</h4>
                 <div className="space-y-4">
                     {data.correlations.map((corr, idx) => (

@@ -1,0 +1,73 @@
+{
+    "common": {
+        "appName": "HabitFlow",
+        "loading": "Laden...",
+        "error": "Fehler",
+        "save": "Speichern",
+        "cancel": "Abbrechen",
+        "delete": "Löschen",
+        "edit": "Bearbeiten",
+        "close": "Schließen",
+        "confirm": "Bestätigen"
+    },
+    "nav": {
+        "dashboard": "Dashboard",
+        "habits": "Gewohnheiten",
+        "analytics": "Analytik",
+        "groups": "Gruppen",
+        "leaderboard": "Bestenliste",
+        "shop": "Shop",
+        "challenges": "Herausforderungen",
+        "settings": "Einstellungen",
+        "profile": "Profil"
+    },
+    "dashboard": {
+        "title": "Dashboard",
+        "welcome": "Willkommen zurück",
+        "todayHabits": "Heutige Gewohnheiten",
+        "streak": "Serie",
+        "xp": "EP",
+        "level": "Level",
+        "coins": "Münzen"
+    },
+    "habits": {
+        "title": "Gewohnheiten",
+        "createNew": "Neue Gewohnheit Erstellen",
+        "editHabit": "Gewohnheit Bearbeiten",
+        "habitName": "Gewohnheitsname",
+        "description": "Beschreibung",
+        "frequency": "Häufigkeit",
+        "category": "Kategorie",
+        "daily": "Täglich",
+        "weekly": "Wöchentlich",
+        "custom": "Benutzerdefiniert"
+    },
+    "analytics": {
+        "title": "Analytik",
+        "insights": "Einblicke",
+        "trends": "Trends",
+        "totalCompletions": "Gesamte Abschlüsse",
+        "bestStreak": "Beste Serie",
+        "correlations": "Gewohnheitskorrelationen"
+    },
+    "settings": {
+        "title": "Einstellungen",
+        "appearance": "Erscheinungsbild",
+        "theme": "Thema",
+        "accentColor": "Akzentfarbe",
+        "font": "Schriftart",
+        "language": "Sprache",
+        "notifications": "Benachrichtigungen",
+        "privacy": "Datenschutz",
+        "account": "Konto"
+    },
+    "auth": {
+        "login": "Anmelden",
+        "signup": "Registrieren",
+        "logout": "Abmelden",
+        "email": "E-Mail",
+        "password": "Passwort",
+        "displayName": "Anzeigename",
+        "forgotPassword": "Passwort Vergessen?"
+    }
+}

@@ -152,7 +152,7 @@ export default function DashboardPage() {
                     title: 'Level Up!',
                     description: `You've reached level ${rewards.levelUp.newLevel}!`,
                     level: rewards.levelUp.newLevel,
-                    icon: '🚀'
+                    icon: ''
                 }
             });
         }
@@ -166,13 +166,13 @@ export default function DashboardPage() {
         switch (id) {
             case 'xp':
                 return (
-                    <DashboardWidget id="xp" title="Progress" icon="📈">
+                    <DashboardWidget id="xp" title="Progress" icon="">
                         <XPWidget />
                     </DashboardWidget>
                 );
             case 'habits':
                 return (
-                    <DashboardWidget id="habits" title="Active Habits" icon="✅">
+                    <DashboardWidget id="habits" title="Active Habits" icon="">
                         <HabitsWidget
                             onOpenEdit={handleOpenEdit}
                             onToggleActive={handleToggleActive}
@@ -184,19 +184,19 @@ export default function DashboardPage() {
                             onClick={handleOpenCreate}
                             className="w-full mt-4 py-3 border-2 border-dashed border-neutral-100 dark:border-neutral-700 rounded-2xl text-[10px] font-black text-neutral-400 hover:text-neutral-900 hover:border-neutral-200 transition-all uppercase tracking-widest"
                         >
-                            + Add Habit
+                            + New Habit
                         </button>
                     </DashboardWidget>
                 );
             case 'stats':
                 return (
-                    <DashboardWidget id="stats" title="Quick Stats" icon="⚡">
+                    <DashboardWidget id="stats" title="Quick Stats" icon="">
                         <QuickStatsWidget />
                     </DashboardWidget>
                 );
             case 'suggestions':
                 return (
-                    <DashboardWidget id="suggestions" title="AI Suggestions" icon="🧠">
+                    <DashboardWidget id="suggestions" title="AI Suggestions" icon="">
                         <SuggestionsWidget onAddHabit={handleSuggestionAdd} />
                     </DashboardWidget>
                 );

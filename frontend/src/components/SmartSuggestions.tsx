@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import { Sparkles } from 'lucide-react';
 import { useAI, WeatherSuggestions, HabitStack } from '@/hooks/useAI';
 
 interface SmartSuggestionsProps {
@@ -60,16 +61,8 @@ export default function SmartSuggestions({ onAddHabit }: SmartSuggestionsProps) 
     return (
         <div className="space-y-4">
             {data && (
-                <div className="bg-gradient-to-br from-primary-50 to-white rounded-xl border border-primary-100 p-6 shadow-sm">
+                <div className="bg-white rounded-xl border border-neutral-200 p-6 shadow-sm">
                     <div className="flex items-center justify-between mb-4">
-                        <div>
-                            <h3 className="text-sm font-bold text-primary-900 flex items-center gap-2">
-                                <span className="text-lg">🤖</span> Smart Suggestions
-                            </h3>
-                            <p className="text-[11px] text-primary-600 mt-0.5">
-                                Based on current weather in your area
-                            </p>
-                        </div>
                         <div className="text-right">
                             <span className="text-2xl">{weatherIcons[data.weather.condition] || '🌈'}</span>
                             <span className="block text-[10px] font-bold text-neutral-500">{data.weather.temperature}°C</span>
@@ -92,12 +85,12 @@ export default function SmartSuggestions({ onAddHabit }: SmartSuggestionsProps) 
             )}
 
             {!isLoading && recommendations.length > 0 && (
-                <div className="bg-gradient-to-br from-indigo-50 to-white rounded-xl border border-indigo-100 p-6 shadow-sm">
+                <div className="bg-white rounded-lg border border-neutral-200 p-5 shadow-sm">
                     <div className="mb-4">
-                        <h3 className="text-sm font-bold text-indigo-900 flex items-center gap-2">
-                            <span className="text-lg">✨</span> Recommended for You
+                        <h3 className="text-sm font-semibold text-neutral-900 flex items-center gap-2">
+                            <Sparkles size={16} className="text-primary-500" /> Recommended for You
                         </h3>
-                        <p className="text-[11px] text-indigo-600 mt-0.5">
+                        <p className="text-xs text-neutral-600 mt-1">
                             AI-picked habits to help you grow
                         </p>
                     </div>
@@ -107,10 +100,10 @@ export default function SmartSuggestions({ onAddHabit }: SmartSuggestionsProps) 
                             <div
                                 key={i}
                                 onClick={() => onAddHabit?.(rec, 'AI Recommended habit')}
-                                className="p-3 bg-white border border-indigo-100 rounded-lg hover:border-indigo-300 transition-all cursor-pointer group flex flex-col items-center justify-center text-center"
+                                className="p-3 bg-white border border-neutral-200 rounded-lg hover:border-neutral-300 transition-all cursor-pointer group flex flex-col items-center justify-center text-center"
                             >
                                 <span className="text-xs font-bold text-neutral-700">{rec}</span>
-                                <span className="text-[10px] text-indigo-400 mt-1 opacity-0 group-hover:opacity-100 transition-opacity">Add Habit +</span>
+                                <span className="text-[10px] text-neutral-500 mt-1 opacity-0 group-hover:opacity-100 transition-opacity">Add Habit +</span>
                             </div>
                         ))}
                     </div>
@@ -118,10 +111,10 @@ export default function SmartSuggestions({ onAddHabit }: SmartSuggestionsProps) 
             )}
 
             {!isLoading && stacks.length > 0 && (
-                <div className="bg-gradient-to-br from-emerald-50 to-white rounded-xl border border-emerald-100 p-6 shadow-sm">
+                <div className="bg-white rounded-xl border border-neutral-200 p-6 shadow-sm">
                     <div className="mb-4">
                         <h3 className="text-sm font-bold text-emerald-900 flex items-center gap-2">
-                            <span className="text-lg">🧱</span> Habit Stacking
+                            Habit Stacking
                         </h3>
                         <p className="text-[11px] text-emerald-600 mt-0.5">
                             Pair new habits with your existing routine

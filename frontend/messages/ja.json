@@ -1,0 +1,73 @@
+{
+    "common": {
+        "appName": "HabitFlow",
+        "loading": "読み込み中...",
+        "error": "エラー",
+        "save": "保存",
+        "cancel": "キャンセル",
+        "delete": "削除",
+        "edit": "編集",
+        "close": "閉じる",
+        "confirm": "確認"
+    },
+    "nav": {
+        "dashboard": "ダッシュボード",
+        "habits": "習慣",
+        "analytics": "分析",
+        "groups": "グループ",
+        "leaderboard": "ランキング",
+        "shop": "ショップ",
+        "challenges": "チャレンジ",
+        "settings": "設定",
+        "profile": "プロフィール"
+    },
+    "dashboard": {
+        "title": "ダッシュボード",
+        "welcome": "おかえりなさい",
+        "todayHabits": "今日の習慣",
+        "streak": "連続記録",
+        "xp": "経験値",
+        "level": "レベル",
+        "coins": "コイン"
+    },
+    "habits": {
+        "title": "習慣",
+        "createNew": "新しい習慣を作成",
+        "editHabit": "習慣を編集",
+        "habitName": "習慣名",
+        "description": "説明",
+        "frequency": "頻度",
+        "category": "カテゴリー",
+        "daily": "毎日",
+        "weekly": "毎週",
+        "custom": "カスタム"
+    },
+    "analytics": {
+        "title": "分析",
+        "insights": "洞察",
+        "trends": "トレンド",
+        "totalCompletions": "総完了数",
+        "bestStreak": "最高記録",
+        "correlations": "習慣の相関関係"
+    },
+    "settings": {
+        "title": "設定",
+        "appearance": "外観",
+        "theme": "テーマ",
+        "accentColor": "アクセントカラー",
+        "font": "フォント",
+        "language": "言語",
+        "notifications": "通知",
+        "privacy": "プライバシー",
+        "account": "アカウント"
+    },
+    "auth": {
+        "login": "ログイン",
+        "signup": "サインアップ",
+        "logout": "ログアウト",
+        "email": "メールアドレス",
+        "password": "パスワード",
+        "displayName": "表示名",
+        "forgotPassword": "パスワードをお忘れですか？"
+    }
+}

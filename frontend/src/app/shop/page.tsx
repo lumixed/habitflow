@@ -70,7 +70,7 @@ export default function ShopPage() {
                     {powerups.map((powerup: any) => (
                         <div
                             key={powerup.id}
-                            className="group relative bg-neutral-800 border border-neutral-700 rounded-[2.5rem] p-8 hover:border-primary-500/50 transition-all duration-500 flex flex-col"
+                            className="group relative bg-neutral-800 border border-neutral-700 rounded-xl p-6 hover:border-primary-500/50 transition-all duration-300 flex flex-col"
                         >
                             <div className="absolute top-6 right-8 text-4xl group-hover:scale-110 transition-transform duration-500">
                                 {powerup.icon}

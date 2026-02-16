@@ -1,0 +1,73 @@
+{
+    "common": {
+        "appName": "HabitFlow",
+        "loading": "Loading...",
+        "error": "Error",
+        "save": "Save",
+        "cancel": "Cancel",
+        "delete": "Delete",
+        "edit": "Edit",
+        "close": "Close",
+        "confirm": "Confirm"
+    },
+    "nav": {
+        "dashboard": "Dashboard",
+        "habits": "Habits",
+        "analytics": "Analytics",
+        "groups": "Groups",
+        "leaderboard": "Leaderboard",
+        "shop": "Shop",
+        "challenges": "Challenges",
+        "settings": "Settings",
+        "profile": "Profile"
+    },
+    "dashboard": {
+        "title": "Dashboard",
+        "welcome": "Welcome back",
+        "todayHabits": "Today's Habits",
+        "streak": "Streak",
+        "xp": "XP",
+        "level": "Level",
+        "coins": "Coins"
+    },
+    "habits": {
+        "title": "Habits",
+        "createNew": "Create New Habit",
+        "editHabit": "Edit Habit",
+        "habitName": "Habit Name",
+        "description": "Description",
+        "frequency": "Frequency",
+        "category": "Category",
+        "daily": "Daily",
+        "weekly": "Weekly",
+        "custom": "Custom"
+    },
+    "analytics": {
+        "title": "Analytics",
+        "insights": "Insights",
+        "trends": "Trends",
+        "totalCompletions": "Total Completions",
+        "bestStreak": "Best Streak",
+        "correlations": "Habit Correlations"
+    },
+    "settings": {
+        "title": "Settings",
+        "appearance": "Appearance",
+        "theme": "Theme",
+        "accentColor": "Accent Color",
+        "font": "Font",
+        "language": "Language",
+        "notifications": "Notifications",
+        "privacy": "Privacy",
+        "account": "Account"
+    },
+    "auth": {
+        "login": "Log In",
+        "signup": "Sign Up",
+        "logout": "Log Out",
+        "email": "Email",
+        "password": "Password",
+        "displayName": "Display Name",
+        "forgotPassword": "Forgot Password?"
+    }
+}

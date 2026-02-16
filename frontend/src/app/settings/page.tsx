@@ -5,6 +5,9 @@ import { useTheme } from '@/contexts/ThemeContext';
 import { useAuth } from '@/contexts/AuthContext';
 import Navbar from '@/components/Navbar';
 import MobileNav from '@/components/MobileNav';
+import LanguageSelector from '@/components/LanguageSelector';
+import ThemeEditor from '@/components/ThemeEditor';
+import AdvancedPrivacy from '@/components/AdvancedPrivacy';
 
 const THEMES = [
     { id: 'classic', name: 'Classic', desc: 'The original clean design', color: '#10B981' },
@@ -94,7 +97,7 @@ export default function SettingsPage() {
 
                 <section className="mb-12">
                     <h2 className="text-xs font-black uppercase tracking-widest opacity-50 mb-6">Font</h2>
-                    <div className="bg-white/50 border border-neutral-200 rounded-[2.5rem] p-8 space-y-3">
+                    <div className="bg-white border border-neutral-200 rounded-lg p-5 space-y-3">
                         {(['inter', 'roboto', 'outfit', 'poppins', 'montserrat'] as const).map((fontName) => (
                             <button
                                 key={fontName}
@@ -114,7 +117,7 @@ export default function SettingsPage() {
 
                 <section className="mb-12">
                     <h2 className="text-xs font-black uppercase tracking-widest opacity-50 mb-6">Privacy</h2>
-                    <div className="bg-white/50 border border-neutral-200 rounded-[2.5rem] p-8">
+                    <div className="bg-white border border-neutral-200 rounded-lg p-5">
                         <div className="flex items-center justify-between">
                             <div className="flex-1">
                                 <h3 className="font-bold mb-1">Public Profile</h3>
@@ -151,10 +154,10 @@ export default function SettingsPage() {
 
                 <section className="mb-12">
                     <h2 className="text-xs font-black uppercase tracking-widest opacity-50 mb-6">Email Reports</h2>
-                    <div className="bg-white/50 border border-neutral-200 rounded-[2.5rem] p-8 space-y-4">
+                    <div className="bg-white border border-neutral-200 rounded-lg p-5 space-y-4">
                         <div className="flex items-center justify-between pb-4 border-b border-neutral-200">
                             <div className="flex-1">
-                                <h3 className="font-bold mb-1">📊 Weekly Reports</h3>
+                                <h3 className="font-bold mb-1">Weekly Reports</h3>
                                 <p className="text-sm opacity-60">Receive a summary of your habits every Monday</p>
                             </div>
                             <button
@@ -169,7 +172,7 @@ export default function SettingsPage() {
                         </div>
                         <div className="flex items-center justify-between">
                             <div className="flex-1">
-                                <h3 className="font-bold mb-1">🎉 Monthly Wrap-Ups</h3>
+                                <h3 className="font-bold mb-1">Monthly Wrap-Ups</h3>
                                 <p className="text-sm opacity-60">Get your monthly achievements on the 1st</p>
                             </div>
                             <button
@@ -184,7 +187,7 @@ export default function SettingsPage() {
                     </div>
                 </section>
 
-                <section className="bg-white/50 border border-neutral-200 rounded-[2.5rem] p-8">
+                <section className="bg-white border border-neutral-200 rounded-lg p-5">
                     <h2 className="text-xs font-black uppercase tracking-widest opacity-50 mb-6">Account Info</h2>
                     <div className="flex items-center gap-4">
                         <div className="h-16 w-16 rounded-full bg-neutral-200 overflow-hidden">
@@ -195,6 +198,21 @@ export default function SettingsPage() {
                             <p className="text-sm opacity-60">{user?.email}</p>
                         </div>
                     </div>
+                </section>
+
+                <section className="mb-12">
+                    <h2 className="text-xs font-black uppercase tracking-widest opacity-50 mb-6">Language</h2>
+                    <LanguageSelector />
+                </section>
+
+                <section className="mb-12">
+                    <h2 className="text-xs font-black uppercase tracking-widest opacity-50 mb-6">Advanced Theme Editor</h2>
+                    <ThemeEditor />
+                </section>
+
+                <section className="mb-12">
+                    <h2 className="text-xs font-black uppercase tracking-widest opacity-50 mb-6">Advanced Privacy</h2>
+                    <AdvancedPrivacy />
                 </section>
             </main>
 

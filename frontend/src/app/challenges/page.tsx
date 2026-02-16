@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import { TrendingUp, MapPin } from 'lucide-react';
 import { useChallenges } from '@/hooks/useChallenges';
 import { useAuth } from '@/contexts/AuthContext';
 import ChallengeCard from '@/components/ChallengeCard';
@@ -55,8 +56,8 @@ export default function ChallengesPage() {
                     <button
                         onClick={() => setActiveTab('active')}
                         className={`px-6 py-2 rounded-full text-xs font-black uppercase tracking-widest transition-all ${activeTab === 'active'
-                                ? 'bg-neutral-900 text-white shadow-lg shadow-neutral-200'
-                                : 'bg-white text-neutral-400 hover:text-neutral-600 border border-neutral-200'
+                            ? 'bg-neutral-900 text-white shadow-lg shadow-neutral-200'
+                            : 'bg-white text-neutral-400 hover:text-neutral-600 border border-neutral-200'
                             }`}
                     >
                         Active ({activeChallenges.length})
@@ -64,8 +65,8 @@ export default function ChallengesPage() {
                     <button
                         onClick={() => setActiveTab('available')}
                         className={`px-6 py-2 rounded-full text-xs font-black uppercase tracking-widest transition-all ${activeTab === 'available'
-                                ? 'bg-neutral-900 text-white shadow-lg shadow-neutral-200'
-                                : 'bg-white text-neutral-400 hover:text-neutral-600 border border-neutral-200'
+                            ? 'bg-neutral-900 text-white shadow-lg shadow-neutral-200'
+                            : 'bg-white text-neutral-400 hover:text-neutral-600 border border-neutral-200'
                             }`}
                     >
                         Available ({availableChallenges.length})
@@ -91,7 +92,7 @@ export default function ChallengesPage() {
                             ))
                         ) : (
                             <div className="col-span-full bg-white rounded-3xl p-12 text-center border border-dashed border-neutral-200">
-                                <span className="text-4xl mb-4 block">🧗</span>
+                                <TrendingUp size={40} className="text-neutral-300 mb-4 mx-auto" />
                                 <h3 className="text-lg font-bold text-neutral-900 mb-2">No Active Challenges</h3>
                                 <p className="text-neutral-500 text-sm mb-6">You haven't joined any challenges yet. Check the available tab!</p>
                                 <button
@@ -118,7 +119,7 @@ export default function ChallengesPage() {
                             ))
                         ) : (
                             <div className="col-span-full bg-white rounded-3xl p-12 text-center border border-dashed border-neutral-200">
-                                <span className="text-4xl mb-4 block">🏜️</span>
+                                <MapPin size={40} className="text-neutral-300 mb-4 mx-auto" />
                                 <h3 className="text-lg font-bold text-neutral-900 mb-2">Nothing to Join</h3>
                                 <p className="text-neutral-500 text-sm">Join more groups to see more challenges!</p>
                             </div>
