@@ -87,6 +87,20 @@ export async function signup({ email, password, display_name }: SignupInput) {
             id: user.id,
             email: user.email,
             display_name: user.display_name,
+            avatar_url: user.avatar_url,
+            xp: user.xp,
+            level: user.level,
+            coins: user.coins,
+            theme_name: user.theme_name,
+            accent_color: user.accent_color,
+            widget_order: user.widget_order,
+            is_profile_public: user.is_profile_public,
+            is_anonymous: user.is_anonymous,
+            two_factor_enabled: user.two_factor_enabled,
+            data_retention_days: user.data_retention_days,
+            scheduled_export_enabled: user.scheduled_export_enabled,
+            last_export_at: user.last_export_at,
+            created_at: user.created_at,
         },
     };
 }
@@ -131,6 +145,20 @@ export async function login({ email, password }: LoginInput) {
             id: user.id,
             email: user.email,
             display_name: user.display_name,
+            avatar_url: user.avatar_url,
+            xp: user.xp,
+            level: user.level,
+            coins: user.coins,
+            theme_name: user.theme_name,
+            accent_color: user.accent_color,
+            widget_order: user.widget_order,
+            is_profile_public: user.is_profile_public,
+            is_anonymous: user.is_anonymous,
+            two_factor_enabled: user.two_factor_enabled,
+            data_retention_days: user.data_retention_days,
+            scheduled_export_enabled: user.scheduled_export_enabled,
+            last_export_at: user.last_export_at,
+            created_at: user.created_at,
         },
     };
 }
@@ -150,12 +178,13 @@ export async function getUserById(userId: string) {
             coins: true,
             theme_name: true,
             accent_color: true,
-            font_family: true,
             widget_order: true,
             is_profile_public: true,
             is_anonymous: true,
             two_factor_enabled: true,
             data_retention_days: true,
+            scheduled_export_enabled: true,
+            last_export_at: true,
             created_at: true,
         },
     });
@@ -178,7 +207,7 @@ export function verifyToken(token: string): TokenPayload {
 }
 
 export async function updateProfile(userId: string, data: any) {
-    const allowedFields = ['display_name', 'avatar_url', 'theme_name', 'accent_color', 'font_family', 'widget_order', 'is_profile_public'];
+    const allowedFields = ['display_name', 'avatar_url', 'theme_name', 'accent_color', 'widget_order', 'is_profile_public'];
     const updateData: any = {};
 
     for (const key of allowedFields) {
@@ -209,6 +238,8 @@ export async function updateProfile(userId: string, data: any) {
             is_anonymous: true,
             two_factor_enabled: true,
             data_retention_days: true,
+            scheduled_export_enabled: true,
+            last_export_at: true,
             created_at: true,
         },
     });
@@ -271,6 +302,20 @@ export async function loginVerify2FA(userId: string, token: string) {
             id: user.id,
             email: user.email,
             display_name: user.display_name,
+            avatar_url: user.avatar_url,
+            xp: user.xp,
+            level: user.level,
+            coins: user.coins,
+            theme_name: user.theme_name,
+            accent_color: user.accent_color,
+            widget_order: user.widget_order,
+            is_profile_public: user.is_profile_public,
+            is_anonymous: user.is_anonymous,
+            two_factor_enabled: user.two_factor_enabled,
+            data_retention_days: user.data_retention_days,
+            scheduled_export_enabled: user.scheduled_export_enabled,
+            last_export_at: user.last_export_at,
+            created_at: user.created_at,
         },
     };
 }

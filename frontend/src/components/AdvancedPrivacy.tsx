@@ -5,7 +5,7 @@ import { useAuth } from '@/contexts/AuthContext';
 import { Shield, Download, Trash2, Eye, Users, Lock } from 'lucide-react';
 
 export default function AdvancedPrivacy() {
-    const { user, token } = useAuth();
+    const { user, token, updateUser } = useAuth();
     const [activityVisibility, setActivityVisibility] = useState<'public' | 'friends' | 'private'>('friends');
     const [dataRetentionDays, setDataRetentionDays] = useState(365);
     const [scheduledExportEnabled, setScheduledExportEnabled] = useState(false);
@@ -85,7 +85,7 @@ export default function AdvancedPrivacy() {
             if (response.ok) {
                 alert('2FA enabled successfully');
                 setShow2FASetup(false);
-                window.location.reload();
+                updateUser({ two_factor_enabled: true });
             } else {
                 alert('Invalid token');
             }
@@ -114,7 +114,7 @@ export default function AdvancedPrivacy() {
             });
             if (response.ok) {
                 alert('2FA disabled successfully');
-                window.location.reload();
+                updateUser({ two_factor_enabled: false });
             } else {
                 alert('Invalid token or failed to disable');
             }
@@ -154,7 +154,7 @@ export default function AdvancedPrivacy() {
         if (!token) return;
 
         try {
-            await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/auth/privacy-settings`, {
+            const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/auth/privacy-settings`, {
                 method: 'POST',
                 headers: {
                     'Authorization': `Bearer ${token}`,
@@ -167,6 +167,10 @@ export default function AdvancedPrivacy() {
                     scheduled_export_enabled: scheduledExportEnabled
                 })
             });
+            const data = await response.json();
+            if (data.user) {
+                updateUser(data.user);
+            }
             alert('Privacy settings saved');
         } catch (err) {
             console.error('Save failed:', err);

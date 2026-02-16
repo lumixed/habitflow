@@ -32,6 +32,7 @@ interface AuthContextType {
     verify2FA: (userId: string, token: string) => Promise<void>;
     signup: (email: string, password: string, display_name: string) => Promise<void>;
     logout: () => void;
+    updateUser: (data: Partial<User>) => void;
 }
 
 // ─── Context ──────────────────────────────────────────────────────────
@@ -118,8 +119,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         setUser(null);
     };
 
+    const updateUser = (data: Partial<User>) => {
+        setUser((prev) => (prev ? { ...prev, ...data } : null));
+    };
+
     return (
-        <AuthContext.Provider value={{ user, token, isLoading, login, verify2FA, signup, logout }}>
+        <AuthContext.Provider value={{ user, token, isLoading, login, verify2FA, signup, logout, updateUser }}>
             {children}
         </AuthContext.Provider>
     );
