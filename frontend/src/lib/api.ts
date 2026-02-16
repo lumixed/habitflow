@@ -10,7 +10,7 @@
 //   await api.put(`/habits/${id}`, { title: 'New title' });
 //   await api.delete(`/habits/${id}`);
 
-const BASE_URL = 'http://192.168.1.85:3001';
+const BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001';
 
 // ─── Error Class ──────────────────────────────────────────────────────
 

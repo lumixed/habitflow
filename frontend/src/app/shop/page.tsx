@@ -1,23 +1,26 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import { useAuth } from '@/contexts/AuthContext';
 import { useGamification, Powerup } from '@/hooks/useGamification';
 import Navbar from '@/components/Navbar';
 import MobileNav from '@/components/MobileNav';
 
 export default function ShopPage() {
+    const { token } = useAuth();
     const { stats, getAvailablePowerups, buyPowerup, loading } = useGamification();
     const [powerups, setPowerups] = useState<Powerup[]>([]);
     const [isPurchasing, setIsPurchasing] = useState<string | null>(null);
     const [message, setMessage] = useState<{ text: string, type: 'success' | 'error' } | null>(null);
 
     useEffect(() => {
+        if (!token) return;
         const fetchPowerups = async () => {
             const data = await getAvailablePowerups();
             setPowerups(data);
         };
         fetchPowerups();
-    }, []);
+    }, [token]);
 
     const handlePurchase = async (key: string) => {
         setIsPurchasing(key);
