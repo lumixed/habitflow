@@ -11,7 +11,6 @@ import AdvancedPrivacy from '@/components/AdvancedPrivacy';
 
 const THEMES = [
     { id: 'classic', name: 'Classic', desc: 'The original clean design', color: '#10B981' },
-    { id: 'neon', name: 'Midnight Neon', desc: 'High contrast vibrant purples', color: '#a855f7' },
     { id: 'pastel', name: 'Soft Pastel', desc: 'Calming soft colors', color: '#f472b6' },
     { id: 'cyberpunk', name: 'Cyberpunk', desc: 'Neon yellow on deep black', color: '#facc15' },
 ];

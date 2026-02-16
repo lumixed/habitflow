@@ -8,12 +8,6 @@
     --text-main: #111827;
 }
 
-[data-theme='neon'] {
-    --color-primary: #a855f7;
-    --bg-main: #0a0a0a;
-    --text-main: #ffffff;
-}
-
 [data-theme='pastel'] {
     --color-primary: #f472b6;
     --bg-main: #fffafb;

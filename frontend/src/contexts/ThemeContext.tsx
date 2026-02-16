@@ -4,7 +4,7 @@ import React, { createContext, useContext, useState, useEffect } from 'react';
 import { useAuth } from './AuthContext';
 import api from '@/lib/api';
 
-type ThemeName = 'classic' | 'neon' | 'pastel' | 'cyberpunk';
+type ThemeName = 'classic' | 'pastel' | 'cyberpunk';
 type FontName = 'inter' | 'roboto' | 'outfit' | 'poppins' | 'montserrat';
 
 interface ThemeContextType {
@@ -42,7 +42,7 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
         document.body.style.fontFamily = `var(--font-${font})`;
 
         // Update body bg based on theme
-        if (theme === 'neon' || theme === 'cyberpunk') {
+        if (theme === 'cyberpunk') {
             root.style.setProperty('--bg-main', '#0a0a0a');
             root.style.setProperty('--text-main', '#ffffff');
         } else {

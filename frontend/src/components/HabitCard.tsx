@@ -127,7 +127,7 @@ export default function HabitCard({ habit, onToggleActive, onDelete, onEdit, onR
                         <div className="flex-1">
                             <h3 className="text-sm font-bold text-neutral-900 dark:text-neutral-100 uppercase tracking-tight leading-4">{habit.title}</h3>
                             <div className="flex items-center gap-2 mt-1">
-                                <span className="text-[10px] font-black text-neutral-400 uppercase tracking-wider">{FREQUENCY_LABELS[habit.frequency]}</span>
+                                <span className="text-[10px] font-black text-neutral-500 uppercase tracking-wider">{FREQUENCY_LABELS[habit.frequency]}</span>
                                 {streak > 0 && (
                                     <>
                                         <span className="text-neutral-300">•</span>
@@ -229,7 +229,7 @@ export default function HabitCard({ habit, onToggleActive, onDelete, onEdit, onR
                 {habit.is_active && insight && (
                     <div className="mt-4 pt-4 border-t border-neutral-50 dark:border-neutral-700/50 ml-9">
                         <div className="flex items-center justify-between mb-2">
-                            <span className="text-[9px] font-black text-neutral-400 uppercase tracking-widest">Success Probability</span>
+                            <span className="text-[9px] font-black text-neutral-500 uppercase tracking-widest">Success Probability</span>
                             <span className={`text-[10px] font-bold ${insight.success_probability > 70 ? 'text-green-600' : 'text-neutral-500'}`}>
                                 {insight.success_probability}%
                             </span>

@@ -4,9 +4,9 @@ import { useState, useEffect } from 'react';
 import { Habit } from '@/hooks/useHabits';
 
 const COLORS = [
+    { name: 'Emerald', value: '#10B981' },
     { name: 'Indigo', value: '#6366F1' },
     { name: 'Rose', value: '#F43F5E' },
-    { name: 'Emerald', value: '#10B981' },
     { name: 'Amber', value: '#F59E0B' },
     { name: 'Sky', value: '#0EA5E9' },
     { name: 'Violet', value: '#8B5CF6' },
@@ -44,7 +44,7 @@ export default function HabitModal({ isOpen, onClose, onSave, editHabit }: Habit
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
     const [frequency, setFrequency] = useState('DAILY');
-    const [color, setColor] = useState('#6366F1');
+    const [color, setColor] = useState('#10B981');
     const [icon, setIcon] = useState('target');
     const [backgroundImage, setBackgroundImage] = useState('');
     const [isSubmitting, setIsSubmitting] = useState(false);
@@ -62,7 +62,7 @@ export default function HabitModal({ isOpen, onClose, onSave, editHabit }: Habit
             setTitle('');
             setDescription('');
             setFrequency('DAILY');
-            setColor('#6366F1');
+            setColor('#10B981');
             setIcon('target');
             setBackgroundImage('');
         }
