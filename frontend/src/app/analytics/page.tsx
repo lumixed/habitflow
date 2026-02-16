@@ -7,6 +7,7 @@ import Navbar from '@/components/Navbar';
 import StatCard from '@/components/StatCard';
 import TrendChart from '@/components/TrendChart';
 import HeatmapCalendar from '@/components/HeatmapCalendar';
+import CorrelationMatrix from '@/components/CorrelationMatrix';
 import {
     Trophy,
     CheckCircle,
@@ -179,6 +180,12 @@ export default function AnalyticsPage() {
                                 </p>
                             </div>
                         </div>
+                        <section className="mb-12">
+                            <h2 className="text-xs font-black uppercase tracking-widest opacity-50 mb-6">
+                                Habit Correlations
+                            </h2>
+                            <CorrelationMatrix />
+                        </section>
                     </div>
                 </div>
             </main>

@@ -13,6 +13,7 @@ import challengeRoutes from './routes/challenges';
 import notificationRoutes from './routes/notifications';
 import aiRoutes from './routes/ai';
 import yearInReviewRoutes from './routes/yearInReview';
+import correlationRoutes from './routes/correlations';
 import { initializeScheduledJobs } from './jobs/emailReports';
 
 const app = express();
@@ -57,6 +58,7 @@ app.use('/api/challenges', challengeRoutes);
 app.use('/api/notifications', notificationRoutes);
 app.use('/api/ai', aiRoutes);
 app.use('/api/year-in-review', yearInReviewRoutes);
+app.use('/api/correlations', correlationRoutes);
 
 app.use(errorHandler);
 
