@@ -15,6 +15,7 @@ import aiRoutes from './routes/ai';
 import yearInReviewRoutes from './routes/yearInReview';
 import correlationRoutes from './routes/correlations';
 import { initializeScheduledJobs } from './jobs/emailReports';
+import { initBackupJob } from './services/backupService';
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -64,6 +65,9 @@ app.use(errorHandler);
 
 // Initialize scheduled email reports
 initializeScheduledJobs();
+
+// Initialize weekly data backups
+initBackupJob();
 
 app.listen(PORT, () => {
     console.log(`🚀 Server running on http://localhost:${PORT}`);

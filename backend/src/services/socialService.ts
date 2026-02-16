@@ -154,20 +154,24 @@ export async function getSocialFeed(userId: string, limit = 20, offset = 0) {
     // Include self in feed
     const userIds = [userId, ...friendIds];
 
-    return await prisma.socialActivity.findMany({
-        where: { user_id: { in: userIds } },
+    const activities = await prisma.socialActivity.findMany({
+        where: {
+            user_id: { in: userIds },
+            user: { is_profile_public: true } // Filter out private profiles
+        },
         include: {
             user: {
                 select: {
                     id: true,
                     display_name: true,
-                    avatar_url: true
+                    avatar_url: true,
+                    is_anonymous: true
                 }
             },
             reactions: {
                 include: {
                     user: {
-                        select: { id: true, display_name: true }
+                        select: { id: true, display_name: true, is_anonymous: true }
                     }
                 }
             },
@@ -177,7 +181,8 @@ export async function getSocialFeed(userId: string, limit = 20, offset = 0) {
                         select: {
                             id: true,
                             display_name: true,
-                            avatar_url: true
+                            avatar_url: true,
+                            is_anonymous: true
                         }
                     }
                 },
@@ -191,16 +196,28 @@ export async function getSocialFeed(userId: string, limit = 20, offset = 0) {
         take: limit,
         skip: offset
     });
+
+    // Handle anonymous users
+    return activities.map(activity => ({
+        ...activity,
+        user: activity.user.is_anonymous ? { ...activity.user, display_name: 'Anonymous', avatar_url: null } : activity.user,
+        comments: activity.comments.map(comment => ({
+            ...comment,
+            user: comment.user.is_anonymous ? { ...comment.user, display_name: 'Anonymous', avatar_url: null } : comment.user
+        })),
+        reactions: activity.reactions.map(reaction => ({
+            ...reaction,
+            user: reaction.user.is_anonymous ? { ...reaction.user, display_name: 'Anonymous' } : reaction.user
+        }))
+    }));
 }
 
-/**
- * Search for users to add as friends
- */
 export async function searchUsers(query: string, currentUserId: string) {
-    return await prisma.user.findMany({
+    const users = await prisma.user.findMany({
         where: {
             AND: [
                 { id: { not: currentUserId } },
+                { is_profile_public: true }, // Only show public profiles
                 {
                     OR: [
                         { display_name: { contains: query, mode: 'insensitive' } },
@@ -213,17 +230,43 @@ export async function searchUsers(query: string, currentUserId: string) {
             id: true,
             display_name: true,
             avatar_url: true,
-            level: true
+            level: true,
+            is_anonymous: true
         },
         take: 10
     });
+
+    return users.map(u => u.is_anonymous ? { ...u, display_name: 'Anonymous', avatar_url: null } : u);
 }
 
 /**
  * Log a social activity
  */
 export async function logActivity(userId: string, type: 'HABIT_COMPLETED' | 'LEVEL_UP' | 'ACHIEVEMENT_UNLOCKED' | 'STREAK_MILESTONE', contentId?: string, contentText?: string, metadata?: any) {
-    if (type === 'HABIT_COMPLETED') {
+    const user = await prisma.user.findUnique({
+        where: { id: userId },
+        select: { is_profile_public: true, is_anonymous: true }
+    });
+
+    // If profile is not public, don't log any social activity
+    if (!user?.is_profile_public) {
+        return null;
+    }
+
+    if (type === 'HABIT_COMPLETED' && contentId) {
+        // Check if the habit is private
+        const habit = await prisma.habit.findUnique({
+            where: { id: contentId },
+            select: { is_private: true }
+        });
+
+        if (habit?.is_private) {
+            // Update challenge progress even for private habits, but don't log social activity
+            const { updateChallengeProgress } = require('./challengeService');
+            updateChallengeProgress(userId, contentId).catch((err: any) => console.error('Failed to update challenge progress:', err));
+            return null;
+        }
+
         const { updateChallengeProgress } = require('./challengeService');
         updateChallengeProgress(userId, contentId).catch((err: any) => console.error('Failed to update challenge progress:', err));
     }

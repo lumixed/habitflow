@@ -17,13 +17,19 @@ interface User {
     accent_color: string;
     widget_order: string;
     is_profile_public?: boolean;
+    is_anonymous?: boolean;
+    two_factor_enabled?: boolean;
+    data_retention_days?: number;
+    scheduled_export_enabled?: boolean;
+    last_export_at?: string;
 }
 
 interface AuthContextType {
     user: User | null;
     token: string | null;
     isLoading: boolean;
-    login: (email: string, password: string) => Promise<void>;
+    login: (email: string, password: string) => Promise<{ two_factor_required?: boolean; userId?: string } | void>;
+    verify2FA: (userId: string, token: string) => Promise<void>;
     signup: (email: string, password: string, display_name: string) => Promise<void>;
     logout: () => void;
 }
@@ -69,9 +75,26 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     }, []);
 
     const login = async (email: string, password: string) => {
-        const data = await api.post<{ token: string; user: User }>('/api/auth/login', {
+        const data = await api.post<{ token?: string; user?: User; two_factor_required?: boolean; userId?: string }>('/api/auth/login', {
             email,
             password,
+        });
+
+        if (data.two_factor_required) {
+            return { two_factor_required: true, userId: data.userId };
+        }
+
+        if (data.token && data.user) {
+            localStorage.setItem('habitflow_token', data.token);
+            setToken(data.token);
+            setUser(data.user);
+        }
+    };
+
+    const verify2FA = async (userId: string, token: string) => {
+        const data = await api.post<{ token: string; user: User }>('/api/auth/login/2fa', {
+            userId,
+            token,
         });
         localStorage.setItem('habitflow_token', data.token);
         setToken(data.token);
@@ -96,7 +119,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     };
 
     return (
-        <AuthContext.Provider value={{ user, token, isLoading, login, signup, logout }}>
+        <AuthContext.Provider value={{ user, token, isLoading, login, verify2FA, signup, logout }}>
             {children}
         </AuthContext.Provider>
     );

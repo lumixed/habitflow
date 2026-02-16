@@ -2,6 +2,8 @@ import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import prisma from '../config/prisma';
 import { AppError } from '../middleware/errorHandler';
+import { generateSecret, verify, generateURI } from 'otplib';
+import QRCode from 'qrcode';
 
 const JWT_SECRET = process.env.JWT_SECRET || 'dev-secret-change-in-production';
 const JWT_EXPIRES_IN = '7d';
@@ -110,6 +112,13 @@ export async function login({ email, password }: LoginInput) {
     }
 
     // Sign and return JWT
+    if (user.two_factor_enabled) {
+        return {
+            two_factor_required: true,
+            userId: user.id
+        };
+    }
+
     const token = signToken({
         sub: user.id,
         email: user.email,
@@ -144,6 +153,9 @@ export async function getUserById(userId: string) {
             font_family: true,
             widget_order: true,
             is_profile_public: true,
+            is_anonymous: true,
+            two_factor_enabled: true,
+            data_retention_days: true,
             created_at: true,
         },
     });
@@ -194,9 +206,89 @@ export async function updateProfile(userId: string, data: any) {
             accent_color: true,
             widget_order: true,
             is_profile_public: true,
+            is_anonymous: true,
+            two_factor_enabled: true,
+            data_retention_days: true,
             created_at: true,
         },
     });
 
     return updatedUser;
+}
+
+export async function generate2FASecret(userId: string) {
+    const user = await prisma.user.findUnique({ where: { id: userId } });
+    if (!user) throw new AppError('User not found', 404);
+
+    const secret = generateSecret();
+    const otpauth = generateURI({
+        issuer: 'HabitFlow',
+        label: user.email,
+        secret
+    });
+    const qrCodeUrl = await QRCode.toDataURL(otpauth);
+
+    // Temporarily save secret but don't enable 2FA yet
+    await prisma.user.update({
+        where: { id: userId },
+        data: { two_factor_secret: secret }
+    });
+
+    return { secret, qrCodeUrl };
+}
+
+export async function verifyAndEnable2FA(userId: string, token: string) {
+    const user = await prisma.user.findUnique({ where: { id: userId } });
+    if (!user || !user.two_factor_secret) throw new AppError('2FA setup not initiated', 400);
+
+    const isValid = await verify({ token, secret: user.two_factor_secret });
+    if (!isValid) throw new AppError('Invalid token', 400);
+
+    await prisma.user.update({
+        where: { id: userId },
+        data: { two_factor_enabled: true }
+    });
+
+    return { message: '2FA enabled successfully' };
+}
+
+export async function loginVerify2FA(userId: string, token: string) {
+    const user = await prisma.user.findUnique({ where: { id: userId } });
+    if (!user || !user.two_factor_secret) throw new AppError('2FA not enabled', 400);
+
+    const isValid = await verify({ token, secret: user.two_factor_secret });
+    if (!isValid) throw new AppError('Invalid token', 401);
+
+    const jwtToken = signToken({
+        sub: user.id,
+        email: user.email,
+        display_name: user.display_name,
+    });
+
+    return {
+        token: jwtToken,
+        user: {
+            id: user.id,
+            email: user.email,
+            display_name: user.display_name,
+        },
+    };
+}
+
+export async function disable2FA(userId: string, token: string) {
+    const user = await prisma.user.findUnique({ where: { id: userId } });
+    if (!user || !user.two_factor_secret) throw new AppError('2FA not enabled', 400);
+
+    const isValid = await verify({ token, secret: user.two_factor_secret });
+    if (!isValid) throw new AppError('Invalid token', 401);
+
+    await prisma.user.update({
+        where: { id: userId },
+        data: {
+            two_factor_enabled: false,
+            two_factor_secret: null
+        }
+    });
+
+    return { message: '2FA disabled successfully' };
 }

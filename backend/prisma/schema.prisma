@@ -44,6 +44,14 @@ model User {
   reactions          Reaction[]
   comments           Comment[]
   challenge_memberships ChallengeMember[]
+
+  // Privacy & Security
+  is_anonymous       Boolean           @default(false)
+  two_factor_enabled Boolean           @default(false)
+  two_factor_secret  String?
+  data_retention_days Int              @default(365)
+  scheduled_export_enabled Boolean       @default(false)
+  last_export_at     DateTime?
 }
 
 model Habit {
@@ -56,6 +64,7 @@ model Habit {
   icon        String       @default("target")
   background_image String?
   is_active   Boolean      @default(true)
+  is_private  Boolean      @default(false)
   created_at  DateTime     @default(now())
 
   user        User         @relation(fields: [user_id], references: [id], onDelete: Cascade)
