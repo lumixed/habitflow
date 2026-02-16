@@ -1,81 +1,67 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
-generator client {
-  provider = "prisma-client-js"
-}
-
 model User {
-  id                 String            @id @default(uuid())
-  email              String            @unique
-  password_hash      String
-  display_name       String
-  avatar_url         String?
-  created_at         DateTime          @default(now())
-  
-  // Gamification fields
-  xp                 Int               @default(0)
-  level              Int               @default(1)
-  coins              Int               @default(0)
-  theme_name         String            @default("classic")
-  accent_color       String            @default("#6366F1")
-  font_family        String            @default("inter")
-  widget_order       String            @default("xp,habits,stats,suggestions")
-  is_profile_public  Boolean           @default(true)
-
-  habits             Habit[]
-  completions        Completion[]
-  group_memberships  GroupMember[]
-  notification_pref  NotificationPref?
-  created_groups     Group[]           @relation("GroupCreator")
-  achievements       UserAchievement[]
-  streaks            Streak[]
-  powerups           UserPowerup[]
-  analytics          Analytics?
-  
-  // Social relations
-  sent_requests      FriendRequest[]   @relation("SentRequests")
-  received_requests  FriendRequest[]   @relation("ReceivedRequests")
-  friends            Friendship[]      @relation("UserFriends")
-  friend_of          Friendship[]      @relation("FriendOf")
-  social_activities  SocialActivity[]
-  reactions          Reaction[]
-  comments           Comment[]
-  challenge_memberships ChallengeMember[]
-
-  // Privacy & Security
-  is_anonymous       Boolean           @default(false)
-  two_factor_enabled Boolean           @default(false)
-  two_factor_secret  String?
-  data_retention_days Int              @default(365)
-  scheduled_export_enabled Boolean       @default(false)
-  last_export_at     DateTime?
+  id                       String            @id @default(uuid())
+  email                    String            @unique
+  password_hash            String
+  display_name             String
+  avatar_url               String?
+  created_at               DateTime          @default(now())
+  xp                       Int               @default(0)
+  level                    Int               @default(1)
+  coins                    Int               @default(0)
+  accent_color             String            @default("#6366F1")
+  theme_name               String            @default("classic")
+  widget_order             String            @default("xp,habits,stats,suggestions")
+  is_profile_public        Boolean           @default(true)
+  font_family              String            @default("inter")
+  data_retention_days      Int               @default(365)
+  is_anonymous             Boolean           @default(false)
+  last_export_at           DateTime?
+  scheduled_export_enabled Boolean           @default(false)
+  two_factor_enabled       Boolean           @default(false)
+  two_factor_secret        String?
+  analytics                Analytics?
+  challenge_memberships    ChallengeMember[]
+  comments                 Comment[]
+  completions              Completion[]
+  received_requests        FriendRequest[]   @relation("ReceivedRequests")
+  sent_requests            FriendRequest[]   @relation("SentRequests")
+  friend_of                Friendship[]      @relation("FriendOf")
+  friends                  Friendship[]      @relation("UserFriends")
+  created_groups           Group[]           @relation("GroupCreator")
+  group_memberships        GroupMember[]
+  habits                   Habit[]
+  notification_pref        NotificationPref?
+  reactions                Reaction[]
+  social_activities        SocialActivity[]
+  streaks                  Streak[]
+  achievements             UserAchievement[]
+  powerups                 UserPowerup[]
 }
 
 model Habit {
-  id          String       @id @default(uuid())
-  user_id     String
-  title       String
-  description String?
-  frequency   Frequency    @default(DAILY)
-  color       String       @default("#6366F1")
-  icon        String       @default("target")
+  id               String       @id @default(uuid())
+  user_id          String
+  title            String
+  description      String?
+  frequency        Frequency    @default(DAILY)
+  color            String       @default("#6366F1")
+  icon             String       @default("target")
+  is_active        Boolean      @default(true)
+  created_at       DateTime     @default(now())
   background_image String?
-  is_active   Boolean      @default(true)
-  is_private  Boolean      @default(false)
-  created_at  DateTime     @default(now())
-
-  user        User         @relation(fields: [user_id], references: [id], onDelete: Cascade)
-  completions Completion[]
-  streaks     Streak[]
-}
-
-enum Frequency {
-  DAILY
-  WEEKLY
-  WEEKDAYS
+  is_private       Boolean      @default(false)
+  completions      Completion[]
+  user             User         @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  streaks          Streak[]
 }
 
 model Completion {
@@ -84,13 +70,11 @@ model Completion {
   user_id        String
   completed_date DateTime
   created_at     DateTime @default(now())
-
   habit          Habit    @relation(fields: [habit_id], references: [id], onDelete: Cascade)
   user           User     @relation(fields: [user_id], references: [id], onDelete: Cascade)
 
   @@unique([habit_id, completed_date])
 }
-
 
 model Group {
   id          String        @id @default(uuid())
@@ -99,13 +83,10 @@ model Group {
   invite_code String        @unique @default(cuid())
   created_by  String
   created_at  DateTime      @default(now())
-
+  challenges  Challenge[]
   creator     User          @relation("GroupCreator", fields: [created_by], references: [id], onDelete: Cascade)
   members     GroupMember[]
-  challenges  Challenge[]
 }
-
-// ... existing models ...
 
 model Challenge {
   id                String            @id @default(uuid())
@@ -114,12 +95,11 @@ model Challenge {
   description       String?
   start_date        DateTime
   end_date          DateTime
-  target_habit_type String?           // e.g., "Any", "Fitness", "Reading"
-  goal_count        Int               @default(0) // target number of completions
-  xp_reward         Int               @default(50)
-  coin_reward       Int               @default(25)
+  target_habit_type String?
+  goal_count        Int               @default(0)
   created_at        DateTime          @default(now())
-
+  coin_reward       Int               @default(25)
+  xp_reward         Int               @default(50)
   group             Group             @relation(fields: [group_id], references: [id], onDelete: Cascade)
   participants      ChallengeMember[]
 }
@@ -129,10 +109,9 @@ model ChallengeMember {
   challenge_id   String
   user_id        String
   progress_count Int       @default(0)
-  is_completed   Boolean   @default(false)
-  completed_at   DateTime?
   joined_at      DateTime  @default(now())
-
+  completed_at   DateTime?
+  is_completed   Boolean   @default(false)
   challenge      Challenge @relation(fields: [challenge_id], references: [id], onDelete: Cascade)
   user           User      @relation(fields: [user_id], references: [id], onDelete: Cascade)
 
@@ -145,30 +124,20 @@ model GroupMember {
   user_id   String
   role      GroupRole @default(MEMBER)
   joined_at DateTime  @default(now())
-
   group     Group     @relation(fields: [group_id], references: [id], onDelete: Cascade)
   user      User      @relation(fields: [user_id], references: [id], onDelete: Cascade)
 
   @@unique([group_id, user_id])
 }
 
-enum GroupRole {
-  OWNER
-  MEMBER
-}
-
-
 model NotificationPref {
-  id            String   @id @default(uuid())
-  user_id       String   @unique
-  email_alerts  Boolean  @default(true)
-  push_alerts   Boolean  @default(true)
-  reminder_time String   @default("09:00")
-
-  user          User     @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  id            String  @id @default(uuid())
+  user_id       String  @unique
+  email_alerts  Boolean @default(true)
+  push_alerts   Boolean @default(true)
+  reminder_time String  @default("09:00")
+  user          User    @relation(fields: [user_id], references: [id], onDelete: Cascade)
 }
-
-// Gamification Models
 
 model Achievement {
   id          String              @id @default(uuid())
@@ -180,16 +149,7 @@ model Achievement {
   xp_reward   Int                 @default(0)
   coin_reward Int                 @default(0)
   created_at  DateTime            @default(now())
-  
   users       UserAchievement[]
-}
-
-enum AchievementCategory {
-  STREAK
-  COMPLETION
-  SOCIAL
-  MILESTONE
-  SPECIAL
 }
 
 model UserAchievement {
@@ -197,25 +157,23 @@ model UserAchievement {
   user_id        String
   achievement_id String
   unlocked_at    DateTime    @default(now())
-  
-  user           User        @relation(fields: [user_id], references: [id], onDelete: Cascade)
   achievement    Achievement @relation(fields: [achievement_id], references: [id], onDelete: Cascade)
-  
+  user           User        @relation(fields: [user_id], references: [id], onDelete: Cascade)
+
   @@unique([user_id, achievement_id])
 }
 
 model Streak {
-  id              String    @id @default(uuid())
-  user_id         String
-  habit_id        String
-  current_count   Int       @default(0)
-  longest_count   Int       @default(0)
-  last_completed  DateTime?
-  started_at      DateTime  @default(now())
-  
-  user            User      @relation(fields: [user_id], references: [id], onDelete: Cascade)
-  habit           Habit     @relation(fields: [habit_id], references: [id], onDelete: Cascade)
-  
+  id             String    @id @default(uuid())
+  user_id        String
+  habit_id       String
+  current_count  Int       @default(0)
+  longest_count  Int       @default(0)
+  last_completed DateTime?
+  started_at     DateTime  @default(now())
+  habit          Habit     @relation(fields: [habit_id], references: [id], onDelete: Cascade)
+  user           User      @relation(fields: [user_id], references: [id], onDelete: Cascade)
+
   @@unique([user_id, habit_id])
 }
 
@@ -227,49 +185,109 @@ model Powerup {
   icon        String
   cost_coins  Int
   created_at  DateTime      @default(now())
-  
   users       UserPowerup[]
 }
 
 model UserPowerup {
-  id         String    @id @default(uuid())
+  id         String  @id @default(uuid())
   user_id    String
   powerup_id String
-  quantity   Int       @default(0)
-  
-  user       User      @relation(fields: [user_id], references: [id], onDelete: Cascade)
-  powerup    Powerup   @relation(fields: [powerup_id], references: [id], onDelete: Cascade)
-  
+  quantity   Int     @default(0)
+  powerup    Powerup @relation(fields: [powerup_id], references: [id], onDelete: Cascade)
+  user       User    @relation(fields: [user_id], references: [id], onDelete: Cascade)
+
   @@unique([user_id, powerup_id])
 }
 
 model Analytics {
-  id                String   @id @default(uuid())
-  user_id           String   @unique
-  best_streak       Int      @default(0)
-  total_completions Int      @default(0)
-  average_completions_per_week Float @default(0)
-  most_productive_day String? // e.g., "Monday"
-  most_productive_time String? // e.g., "Morning"
-  last_updated      DateTime @default(now())
-  
-  user              User     @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  id                           String   @id @default(uuid())
+  user_id                      String   @unique
+  best_streak                  Int      @default(0)
+  total_completions            Int      @default(0)
+  average_completions_per_week Float    @default(0)
+  most_productive_day          String?
+  most_productive_time         String?
+  last_updated                 DateTime @default(now())
+  user                         User     @relation(fields: [user_id], references: [id], onDelete: Cascade)
 }
 
-// Social Models
-
 model FriendRequest {
-  id           String             @id @default(uuid())
-  sender_id    String
-  receiver_id  String
-  status       FriendRequestStatus @default(PENDING)
-  created_at   DateTime           @default(now())
-  updated_at   DateTime           @updatedAt
-
-  sender       User @relation("SentRequests", fields: [sender_id], references: [id], onDelete: Cascade)
-  receiver     User @relation("ReceivedRequests", fields: [receiver_id], references: [id], onDelete: Cascade)
+  id          String              @id @default(uuid())
+  sender_id   String
+  receiver_id String
+  status      FriendRequestStatus @default(PENDING)
+  created_at  DateTime            @default(now())
+  updated_at  DateTime            @updatedAt
+  receiver    User                @relation("ReceivedRequests", fields: [receiver_id], references: [id], onDelete: Cascade)
+  sender      User                @relation("SentRequests", fields: [sender_id], references: [id], onDelete: Cascade)
 
   @@unique([sender_id, receiver_id])
+}
+
+model Friendship {
+  id         String   @id @default(uuid())
+  user_id    String
+  friend_id  String
+  created_at DateTime @default(now())
+  friend     User     @relation("FriendOf", fields: [friend_id], references: [id], onDelete: Cascade)
+  user       User     @relation("UserFriends", fields: [user_id], references: [id], onDelete: Cascade)
+
+  @@unique([user_id, friend_id])
+}
+
+model SocialActivity {
+  id           String       @id @default(uuid())
+  user_id      String
+  type         ActivityType
+  content_id   String?
+  content_text String?
+  metadata     Json?
+  created_at   DateTime     @default(now())
+  comments     Comment[]
+  reactions    Reaction[]
+  user         User         @relation(fields: [user_id], references: [id], onDelete: Cascade)
+}
+
+model Reaction {
+  id          String         @id @default(uuid())
+  activity_id String
+  user_id     String
+  type        String         @default("LIKE")
+  created_at  DateTime       @default(now())
+  activity    SocialActivity @relation(fields: [activity_id], references: [id], onDelete: Cascade)
+  user        User           @relation(fields: [user_id], references: [id], onDelete: Cascade)
+
+  @@unique([activity_id, user_id, type])
+}
+
+model Comment {
+  id          String         @id @default(uuid())
+  activity_id String
+  user_id     String
+  content     String
+  created_at  DateTime       @default(now())
+  updated_at  DateTime       @updatedAt
+  activity    SocialActivity @relation(fields: [activity_id], references: [id], onDelete: Cascade)
+  user        User           @relation(fields: [user_id], references: [id], onDelete: Cascade)
+}
+
+enum Frequency {
+  DAILY
+  WEEKLY
+  WEEKDAYS
+}
+
+enum GroupRole {
+  OWNER
+  MEMBER
+}
+
+enum AchievementCategory {
+  STREAK
+  COMPLETION
+  SOCIAL
+  MILESTONE
+  SPECIAL
 }
 
 enum FriendRequestStatus {
@@ -278,60 +296,9 @@ enum FriendRequestStatus {
   DECLINED
 }
 
-model Friendship {
-  id         String   @id @default(uuid())
-  user_id    String
-  friend_id  String
-  created_at DateTime @default(now())
-
-  user       User @relation("UserFriends", fields: [user_id], references: [id], onDelete: Cascade)
-  friend     User @relation("FriendOf", fields: [friend_id], references: [id], onDelete: Cascade)
-
-  @@unique([user_id, friend_id])
-}
-
-model SocialActivity {
-  id             String       @id @default(uuid())
-  user_id        String
-  type           ActivityType
-  content_id     String?      // ID of habit, achievement, or powerup
-  content_text   String?      // Description of the activity
-  metadata       Json?        // Flexible storage for activity-specific data
-  created_at     DateTime     @default(now())
-
-  user           User         @relation(fields: [user_id], references: [id], onDelete: Cascade)
-  reactions      Reaction[]
-  comments       Comment[]
-}
-
 enum ActivityType {
   HABIT_COMPLETED
   LEVEL_UP
   ACHIEVEMENT_UNLOCKED
   STREAK_MILESTONE
-}
-
-model Reaction {
-  id           String         @id @default(uuid())
-  activity_id  String
-  user_id      String
-  type         String         @default("LIKE") // "LIKE", "FIRE", "CELEBRATE", etc.
-  created_at   DateTime       @default(now())
-
-  activity     SocialActivity @relation(fields: [activity_id], references: [id], onDelete: Cascade)
-  user         User           @relation(fields: [user_id], references: [id], onDelete: Cascade)
-
-  @@unique([activity_id, user_id, type])
-}
-
-model Comment {
-  id           String         @id @default(uuid())
-  activity_id  String
-  user_id      String
-  content      String
-  created_at   DateTime       @default(now())
-  updated_at   DateTime       @updatedAt
-
-  activity     SocialActivity @relation(fields: [activity_id], references: [id], onDelete: Cascade)
-  user         User           @relation(fields: [user_id], references: [id], onDelete: Cascade)
 }
