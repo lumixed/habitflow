@@ -1,10 +1,12 @@
 'use client';
 
 import React from 'react';
-import { useHabits, Habit } from '@/hooks/useHabits';
+import { Habit } from '@/hooks/useHabits';
 import HabitCard from '../HabitCard';
 
 interface HabitsWidgetProps {
+    habits: Habit[];
+    isLoading: boolean;
     onOpenEdit: (habit: Habit) => void;
     onToggleActive: (id: string, is_active: boolean) => void;
     onDelete: (id: string) => void;
@@ -13,13 +15,14 @@ interface HabitsWidgetProps {
 }
 
 export default function HabitsWidget({
+    habits,
+    isLoading,
     onOpenEdit,
     onToggleActive,
     onDelete,
     onReward,
     onViewDetail
 }: HabitsWidgetProps) {
-    const { habits, isLoading } = useHabits();
     const activeHabits = habits.filter(h => h.is_active);
 
     if (isLoading) return <div className="animate-pulse space-y-2"><div className="h-20 bg-neutral-50 rounded-2xl" /><div className="h-20 bg-neutral-50 rounded-2xl" /></div>;

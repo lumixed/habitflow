@@ -34,10 +34,8 @@ export default function DashboardWidget({ id, title, children, icon }: Dashboard
                 rounded-xl border border-neutral-200 dark:border-neutral-800 
                 shadow-sm 
                 hover:shadow-md hover:border-neutral-300 dark:hover:border-neutral-700
-                transition-all duration-200 group
-                cursor-grab active:cursor-grabbing"
+                transition-all duration-200 group"
             {...attributes}
-            {...listeners}
             style={style}
         >
 

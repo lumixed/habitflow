@@ -110,7 +110,7 @@ export default function CorrelationMatrix() {
 
             {/* Insights */}
             {data.insights.length > 0 && (
-                <div className="bg-blue-50 border border-blue-200 rounded-lg p-5">
+                <div className="bg-white border border-neutral-200 rounded-lg p-5">
                     <h4 className="text-sm font-black uppercase tracking-widest opacity-50 mb-4">Key Insights</h4>
                     <div className="space-y-2">
                         {data.insights.map((insight, idx) => (
@@ -125,7 +125,7 @@ export default function CorrelationMatrix() {
 
             {/* Recommendations */}
             {data.recommendations.length > 0 && (
-                <div className="bg-purple-50 border border-purple-200 rounded-lg p-5">
+                <div className="bg-white border border-neutral-200 rounded-lg p-5">
                     <h4 className="text-sm font-black uppercase tracking-widest opacity-50 mb-4">Recommendations</h4>
                     <div className="space-y-2">
                         {data.recommendations.map((rec, idx) => (

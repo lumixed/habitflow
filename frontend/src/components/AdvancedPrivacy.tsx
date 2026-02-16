@@ -87,8 +87,8 @@ export default function AdvancedPrivacy() {
                             key={option.id}
                             onClick={() => setActivityVisibility(option.id as any)}
                             className={`w-full px-4 py-3 rounded-lg text-left transition-colors flex items-center gap-3 ${activityVisibility === option.id
-                                    ? 'bg-primary-50 border-2 border-primary-500'
-                                    : 'bg-neutral-50 border border-neutral-200 hover:border-neutral-300'
+                                ? 'bg-white border-2 border-primary-500 shadow-sm'
+                                : 'bg-white border border-neutral-200 hover:border-neutral-300'
                                 }`}
                         >
                             <option.icon size={18} className={activityVisibility === option.id ? 'text-primary-600' : 'text-neutral-400'} />
@@ -135,12 +135,12 @@ export default function AdvancedPrivacy() {
             </button>
 
             {/* Data Export */}
-            <div className="bg-blue-50 border border-blue-200 rounded-lg p-5">
+            <div className="bg-white border border-neutral-200 rounded-lg p-5">
                 <div className="flex items-center gap-2 mb-3">
-                    <Download size={16} className="text-blue-700" />
-                    <h4 className="text-sm font-semibold text-blue-900">Export Your Data</h4>
+                    <Download size={16} className="text-neutral-500" />
+                    <h4 className="text-sm font-semibold text-neutral-700">Export Your Data</h4>
                 </div>
-                <p className="text-sm text-blue-800 mb-3">
+                <p className="text-sm text-neutral-600 mb-3">
                     Download all your data in a machine-readable format
                 </p>
                 <button
@@ -153,12 +153,12 @@ export default function AdvancedPrivacy() {
             </div>
 
             {/* Delete Account */}
-            <div className="bg-red-50 border border-red-200 rounded-lg p-5">
+            <div className="bg-white border border-red-100 rounded-lg p-5">
                 <div className="flex items-center gap-2 mb-3">
-                    <Trash2 size={16} className="text-red-700" />
-                    <h4 className="text-sm font-semibold text-red-900">Danger Zone</h4>
+                    <Trash2 size={16} className="text-red-500" />
+                    <h4 className="text-sm font-semibold text-red-700">Danger Zone</h4>
                 </div>
-                <p className="text-sm text-red-800 mb-3">
+                <p className="text-sm text-neutral-600 mb-3">
                     Permanently delete your account and all data. This cannot be undone.
                 </p>
                 <button

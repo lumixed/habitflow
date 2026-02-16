@@ -105,10 +105,17 @@ export default function DashboardPage() {
     };
 
     const handleSave = async (data: any) => {
-        if (editingHabit && editingHabit.id) {
-            await updateHabit(editingHabit.id, data);
-        } else {
-            await createHabit(data);
+        try {
+            if (editingHabit && editingHabit.id) {
+                await updateHabit(editingHabit.id, data);
+            } else {
+                await createHabit(data);
+            }
+            setModalOpen(false);
+            setEditingHabit(null);
+        } catch (error) {
+            console.error('Failed to save habit:', error);
+            throw error; // Re-throw so modal can handle it
         }
     };
 
@@ -167,13 +174,15 @@ export default function DashboardPage() {
             case 'xp':
                 return (
                     <DashboardWidget id="xp" title="Progress" icon="">
-                        <XPWidget />
+                        <XPWidget stats={stats} />
                     </DashboardWidget>
                 );
             case 'habits':
                 return (
                     <DashboardWidget id="habits" title="Active Habits" icon="">
                         <HabitsWidget
+                            habits={habits}
+                            isLoading={habitsLoading}
                             onOpenEdit={handleOpenEdit}
                             onToggleActive={handleToggleActive}
                             onDelete={deleteHabit}
@@ -182,6 +191,7 @@ export default function DashboardPage() {
                         />
                         <button
                             onClick={handleOpenCreate}
+                            onPointerDown={(e) => e.stopPropagation()} // Prevent drag system from capturing this
                             className="w-full mt-4 py-3 border-2 border-dashed border-neutral-100 dark:border-neutral-700 rounded-2xl text-[10px] font-black text-neutral-400 hover:text-neutral-900 hover:border-neutral-200 transition-all uppercase tracking-widest"
                         >
                             + New Habit
@@ -191,7 +201,7 @@ export default function DashboardPage() {
             case 'stats':
                 return (
                     <DashboardWidget id="stats" title="Quick Stats" icon="">
-                        <QuickStatsWidget />
+                        <QuickStatsWidget stats={stats} />
                     </DashboardWidget>
                 );
             case 'suggestions':

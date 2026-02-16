@@ -1,10 +1,13 @@
 'use client';
 
 import React from 'react';
-import { useGamification } from '@/hooks/useGamification';
+import { GamificationStats } from '@/hooks/useGamification';
 
-export default function XPWidget() {
-    const { stats } = useGamification();
+interface XPWidgetProps {
+    stats: GamificationStats | null;
+}
+
+export default function XPWidget({ stats }: XPWidgetProps) {
 
     if (!stats) return <div className="animate-pulse h-20 bg-neutral-50 rounded-2xl" />;
 

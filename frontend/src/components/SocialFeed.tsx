@@ -59,7 +59,7 @@ export default function SocialFeed() {
                     <div className="flex gap-4">
                         {/* Avatar */}
                         <Link href={`/profile/${activity.user?.id || '#'}`} className="hover:opacity-80 transition-opacity">
-                            <div className="w-10 h-10 rounded-md bg-emerald-50 dark:bg-emerald-900/20 flex items-center justify-center text-emerald-600 dark:text-emerald-400 font-black border border-emerald-100 dark:border-emerald-800/50 overflow-hidden">
+                            <div className="w-10 h-10 rounded-md bg-white border border-neutral-200 flex items-center justify-center text-primary-500 font-black overflow-hidden shadow-sm">
                                 {activity.user?.avatar_url ? (
                                     <img src={activity.user.avatar_url} alt="" className="w-full h-full object-cover" />
                                 ) : (
@@ -92,9 +92,6 @@ export default function SocialFeed() {
                             </p>
 
                             {/* Interactions */}
-                            <div className="w-10 h-10 rounded-full bg-neutral-100 flex items-center justify-center flex-shrink-0">
-                                {getActivityIcon(activity.type)}
-                            </div>
                             <div className="mt-4 flex items-center gap-6">
                                 <button
                                     onClick={() => reactToActivity(activity.id)}

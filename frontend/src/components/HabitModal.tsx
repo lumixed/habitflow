@@ -74,12 +74,22 @@ export default function HabitModal({ isOpen, onClose, onSave, editHabit }: Habit
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         setError('');
+
+        if (isSubmitting) {
+            console.log('Already submitting, ignoring click');
+            return; // Prevent double submission
+        }
+
         setIsSubmitting(true);
 
         try {
+            console.log('Saving habit...');
             await onSave({ title, description, frequency, color, icon, background_image: backgroundImage });
-            onClose();
+            console.log('Habit saved successfully');
+            setIsSubmitting(false);
+            onClose(); // Close modal on success
         } catch (err: any) {
+            console.error('Failed to save habit:', err);
             setError(err.message || 'Something went wrong');
             setIsSubmitting(false);
         }

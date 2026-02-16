@@ -86,7 +86,7 @@ export default function UserSearch() {
                             ) : (
                                 <button
                                     onClick={() => handleAddFriend(u.id)}
-                                    className="px-4 py-2 bg-emerald-50 text-emerald-600 text-[10px] font-black uppercase tracking-widest rounded-md hover:bg-emerald-100 transition-all border border-emerald-100"
+                                    className="px-4 py-2 bg-white text-emerald-600 text-[10px] font-black uppercase tracking-widest rounded-md hover:bg-neutral-50 transition-all border border-emerald-200 shadow-sm"
                                 >
                                     Add Friend
                                 </button>

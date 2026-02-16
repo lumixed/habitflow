@@ -83,12 +83,12 @@ export default function CelebrationModal({ isOpen, onClose, type, data }: Celebr
                     {/* Rewards */}
                     <div className="flex items-center justify-center gap-4 mb-6">
                         {data.xp && (
-                            <div className="bg-emerald-50 dark:bg-emerald-900/20 text-emerald-700 dark:text-emerald-300 px-6 py-3 rounded-md font-black text-sm border border-emerald-100 dark:border-emerald-800/50 uppercase tracking-widest">
+                            <div className="bg-white text-emerald-700 px-6 py-3 rounded-md font-black text-sm border border-emerald-200 uppercase tracking-widest shadow-sm">
                                 +{data.xp} XP
                             </div>
                         )}
                         {data.coins && (
-                            <div className="bg-emerald-50 dark:bg-emerald-900/20 text-emerald-700 dark:text-emerald-300 px-6 py-3 rounded-md font-black text-sm border border-emerald-100 dark:border-emerald-800/50 uppercase tracking-widest">
+                            <div className="bg-white text-emerald-700 px-6 py-3 rounded-md font-black text-sm border border-emerald-200 uppercase tracking-widest shadow-sm">
                                 +{data.coins} 🪙
                             </div>
                         )}

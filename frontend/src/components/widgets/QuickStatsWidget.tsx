@@ -2,10 +2,13 @@
 
 import React from 'react';
 import { Coins, Flame } from 'lucide-react';
-import { useGamification } from '@/hooks/useGamification';
+import { GamificationStats } from '@/hooks/useGamification';
 
-export default function QuickStatsWidget() {
-    const { stats } = useGamification();
+interface QuickStatsWidgetProps {
+    stats: GamificationStats | null;
+}
+
+export default function QuickStatsWidget({ stats }: QuickStatsWidgetProps) {
 
     if (!stats) return <div className="animate-pulse h-20 bg-neutral-50 rounded-xl" />;
 
