@@ -2,6 +2,30 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+    --color-primary: #6366F1;
+    --bg-main: #f9fafb;
+    --text-main: #111827;
+}
+
+[data-theme='neon'] {
+    --color-primary: #a855f7;
+    --bg-main: #0a0a0a;
+    --text-main: #ffffff;
+}
+
+[data-theme='pastel'] {
+    --color-primary: #f472b6;
+    --bg-main: #fffafb;
+    --text-main: #4d4d4d;
+}
+
+[data-theme='cyberpunk'] {
+    --color-primary: #facc15;
+    --bg-main: #050505;
+    --text-main: #00ff00;
+}
+
 @layer base {
     html {
         font-family: 'Inter', system-ui, -apple-system, sans-serif;

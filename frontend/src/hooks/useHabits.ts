@@ -11,6 +11,7 @@ export interface Habit {
     color: string;
     icon: string;
     is_active: boolean;
+    background_image: string | null;
     created_at: string;
 }
 
@@ -20,6 +21,7 @@ interface CreateHabitInput {
     frequency?: 'DAILY' | 'WEEKLY' | 'WEEKDAYS';
     color?: string;
     icon?: string;
+    background_image?: string;
 }
 
 interface UpdateHabitInput {
@@ -28,6 +30,7 @@ interface UpdateHabitInput {
     frequency?: 'DAILY' | 'WEEKLY' | 'WEEKDAYS';
     color?: string;
     icon?: string;
+    background_image?: string;
     is_active?: boolean;
 }
 

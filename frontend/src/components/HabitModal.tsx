@@ -15,16 +15,16 @@ const COLORS = [
 ];
 
 const ICONS = [
-    { key: 'target', label: '🎯 Target' },
-    { key: 'run', label: '🏃 Run' },
-    { key: 'book', label: '📚 Read' },
-    { key: 'water', label: '💧 Hydrate' },
-    { key: 'sleep', label: '😴 Sleep' },
-    { key: 'meditate', label: '🧘 Meditate' },
-    { key: 'exercise', label: '💪 Exercise' },
-    { key: 'write', label: '✍️ Write' },
-    { key: 'cook', label: '🍳 Cook' },
-    { key: 'learn', label: '🧠 Learn' },
+    { key: 'target', label: '🎯' }, { key: 'run', label: '🏃' }, { key: 'book', label: '📚' }, { key: 'water', label: '💧' }, { key: 'sleep', label: '😴' },
+    { key: 'meditate', label: '🧘' }, { key: 'exercise', label: '💪' }, { key: 'write', label: '✍️' }, { key: 'cook', label: '🍳' }, { key: 'learn', label: '🧠' },
+    { key: 'guitar', label: '🎸' }, { key: 'music', label: '🎵' }, { key: 'brush', label: '🎨' }, { key: 'camera', label: '📷' }, { key: 'code', label: '💻' },
+    { key: 'game', label: '🎮' }, { key: 'gardening', label: '🌱' }, { key: 'pet', label: '🐾' }, { key: 'phone', label: '📵' }, { key: 'money', label: '💰' },
+    { key: 'heart', label: '❤️' }, { key: 'star', label: '⭐' }, { key: 'fire', label: '🔥' }, { key: 'moon', label: '🌙' }, { key: 'sun', label: '☀️' },
+    { key: 'cloud', label: '☁️' }, { key: 'rain', label: '🌧️' }, { key: 'coffee', label: '☕' }, { key: 'tea', label: '🍵' }, { key: 'apple', label: '🍎' },
+    { key: 'pizza', label: '🍕' }, { key: 'bike', label: '🚲' }, { key: 'car', label: '🚗' }, { key: 'plane', label: '✈️' }, { key: 'map', label: '🗺️' },
+    { key: 'home', label: '🏠' }, { key: 'work', label: '💼' }, { key: 'school', label: '🏫' }, { key: 'church', label: '⛪' }, { key: 'beach', label: '🏖️' },
+    { key: 'mountain', label: '⛰️' }, { key: 'tree', label: '🌳' }, { key: 'flower', label: '🌸' }, { key: 'bird', label: '🐦' }, { key: 'dog', label: '🐶' },
+    { key: 'cat', label: '🐱' }, { key: 'fish', label: '🐟' }, { key: 'rocket', label: '🚀' }, { key: 'clock', label: '⏰' }, { key: 'diary', label: '📔' },
 ];
 
 const FREQUENCIES = [
@@ -46,6 +46,7 @@ export default function HabitModal({ isOpen, onClose, onSave, editHabit }: Habit
     const [frequency, setFrequency] = useState('DAILY');
     const [color, setColor] = useState('#6366F1');
     const [icon, setIcon] = useState('target');
+    const [backgroundImage, setBackgroundImage] = useState('');
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [error, setError] = useState('');
 
@@ -56,12 +57,14 @@ export default function HabitModal({ isOpen, onClose, onSave, editHabit }: Habit
             setFrequency(editHabit.frequency);
             setColor(editHabit.color);
             setIcon(editHabit.icon);
+            setBackgroundImage((editHabit as any).background_image || '');
         } else {
             setTitle('');
             setDescription('');
             setFrequency('DAILY');
             setColor('#6366F1');
             setIcon('target');
+            setBackgroundImage('');
         }
         setError('');
     }, [editHabit, isOpen]);
@@ -74,7 +77,7 @@ export default function HabitModal({ isOpen, onClose, onSave, editHabit }: Habit
         setIsSubmitting(true);
 
         try {
-            await onSave({ title, description, frequency, color, icon });
+            await onSave({ title, description, frequency, color, icon, background_image: backgroundImage });
             onClose();
         } catch (err: any) {
             setError(err.message || 'Something went wrong');
@@ -179,7 +182,7 @@ export default function HabitModal({ isOpen, onClose, onSave, editHabit }: Habit
                         {/* Icon */}
                         <div>
                             <label className="block text-[10px] font-black text-neutral-400 uppercase tracking-[0.2em] mb-2">Icon</label>
-                            <div className="grid grid-cols-5 gap-2">
+                            <div className="grid grid-cols-5 gap-2 max-h-40 overflow-y-auto p-1 bg-neutral-50 rounded-md border border-neutral-200">
                                 {ICONS.map((i) => (
                                     <button
                                         key={i.key}
@@ -187,14 +190,28 @@ export default function HabitModal({ isOpen, onClose, onSave, editHabit }: Habit
                                         onClick={() => setIcon(i.key)}
                                         className={`p-3 text-lg rounded-md border transition-all ${icon === i.key
                                             ? 'border-neutral-900 bg-neutral-900 text-white'
-                                            : 'border-neutral-200 hover:bg-neutral-50'
+                                            : 'border-white bg-white hover:bg-neutral-50'
                                             }`}
-                                        title={i.label}
+                                        title={i.key}
                                     >
-                                        {i.label.split(' ')[0]}
+                                        {i.label}
                                     </button>
                                 ))}
                             </div>
+                        </div>
+
+                        {/* Background Image */}
+                        <div>
+                            <label className="block text-[10px] font-black text-neutral-400 uppercase tracking-[0.2em] mb-2">
+                                Background Image URL <span className="text-neutral-300 font-bold">(OPTIONAL)</span>
+                            </label>
+                            <input
+                                type="url"
+                                value={backgroundImage}
+                                onChange={(e) => setBackgroundImage(e.target.value)}
+                                placeholder="https://images.unsplash.com/..."
+                                className="w-full px-4 py-3 bg-neutral-50 border border-neutral-200 rounded-md text-sm text-neutral-900 placeholder-neutral-300 focus:outline-none focus:ring-1 focus:ring-neutral-900 focus:border-transparent transition-all"
+                            />
                         </div>
 
 

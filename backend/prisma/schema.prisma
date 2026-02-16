@@ -19,6 +19,11 @@ model User {
   xp                 Int               @default(0)
   level              Int               @default(1)
   coins              Int               @default(0)
+  theme_name         String            @default("classic")
+  accent_color       String            @default("#6366F1")
+  font_family        String            @default("inter")
+  widget_order       String            @default("xp,habits,stats,suggestions")
+  is_profile_public  Boolean           @default(true)
 
   habits             Habit[]
   completions        Completion[]
@@ -49,6 +54,7 @@ model Habit {
   frequency   Frequency    @default(DAILY)
   color       String       @default("#6366F1")
   icon        String       @default("target")
+  background_image String?
   is_active   Boolean      @default(true)
   created_at  DateTime     @default(now())
 
@@ -101,6 +107,8 @@ model Challenge {
   end_date          DateTime
   target_habit_type String?           // e.g., "Any", "Fitness", "Reading"
   goal_count        Int               @default(0) // target number of completions
+  xp_reward         Int               @default(50)
+  coin_reward       Int               @default(25)
   created_at        DateTime          @default(now())
 
   group             Group             @relation(fields: [group_id], references: [id], onDelete: Cascade)
@@ -112,6 +120,8 @@ model ChallengeMember {
   challenge_id   String
   user_id        String
   progress_count Int       @default(0)
+  is_completed   Boolean   @default(false)
+  completed_at   DateTime?
   joined_at      DateTime  @default(now())
 
   challenge      Challenge @relation(fields: [challenge_id], references: [id], onDelete: Cascade)

@@ -19,6 +19,15 @@ export interface GamificationStats {
     longestStreak: number;
 }
 
+export interface Powerup {
+    id: string;
+    key: string;
+    name: string;
+    description: string;
+    icon: string;
+    cost_coins: number;
+}
+
 export function useGamification() {
     const { token } = useAuth();
     const [stats, setStats] = useState<GamificationStats | null>(null);
@@ -48,10 +57,34 @@ export function useGamification() {
         fetchStats();
     }, [fetchStats]);
 
+    const getAvailablePowerups = async (): Promise<Powerup[]> => {
+        if (!token) return [];
+        try {
+            return await api.get<Powerup[]>('/api/gamification/powerups', token);
+        } catch (err: any) {
+            console.error('Failed to fetch powerups:', err);
+            return [];
+        }
+    };
+
+    const buyPowerup = async (powerupKey: string) => {
+        if (!token) return;
+        try {
+            await api.post('/api/gamification/powerups/purchase', { powerupKey }, token);
+            await fetchStats(); // Refresh coins
+            return true;
+        } catch (err: any) {
+            console.error('Failed to purchase powerup:', err);
+            throw err;
+        }
+    };
+
     return {
         stats,
         loading,
         error,
+        getAvailablePowerups,
+        buyPowerup,
         refetch: fetchStats
     };
 }

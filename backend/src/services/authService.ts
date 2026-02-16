@@ -136,6 +136,14 @@ export async function getUserById(userId: string) {
             email: true,
             display_name: true,
             avatar_url: true,
+            xp: true,
+            level: true,
+            coins: true,
+            theme_name: true,
+            accent_color: true,
+            font_family: true,
+            widget_order: true,
+            is_profile_public: true,
             created_at: true,
         },
     });
@@ -155,4 +163,40 @@ export function verifyToken(token: string): TokenPayload {
     } catch {
         throw new AppError('Invalid or expired token', 401);
     }
+}
+
+export async function updateProfile(userId: string, data: any) {
+    const allowedFields = ['display_name', 'avatar_url', 'theme_name', 'accent_color', 'font_family', 'widget_order', 'is_profile_public'];
+    const updateData: any = {};
+
+    for (const key of allowedFields) {
+        if (data[key] !== undefined) {
+            updateData[key] = data[key];
+        }
+    }
+
+    if (Object.keys(updateData).length === 0) {
+        throw new AppError('No valid fields to update', 400);
+    }
+
+    const updatedUser = await prisma.user.update({
+        where: { id: userId },
+        data: updateData,
+        select: {
+            id: true,
+            email: true,
+            display_name: true,
+            avatar_url: true,
+            xp: true,
+            level: true,
+            coins: true,
+            theme_name: true,
+            accent_color: true,
+            widget_order: true,
+            is_profile_public: true,
+            created_at: true,
+        },
+    });
+
+    return updatedUser;
 }

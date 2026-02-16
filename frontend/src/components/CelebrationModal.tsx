@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import Confetti from './Confetti';
+import ShareButton from './ShareButton';
 
 interface CelebrationModalProps {
     isOpen: boolean;
@@ -93,13 +94,25 @@ export default function CelebrationModal({ isOpen, onClose, type, data }: Celebr
                         )}
                     </div>
 
-                    {/* Close button */}
-                    <button
-                        onClick={onClose}
-                        className="w-full bg-neutral-900 dark:bg-white text-white dark:text-neutral-900 text-[10px] font-black uppercase tracking-[0.2em] py-4 px-6 rounded-md hover:bg-neutral-800 transition-all duration-200"
-                    >
-                        CONTINUE
-                    </button>
+                    {/* Share and Close buttons */}
+                    <div className="flex gap-3">
+                        <ShareButton
+                            type={type === 'levelUp' ? 'levelup' : type}
+                            data={{
+                                title: data.title,
+                                subtitle: data.description,
+                                icon: data.icon,
+                                value: data.level || data.xp,
+                            }}
+                            className="flex-1"
+                        />
+                        <button
+                            onClick={onClose}
+                            className="flex-1 bg-neutral-900 dark:bg-white text-white dark:text-neutral-900 text-[10px] font-black uppercase tracking-[0.2em] py-4 px-6 rounded-2xl hover:bg-neutral-800 transition-all duration-200"
+                        >
+                            CONTINUE
+                        </button>
+                    </div>
                 </div>
             </div>
         </>

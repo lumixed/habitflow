@@ -16,10 +16,10 @@ export default function Navbar() {
     if (!user) return null;
 
     return (
-        <nav className="bg-white border-b border-neutral-200 sticky top-0 z-30">
+        <nav className="bg-white border-b border-neutral-200 sticky top-0 z-30" role="navigation" aria-label="Main navigation">
             <div className="max-w-5xl mx-auto px-6">
                 <div className="flex justify-between items-center h-16">
-                    <Link href="/dashboard" className="text-lg font-black text-neutral-900 uppercase tracking-tight">
+                    <Link href="/dashboard" className="text-lg font-black text-neutral-900 uppercase tracking-tight" aria-label="HabitFlow home">
                         Habit<span className="text-primary-500 ml-0.5">Flow</span>
                     </Link>
                     <div className="hidden md:flex items-center gap-8">
@@ -58,6 +58,24 @@ export default function Navbar() {
                             className="text-[10px] font-black text-neutral-400 hover:text-neutral-900 uppercase tracking-[0.15em] transition-colors"
                         >
                             Leaderboard
+                        </Link>
+                        <Link
+                            href="/challenges"
+                            className="text-[10px] font-black text-neutral-400 hover:text-neutral-900 uppercase tracking-[0.15em] transition-colors"
+                        >
+                            Challenges
+                        </Link>
+                        <Link
+                            href="/shop"
+                            className="text-[10px] font-black text-neutral-400 hover:text-neutral-900 uppercase tracking-[0.15em] transition-colors"
+                        >
+                            Shop
+                        </Link>
+                        <Link
+                            href="/settings"
+                            className="text-[10px] font-black text-neutral-400 hover:text-neutral-900 uppercase tracking-[0.15em] transition-colors"
+                        >
+                            Settings
                         </Link>
                         <div className="h-4 w-[1px] bg-neutral-200"></div>
                         <button

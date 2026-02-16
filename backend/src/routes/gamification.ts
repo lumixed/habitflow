@@ -44,8 +44,25 @@ router.get('/stats', authenticate, async (req: Request, res: Response) => {
  */
 router.get('/profile/:id', authenticate, async (req: Request, res: Response) => {
     try {
-        const userId = req.params.id;
-        const stats = await getUserStats(userId);
+        const targetUserId = req.params.id;
+        const requestingUserId = req.user?.sub;
+
+        // Check if profile is public
+        const targetUser = await (await import('../config/prisma')).default.user.findUnique({
+            where: { id: targetUserId },
+            select: { is_profile_public: true }
+        });
+
+        if (!targetUser) {
+            return res.status(404).json({ error: 'User not found' });
+        }
+
+        // Allow access if: profile is public OR requesting user is viewing their own profile
+        if (!targetUser.is_profile_public && targetUserId !== requestingUserId) {
+            return res.status(403).json({ error: 'This profile is private' });
+        }
+
+        const stats = await getUserStats(targetUserId);
         res.json(stats);
     } catch (error: any) {
         res.status(500).json({ error: error.message });

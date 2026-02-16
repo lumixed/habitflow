@@ -48,8 +48,12 @@ export default function ProfileClient({ id }: { id: string }) {
         try {
             const data = await api.get<ProfileData>(`/api/gamification/profile/${id}`, token!);
             setProfile(data);
-        } catch (error) {
-            console.error('Failed to fetch profile:', error);
+        } catch (err: any) {
+            console.error('Profile fetch error:', err);
+            if (err.message?.includes('private') || err.message?.includes('403')) {
+                alert('This profile is private.');
+                router.push('/dashboard');
+            }
         } finally {
             setLoading(false);
         }

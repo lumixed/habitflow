@@ -178,13 +178,6 @@ export default function AnalyticsPage() {
                                     You're most consistent on {data.insights?.mostProductiveDay}s. Try scheduling your hardest habits then!
                                 </p>
                             </div>
-                            # [ERROR] Target content not exactly matched.
-                            # Searching for:
-                            #                             <div className="mt-8 p-4 bg-primary-50 dark:bg-primary-900/20 rounded-xl border border-primary-100 dark:border-primary-900/30">
-                                #                                 <p className="text-sm text-primary-700 dark:text-primary-300">
-                                    #                                     💡 <b>Insight:</b> You're most consistent on {data.insights?.mostProductiveDay}s. Try scheduling your hardest habits then!
-                                    #                                 </p>
-                                #                             </div>
                         </div>
                     </div>
                 </div>

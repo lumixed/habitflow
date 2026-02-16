@@ -37,9 +37,24 @@ export function useChallenges() {
         }
     };
 
+    const getChallenges = async () => {
+        setIsLoading(true);
+        setError(null);
+        try {
+            const response = await api.get('/api/challenges', token!) as any;
+            return response;
+        } catch (err: any) {
+            setError(err.message || 'Failed to fetch challenges');
+            throw err;
+        } finally {
+            setIsLoading(false);
+        }
+    };
+
     return {
         createChallenge,
         joinChallenge,
+        getChallenges,
         isLoading,
         error,
     };

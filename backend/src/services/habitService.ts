@@ -8,6 +8,7 @@ interface CreateHabitInput {
     frequency?: 'DAILY' | 'WEEKLY' | 'WEEKDAYS';
     color?: string;
     icon?: string;
+    background_image?: string;
 }
 
 interface UpdateHabitInput {
@@ -16,6 +17,7 @@ interface UpdateHabitInput {
     frequency?: 'DAILY' | 'WEEKLY' | 'WEEKDAYS';
     color?: string;
     icon?: string;
+    background_image?: string;
     is_active?: boolean;
 }
 
@@ -27,12 +29,13 @@ export async function createHabit(input: CreateHabitInput) {
 
     const habit = await prisma.habit.create({
         data: {
-        user_id: input.user_id,
-        title: input.title.trim(),
-        description: input.description?.trim() || null,
-        frequency: input.frequency || 'DAILY',
-        color: input.color || '#6366F1',
-        icon: input.icon || 'target',
+            user_id: input.user_id,
+            title: input.title.trim(),
+            description: input.description?.trim() || null,
+            frequency: input.frequency || 'DAILY',
+            color: input.color || '#6366F1',
+            icon: input.icon || 'target',
+            background_image: input.background_image || null,
         },
     });
 
@@ -76,12 +79,13 @@ export async function updateHabit(habit_id: string, user_id: string, updates: Up
     const updated = await prisma.habit.update({
         where: { id: habit.id },
         data: {
-        ...(updates.title !== undefined && { title: updates.title.trim() }),
-        ...(updates.description !== undefined && { description: updates.description?.trim() || null }),
-        ...(updates.frequency !== undefined && { frequency: updates.frequency }),
-        ...(updates.color !== undefined && { color: updates.color }),
-        ...(updates.icon !== undefined && { icon: updates.icon }),
-        ...(updates.is_active !== undefined && { is_active: updates.is_active }),
+            ...(updates.title !== undefined && { title: updates.title.trim() }),
+            ...(updates.description !== undefined && { description: updates.description?.trim() || null }),
+            ...(updates.frequency !== undefined && { frequency: updates.frequency }),
+            ...(updates.color !== undefined && { color: updates.color }),
+            ...(updates.icon !== undefined && { icon: updates.icon }),
+            ...(updates.background_image !== undefined && { background_image: updates.background_image || null }),
+            ...(updates.is_active !== undefined && { is_active: updates.is_active }),
         },
     });
 

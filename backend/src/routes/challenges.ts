@@ -7,6 +7,18 @@ const router = Router();
 router.use(authenticate);
 
 /**
+ * Get all challenges for the current user
+ */
+router.get('/', async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const challenges = await challengeService.getUserChallenges(req.user!.sub);
+        res.json(challenges);
+    } catch (error) {
+        next(error);
+    }
+});
+
+/**
  * Create a new challenge
  */
 router.post('/', async (req: Request, res: Response, next: NextFunction) => {

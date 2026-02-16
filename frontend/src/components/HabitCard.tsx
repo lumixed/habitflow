@@ -9,16 +9,16 @@ import { Haptics, ImpactStyle } from '@capacitor/haptics';
 
 
 const ICON_MAP: Record<string, string> = {
-    target: '🎯',
-    run: '🏃',
-    book: '📚',
-    water: '💧',
-    sleep: '😴',
-    meditate: '🧘',
-    exercise: '💪',
-    write: '✍️',
-    cook: '🍳',
-    learn: '🧠',
+    target: '🎯', run: '🏃', book: '📚', water: '💧', sleep: '😴', meditate: '🧘', exercise: '💪', write: '✍️', cook: '🍳', learn: '🧠',
+    guitar: '🎸', music: '🎵', brush: '🎨', camera: '📷', code: '💻', game: '🎮', gardening: '🌱', pet: '🐾', phone: '📵', money: '💰',
+    heart: '❤️', star: '⭐', fire: '🔥', moon: '🌙', sun: '☀️', cloud: '☁️', rain: '🌧️', coffee: '☕', tea: '🍵', apple: '🍎',
+    pizza: '🍕', bike: '🚲', car: '🚗', plane: '✈️', map: '🗺️', home: '🏠', work: '💼', school: '🏫', church: '⛪', beach: '🏖️',
+    mountain: '⛰️', tree: '🌳', flower: '🌸', bird: '🐦', dog: '🐶', cat: '🐱', fish: '🐟', rocket: '🚀', clock: '⏰', diary: '📔',
+    weights: '🏋️', yoga: '🧘‍♀️', swim: '🏊', walk: '🚶', hike: '🥾', tennis: '🎾', soccer: '⚽', basketball: '🏀', golf: '⛳', chess: '♟️',
+    clean: '🧹', wash: '🧺', trash: '🗑️', shop: '🛒', gift: '🎁', party: '🎉', beer: '🍺', wine: '🍷', cocktail: '🍸', water_glass: '🥃',
+    pill: '💊', doctor: '👨‍⚕️', dentist: '🦷', glasses: '👓', watch: '⌚', lightbulb: '💡', tool: '🛠️', key: '🔑', lock: '🔒', shield: '🛡️',
+    flag: '🚩', trophy: '🏆', medal: '🏅', crown: '👑', diamond: '💎', money_bag: '💰', credit_card: '💳', chart: '📊', calendar: '📅', clip: '📎',
+    search: '🔍', mail: '✉️', bell: '🔔', speaker: '🔊', mic: '🎤', video: '📹', tv: '📺', radio: '📻', battery: '🔋', bolt: '⚡',
 };
 
 const FREQUENCY_LABELS: Record<string, string> = {
@@ -65,6 +65,28 @@ export default function HabitCard({ habit, onToggleActive, onDelete, onEdit, onR
                 // Ignore haptic errors (e.g. running on web)
             }
 
+            // Play synthesized success sound
+            try {
+                const audioCtx = new (window.AudioContext || (window as any).webkitAudioContext)();
+                const oscillator = audioCtx.createOscillator();
+                const gainNode = audioCtx.createGain();
+
+                oscillator.type = 'sine';
+                oscillator.frequency.setValueAtTime(523.25, audioCtx.currentTime); // C5
+                oscillator.frequency.exponentialRampToValueAtTime(1046.50, audioCtx.currentTime + 0.1); // C6
+
+                gainNode.gain.setValueAtTime(0.1, audioCtx.currentTime);
+                gainNode.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.3);
+
+                oscillator.connect(gainNode);
+                gainNode.connect(audioCtx.destination);
+
+                oscillator.start();
+                oscillator.stop(audioCtx.currentTime + 0.3);
+            } catch (soundErr) {
+                // Ignore sound errors
+            }
+
             if (onReward) {
 
                 onReward(rewards);
@@ -79,13 +101,22 @@ export default function HabitCard({ habit, onToggleActive, onDelete, onEdit, onR
             className={`relative bg-white dark:bg-gray-800 rounded-md border transition-all ${habit.is_active ? 'border-neutral-200 dark:border-neutral-700 shadow-sm' : 'border-neutral-200 dark:border-neutral-700 opacity-60'
                 }`}
         >
+            {/* Background Image */}
+            {habit.background_image && (
+                <div
+                    className="absolute inset-0 z-0 bg-cover bg-center rounded-md opacity-20 pointer-events-none"
+                    style={{ backgroundImage: `url(${habit.background_image})` }}
+                />
+            )}
+            {habit.background_image && <div className="absolute inset-0 z-0 bg-black/5 rounded-md pointer-events-none" />}
+
             {/* Color accent strip on the left */}
             <div
-                className="absolute left-0 top-0 bottom-0 w-0.5 rounded-l-md"
+                className="absolute left-0 top-0 bottom-0 w-0.5 rounded-l-md z-10"
                 style={{ backgroundColor: habit.color }}
             />
 
-            <div className="p-4 pl-5">
+            <div className="relative z-10 p-4 pl-5">
                 {/* Top row: icon + title + streak + actions */}
                 <div className="flex items-start justify-between gap-3">
                     <div className="flex items-start gap-3 flex-1">

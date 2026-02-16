@@ -27,11 +27,24 @@ router.post('/login', async (req: Request, res: Response, next: NextFunction) =>
 router.get('/me', authenticate, async (req: Request, res: Response, next: NextFunction) => {
     try {
         if (!req.user) {
-        return res.status(401).json({ error: 'Unauthorized' });
+            return res.status(401).json({ error: 'Unauthorized' });
         }
-        
+
         const user = await authService.getUserById(req.user.sub);
         res.json({ user });
+    } catch (error) {
+        next(error);
+    }
+});
+
+router.post('/profile/update', authenticate, async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        if (!req.user) {
+            return res.status(401).json({ error: 'Unauthorized' });
+        }
+
+        const updatedUser = await authService.updateProfile(req.user.sub, req.body);
+        res.json({ user: updatedUser });
     } catch (error) {
         next(error);
     }

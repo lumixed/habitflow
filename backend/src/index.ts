@@ -12,6 +12,8 @@ import interactionRoutes from './routes/interactions';
 import challengeRoutes from './routes/challenges';
 import notificationRoutes from './routes/notifications';
 import aiRoutes from './routes/ai';
+import yearInReviewRoutes from './routes/yearInReview';
+import { initializeScheduledJobs } from './jobs/emailReports';
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -54,11 +56,16 @@ app.use('/api/interactions', interactionRoutes);
 app.use('/api/challenges', challengeRoutes);
 app.use('/api/notifications', notificationRoutes);
 app.use('/api/ai', aiRoutes);
+app.use('/api/year-in-review', yearInReviewRoutes);
 
 app.use(errorHandler);
 
-app.listen(Number(PORT), '0.0.0.0', () => {
-    console.log(`✅ HabitFlow API running on port ${PORT}`);
+// Initialize scheduled email reports
+initializeScheduledJobs();
+
+app.listen(PORT, () => {
+    console.log(`🚀 Server running on http://localhost:${PORT}`);
+    console.log(`📧 Email reports scheduled and ready`);
     console.log(`   Health check: http://localhost:${PORT}/api/health`);
 });
 

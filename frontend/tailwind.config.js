@@ -13,12 +13,14 @@ module.exports = {
                 foreground: 'var(--foreground)',
                 // Primary brand color (Sophisticated Emerald)
                 primary: {
-                    50: '#ECFDF5',
-                    100: '#D1FAE5',
-                    500: '#10B981',
-                    600: '#059669',
-                    700: '#047857',
+                    50: 'var(--color-primary-50, #ECFDF5)',
+                    100: 'var(--color-primary-100, #D1FAE5)',
+                    500: 'var(--color-primary)',
+                    600: 'var(--color-primary-600, #059669)',
+                    700: 'var(--color-primary-700, #047857)',
                 },
+                appBg: 'var(--bg-main)',
+                appText: 'var(--text-main)',
                 // Success / completion
                 success: {
                     50: '#ECFDF5',
