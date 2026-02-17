@@ -5,6 +5,7 @@ import { useAuth } from '@/contexts/AuthContext';
 import { useGamification, Powerup } from '@/hooks/useGamification';
 import Navbar from '@/components/Navbar';
 import MobileNav from '@/components/MobileNav';
+import LucideIcon from '@/components/LucideIcon';
 
 export default function ShopPage() {
     const { token } = useAuth();
@@ -52,8 +53,8 @@ export default function ShopPage() {
                     </div>
 
                     <div className="bg-neutral-800 border border-neutral-700 rounded-3xl p-6 flex items-center gap-4 shadow-2xl">
-                        <div className="h-12 w-12 rounded-2xl bg-yellow-500/10 flex items-center justify-center text-2xl">
-                            🪙
+                        <div className="h-12 w-12 rounded-2xl bg-yellow-500/10 flex items-center justify-center">
+                            <LucideIcon name="Coins" size={24} className="text-yellow-500" />
                         </div>
                         <div>
                             <p className="text-[10px] font-black text-neutral-500 uppercase tracking-widest">Your Balance</p>
@@ -75,8 +76,8 @@ export default function ShopPage() {
                             key={powerup.id}
                             className="group relative bg-neutral-800 border border-neutral-700 rounded-xl p-6 hover:border-primary-500/50 transition-all duration-300 flex flex-col"
                         >
-                            <div className="absolute top-6 right-8 text-4xl group-hover:scale-110 transition-transform duration-500">
-                                {powerup.icon}
+                            <div className="absolute top-6 right-8 group-hover:scale-110 transition-transform duration-500">
+                                <LucideIcon name={powerup.icon} size={40} className="text-primary-400" />
                             </div>
 
                             <h3 className="text-xl font-black mb-2 pr-12">{powerup.name}</h3>
@@ -86,7 +87,10 @@ export default function ShopPage() {
 
                             <div className="pt-6 border-t border-neutral-700 flex items-center justify-between">
                                 <div className="flex items-center gap-2">
-                                    <span className="text-yellow-500 font-black">🪙 {powerup.cost_coins}</span>
+                                    <div className="flex items-center gap-1.5 text-yellow-500 font-black">
+                                        <LucideIcon name="Coins" size={14} />
+                                        <span>{powerup.cost_coins}</span>
+                                    </div>
                                 </div>
                                 <button
                                     onClick={() => handlePurchase(powerup.key)}

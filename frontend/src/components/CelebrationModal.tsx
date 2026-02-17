@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { ArrowUp, Target, Trophy } from 'lucide-react';
 import Confetti from './Confetti';
 import ShareButton from './ShareButton';
+import LucideIcon from './LucideIcon';
 
 interface CelebrationModalProps {
     isOpen: boolean;
@@ -88,8 +89,8 @@ export default function CelebrationModal({ isOpen, onClose, type, data }: Celebr
                             </div>
                         )}
                         {data.coins && (
-                            <div className="bg-white text-emerald-700 px-6 py-3 rounded-md font-black text-sm border border-emerald-200 uppercase tracking-widest shadow-sm">
-                                +{data.coins} 🪙
+                            <div className="bg-white text-emerald-700 px-6 py-3 rounded-md font-black text-sm border border-emerald-200 uppercase tracking-widest shadow-sm flex items-center gap-2">
+                                +{data.coins} <LucideIcon name="Coins" size={16} />
                             </div>
                         )}
                         {data.level && (

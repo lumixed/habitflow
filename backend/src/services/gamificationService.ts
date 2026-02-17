@@ -397,15 +397,22 @@ export async function seedPowerups(): Promise<void> {
             key: 'streak_freeze',
             name: 'Streak Freeze',
             description: 'Protect your streak for one day',
-            icon: '❄️',
+            icon: 'Snowflake',
             cost_coins: 100
         },
         {
             key: 'double_xp',
             name: 'Double XP',
             description: 'Earn 2x XP for 24 hours',
-            icon: '⚡',
+            icon: 'Zap',
             cost_coins: 200
+        },
+        {
+            key: 'xp_booster',
+            name: 'XP Booster',
+            description: 'Earn triple XP for your next 3 habit completions!',
+            icon: 'Rocket',
+            cost_coins: 350
         }
     ];
 

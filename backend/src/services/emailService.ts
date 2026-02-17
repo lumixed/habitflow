@@ -106,7 +106,7 @@ export async function sendWeeklyReport(
             </div>
             
             ${stats.topHabits.length > 0 ? `
-            <h3>🔥 Top Habits</h3>
+            <h3>Top Habits</h3>
             <div class="habits-list">
                 ${stats.topHabits.map(h => `
                 <div class="habit-item">
@@ -124,7 +124,7 @@ export async function sendWeeklyReport(
             </center>
         </div>
         <div class="footer">
-            <p>Keep up the great work! 💪</p>
+            <p>Keep up the great work!</p>
             <p>HabitFlow | Unsubscribe preferences in Settings</p>
         </div>
     </div>
@@ -134,7 +134,7 @@ export async function sendWeeklyReport(
 
     await sendEmail({
         to: email,
-        subject: '📊 Your Weekly HabitFlow Report',
+        subject: 'Weekly HabitFlow Report',
         html,
     });
 }
@@ -213,7 +213,7 @@ export async function sendMonthlyReport(
             </center>
         </div>
         <div class="footer">
-            <p>You're crushing it! 🚀</p>
+            <p>You're crushing it!</p>
             <p>HabitFlow | Manage email preferences in Settings</p>
         </div>
     </div>
@@ -223,7 +223,7 @@ export async function sendMonthlyReport(
 
     await sendEmail({
         to: email,
-        subject: '🎉 Your Monthly HabitFlow Wrap-Up',
+        subject: 'Your Monthly HabitFlow Wrap-Up',
         html,
     });
 }

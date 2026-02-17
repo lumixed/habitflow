@@ -1,8 +1,9 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { Sparkles } from 'lucide-react';
+import { Sparkles, Sun, Cloud, CloudRain, Snowflake, CloudLightning, CloudFog, CloudSunRain, Rainbow } from 'lucide-react';
 import { useAI, WeatherSuggestions, HabitStack } from '@/hooks/useAI';
+import LucideIcon from './LucideIcon';
 
 interface SmartSuggestionsProps {
     onAddHabit?: (title: string, description: string) => void;
@@ -49,13 +50,13 @@ export default function SmartSuggestions({ onAddHabit }: SmartSuggestionsProps) 
     // if (!data) return null; // This line is removed as the new structure handles it
 
     const weatherIcons: Record<string, string> = {
-        clear: '☀️',
-        cloudy: '☁️',
-        rainy: '🌧️',
-        snowy: '❄️',
-        stormy: '⛈️',
-        foggy: '🌫️',
-        rain_showers: '🌦️'
+        clear: 'Sun',
+        cloudy: 'Cloud',
+        rainy: 'CloudRain',
+        snowy: 'Snowflake',
+        stormy: 'CloudLightning',
+        foggy: 'CloudFog',
+        rain_showers: 'CloudSunRain'
     };
 
     return (
@@ -64,8 +65,8 @@ export default function SmartSuggestions({ onAddHabit }: SmartSuggestionsProps) 
                 <div className="bg-white rounded-xl border border-neutral-200 p-6 shadow-sm">
                     <div className="flex items-center justify-between mb-4">
                         <div className="text-right">
-                            <span className="text-2xl">{weatherIcons[data.weather.condition] || '🌈'}</span>
-                            <span className="block text-[10px] font-bold text-neutral-500">{data.weather.temperature}°C</span>
+                            <LucideIcon name={weatherIcons[data.weather.condition] || 'Rainbow'} size={32} className="text-primary-500" />
+                            <span className="block text-[10px] font-bold text-neutral-500 mt-1">{data.weather.temperature}°C</span>
                         </div>
                     </div>
 

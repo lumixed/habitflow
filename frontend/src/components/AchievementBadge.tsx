@@ -1,4 +1,4 @@
-'use client';
+import LucideIcon from './LucideIcon';
 
 interface AchievementBadgeProps {
     icon: string;
@@ -32,15 +32,19 @@ export default function AchievementBadge({
         >
             {/* Locked overlay */}
             {!unlocked && (
-                <div className="absolute inset-0 flex items-center justify-center bg-black/10 rounded-lg">
-                    <span className="text-4xl">🔒</span>
+                <div className="absolute inset-0 flex items-center justify-center bg-black/10 rounded-lg z-10">
+                    <LucideIcon name="Lock" size={40} className="text-neutral-900 dark:text-white" />
                 </div>
             )}
 
             {/* Badge content */}
             <div className="text-center">
-                <div className="text-4xl mb-3">
-                    {unlocked ? icon : '❓'}
+                <div className="flex justify-center mb-3">
+                    {unlocked ? (
+                        <LucideIcon name={icon} size={40} className="text-amber-500" />
+                    ) : (
+                        <LucideIcon name="HelpCircle" size={40} className="text-neutral-300" />
+                    )}
                 </div>
                 <h3 className={`font-bold mb-1 ${unlocked ? 'text-gray-900 dark:text-white' : 'text-gray-600 dark:text-gray-400'}`}>
                     {name}

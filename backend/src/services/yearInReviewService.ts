@@ -147,26 +147,26 @@ function generateInsights(data: {
     const insights: string[] = [];
 
     if (data.totalDaysActive > 300) {
-        insights.push(`🔥 You showed up ${data.totalDaysActive} days this year - that's incredible consistency!`);
+        insights.push(`You showed up ${data.totalDaysActive} days this year - that's incredible consistency!`);
     } else if (data.totalDaysActive > 200) {
-        insights.push(`💪 You were active ${data.totalDaysActive} days - more than half the year!`);
+        insights.push(`You were active ${data.totalDaysActive} days - more than half the year!`);
     }
 
     if (data.topHabits.length > 0) {
-        insights.push(`⭐ Your top habit was "${data.topHabits[0].title}" with ${data.topHabits[0].completions} completions`);
+        insights.push(`Your top habit was "${data.topHabits[0].title}" with ${data.topHabits[0].completions} completions`);
     }
 
     const bestMonth = data.monthlyBreakdown.reduce((max, month) =>
         month.completions > max.completions ? month : max
     );
-    insights.push(`📈 ${bestMonth.month} was your most productive month with ${bestMonth.completions} completions`);
+    insights.push(`${bestMonth.month} was your most productive month with ${bestMonth.completions} completions`);
 
     if (data.achievementsUnlocked > 10) {
-        insights.push(`🏆 You unlocked ${data.achievementsUnlocked} achievements - you're unstoppable!`);
+        insights.push(`You unlocked ${data.achievementsUnlocked} achievements - you're unstoppable!`);
     }
 
     const avgPerDay = (data.totalCompletions / Math.max(data.totalDaysActive, 1)).toFixed(1);
-    insights.push(`📊 On average, you completed ${avgPerDay} habits per active day`);
+    insights.push(`On average, you completed ${avgPerDay} habits per active day`);
 
     return insights;
 }

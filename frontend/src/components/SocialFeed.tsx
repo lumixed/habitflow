@@ -5,6 +5,7 @@ import { formatDistanceToNow } from 'date-fns';
 import Link from 'next/link';
 import { useState, useEffect } from 'react';
 import { Check, Flame, Trophy, Heart, MessageCircle } from 'lucide-react';
+import LucideIcon from './LucideIcon';
 
 export default function SocialFeed() {
     const { feed, isLoading, error, reactToActivity, addComment } = useSocial();
@@ -97,11 +98,11 @@ export default function SocialFeed() {
                                     onClick={() => reactToActivity(activity.id)}
                                     className="flex items-center gap-1.5 text-[10px] font-bold text-neutral-400 hover:text-emerald-600 uppercase tracking-widest transition-colors"
                                 >
-                                    <span>👏</span>
+                                    <LucideIcon name="Heart" size={14} />
                                     <span>{activity.reactions?.length || 0}</span>
                                 </button>
                                 <div className="flex items-center gap-1.5 text-[10px] font-bold text-neutral-400 uppercase tracking-widest">
-                                    <span>💬</span>
+                                    <LucideIcon name="MessageSquare" size={14} />
                                     <span>{activity._count?.comments || 0}</span>
                                 </div>
                             </div>

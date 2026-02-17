@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import LucideIcon from './LucideIcon';
 
 interface Participant {
     id: string;
@@ -79,10 +80,14 @@ export default function ChallengeCard({ challenge, currentUserId, onJoin }: Chal
 
             <div className="space-y-3">
                 <div className="flex items-center justify-between text-[11px] font-medium text-neutral-400">
-                    <div className="flex items-center gap-1">
-                        <span>👥 {challenge.participants.length} participants</span>
+                    <div className="flex items-center gap-1.5">
+                        <LucideIcon name="Users" size={12} />
+                        <span>{challenge.participants.length} participants</span>
                     </div>
-                    <span>⌛ {daysLeft} days left</span>
+                    <div className="flex items-center gap-1.5">
+                        <LucideIcon name="Clock" size={12} />
+                        <span>{daysLeft} days left</span>
+                    </div>
                 </div>
 
                 {isParticipating && (
