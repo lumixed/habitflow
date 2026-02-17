@@ -45,6 +45,9 @@ model User {
   streaks                  Streak[]
   achievements             UserAchievement[]
   powerups                 UserPowerup[]
+  api_keys                 ApiKey[]
+  webhooks                 Webhook[]
+  external_integrations    ExternalIntegration[]
 }
 
 model Habit {
@@ -269,6 +272,48 @@ model Comment {
   updated_at  DateTime       @updatedAt
   activity    SocialActivity @relation(fields: [activity_id], references: [id], onDelete: Cascade)
   user        User           @relation(fields: [user_id], references: [id], onDelete: Cascade)
+}
+
+model ApiKey {
+  id         String    @id @default(uuid())
+  user_id    String
+  name       String    // e.g., "Mobile App", "Internal Script"
+  key_hash   String    @unique
+  scopes     String    @default("read,write") // comma-separated scopes
+  created_at DateTime  @default(now())
+  last_used  DateTime?
+  expires_at DateTime?
+  user       User      @relation(fields: [user_id], references: [id], onDelete: Cascade)
+
+  @@index([user_id])
+}
+
+model Webhook {
+  id         String    @id @default(uuid())
+  user_id    String
+  url        String
+  secret     String    // For signed payloads
+  events     String    // Comma-separated list of events: habit.completed, level.up, etc.
+  is_active  Boolean   @default(true)
+  created_at DateTime  @default(now())
+  user       User      @relation(fields: [user_id], references: [id], onDelete: Cascade)
+
+  @@index([user_id])
+}
+
+model ExternalIntegration {
+  id              String   @id @default(uuid())
+  user_id         String
+  provider        String   // "google_calendar", "strava", etc.
+  access_token    String
+  refresh_token   String?
+  expires_at      DateTime?
+  metadata        Json?    // Provider-specific data (e.g., calendar_id)
+  created_at      DateTime @default(now())
+  updated_at      DateTime @updatedAt
+  user            User     @relation(fields: [user_id], references: [id], onDelete: Cascade)
+
+  @@unique([user_id, provider])
 }
 
 enum Frequency {

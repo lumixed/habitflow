@@ -8,6 +8,7 @@ import MobileNav from '@/components/MobileNav';
 import LanguageSelector from '@/components/LanguageSelector';
 import ThemeEditor from '@/components/ThemeEditor';
 import AdvancedPrivacy from '@/components/AdvancedPrivacy';
+import DeveloperSettings from '@/components/DeveloperSettings';
 
 const THEMES = [
     { id: 'classic', name: 'Classic', desc: 'The original clean design', color: '#10B981' },
@@ -212,6 +213,11 @@ export default function SettingsPage() {
                 <section className="mb-12">
                     <h2 className="text-xs font-black uppercase tracking-widest opacity-50 mb-6">Advanced Privacy</h2>
                     <AdvancedPrivacy />
+                </section>
+
+                <section className="mb-12">
+                    <h2 className="text-xs font-black uppercase tracking-widest opacity-50 mb-6">Developer</h2>
+                    <DeveloperSettings />
                 </section>
             </main>
 

@@ -14,6 +14,8 @@ import notificationRoutes from './routes/notifications';
 import aiRoutes from './routes/ai';
 import yearInReviewRoutes from './routes/yearInReview';
 import correlationRoutes from './routes/correlations';
+import publicApiRoutes from './routes/publicApi';
+import developerRoutes from './routes/developer';
 import { initializeScheduledJobs } from './jobs/emailReports';
 import { initBackupJob } from './services/backupService';
 
@@ -60,6 +62,8 @@ app.use('/api/notifications', notificationRoutes);
 app.use('/api/ai', aiRoutes);
 app.use('/api/year-in-review', yearInReviewRoutes);
 app.use('/api/correlations', correlationRoutes);
+app.use('/api/v1', publicApiRoutes);
+app.use('/api/developer', developerRoutes);
 
 app.use(errorHandler);
 
