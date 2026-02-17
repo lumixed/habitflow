@@ -362,3 +362,16 @@ enum ActivityType {
   ACHIEVEMENT_UNLOCKED
   STREAK_MILESTONE
 }
+
+model PartnerInquiry {
+  id           String   @id @default(uuid())
+  company_name String
+  contact_name String
+  email        String
+  phone        String?
+  type         String   // "GYM" | "CORPORATE" | "OTHER"
+  size         String?  // Number of employees/members
+  message      String?
+  status       String   @default("PENDING") // "PENDING" | "CONTACTED" | "PARTNERED"
+  created_at   DateTime @default(now())
+}

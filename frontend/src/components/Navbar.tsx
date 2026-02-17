@@ -77,6 +77,12 @@ export default function Navbar() {
                         >
                             Settings
                         </Link>
+                        <Link
+                            href="/partners"
+                            className="text-[10px] font-black text-neutral-400 hover:text-primary-500 uppercase tracking-[0.15em] transition-colors"
+                        >
+                            Partners
+                        </Link>
                         <div className="h-4 w-[1px] bg-neutral-200"></div>
                         <button
                             onClick={handleLogout}
