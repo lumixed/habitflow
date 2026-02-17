@@ -2,6 +2,8 @@
 
 import React, { useState, useEffect } from 'react';
 import { Calendar, CheckCircle2, AlertCircle, Trash2, ExternalLink, RefreshCw } from 'lucide-react';
+import { useAuth } from '@/contexts/AuthContext';
+import api from '@/lib/api';
 
 interface Integration {
     provider: string;
@@ -9,23 +11,21 @@ interface Integration {
 }
 
 const IntegrationsList = () => {
+    const { token } = useAuth();
     const [integrations, setIntegrations] = useState<Integration[]>([]);
     const [isLoading, setIsLoading] = useState(true);
     const [isSyncing, setIsSyncing] = useState(false);
 
     useEffect(() => {
-        fetchIntegrations();
-    }, []);
+        if (token) {
+            fetchIntegrations();
+        }
+    }, [token]);
 
     const fetchIntegrations = async () => {
         try {
-            const token = localStorage.getItem('token');
-            const res = await fetch('/api/integrations', {
-                headers: { 'Authorization': `Bearer ${token}` }
-            });
-            if (res.ok) {
-                setIntegrations(await res.json());
-            }
+            const data = await api.get<Integration[]>('/api/integrations', token!);
+            setIntegrations(data);
         } catch (err) {
             console.error('Failed to fetch integrations:', err);
         } finally {
@@ -35,14 +35,9 @@ const IntegrationsList = () => {
 
     const handleConnect = async (provider: 'google' | 'strava') => {
         try {
-            const token = localStorage.getItem('token');
-            const res = await fetch(`/api/integrations/${provider}/auth`, {
-                headers: { 'Authorization': `Bearer ${token}` }
-            });
-            if (res.ok) {
-                const { url } = await res.json();
-                window.location.href = url;
-            }
+            if (!token) return;
+            const { url } = await api.get<{ url: string }>(`/api/integrations/${provider}/auth`, token);
+            window.location.href = url;
         } catch (err) {
             console.error(`Failed to start ${provider} auth:`, err);
         }
@@ -52,12 +47,9 @@ const IntegrationsList = () => {
         if (!confirm(`Are you sure you want to disconnect ${provider === 'google_calendar' ? 'Google Calendar' : 'Strava'}?`)) return;
 
         try {
-            const token = localStorage.getItem('token');
+            if (!token) return;
             const route = provider === 'google_calendar' ? 'google' : 'strava';
-            await fetch(`/api/integrations/${route}`, {
-                method: 'DELETE',
-                headers: { 'Authorization': `Bearer ${token}` }
-            });
+            await api.delete(`/api/integrations/${route}`, undefined, token);
             fetchIntegrations();
         } catch (err) {
             console.error(`Failed to disconnect ${provider}:`, err);
@@ -67,11 +59,8 @@ const IntegrationsList = () => {
     const handleStravaSync = async () => {
         setIsSyncing(true);
         try {
-            const token = localStorage.getItem('token');
-            await fetch('/api/integrations/strava/sync', {
-                method: 'POST',
-                headers: { 'Authorization': `Bearer ${token}` }
-            });
+            if (!token) return;
+            await api.post('/api/integrations/strava/sync', {}, token);
             alert('Strava sync initiated. Your activities will appear shortly!');
         } catch (err) {
             console.error('Strava sync failed:', err);
