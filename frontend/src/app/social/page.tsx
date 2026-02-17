@@ -10,11 +10,12 @@ import UserSearch from '@/components/UserSearch';
 import ReferralDashboard from '@/components/ReferralDashboard';
 import CommunityStats from '@/components/CommunityStats';
 import CommunityHighlights from '@/components/CommunityHighlights';
+import WidgetGenerator from '@/components/Social/WidgetGenerator';
 
 export default function SocialPage() {
     const router = useRouter();
     const { user, isLoading: authLoading } = useAuth();
-    const [activeTab, setActiveTab] = useState<'feed' | 'friends' | 'search' | 'invite' | 'community'>('community');
+    const [activeTab, setActiveTab] = useState<'feed' | 'friends' | 'search' | 'invite' | 'community' | 'widget'>('community');
 
     useEffect(() => {
         if (!authLoading && !user) {
@@ -85,6 +86,15 @@ export default function SocialPage() {
                         >
                             Invite Friends
                         </button>
+                        <button
+                            onClick={() => setActiveTab('widget')}
+                            className={`w-full text-left px-4 py-3 rounded-xl font-semibold transition-all ${activeTab === 'widget'
+                                ? 'bg-white border-2 border-primary-500 text-primary-600 shadow-sm'
+                                : 'text-neutral-500 hover:bg-neutral-100'
+                                }`}
+                        >
+                            Embed Widget
+                        </button>
                     </div>
 
                     {/* Content Area */}
@@ -123,6 +133,12 @@ export default function SocialPage() {
                                 <div className="pt-8 border-t border-neutral-100">
                                     <CommunityHighlights />
                                 </div>
+                            </div>
+                        )}
+                        {activeTab === 'widget' && (
+                            <div className="p-6">
+                                <h2 className="text-xl font-bold text-neutral-900 mb-6 font-black uppercase tracking-tight">Public Widgets</h2>
+                                <WidgetGenerator />
                             </div>
                         )}
                     </div>
