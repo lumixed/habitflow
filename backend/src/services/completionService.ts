@@ -2,6 +2,7 @@ import prisma from '../config/prisma';
 import { AppError } from '../middleware/errorHandler';
 import { processCompletion } from './gamificationService';
 import { updateUserInsights } from './analyticsService';
+import { GoogleCalendarService } from './googleCalendarService';
 
 interface LogCompletionInput {
     habit_id: string;
@@ -40,6 +41,9 @@ export async function logCompletion(input: LogCompletionInput) {
 
         // Update analytics
         updateUserInsights(input.user_id).catch(err => console.error('Failed to update analytics:', err));
+
+        // Sync to Google Calendar
+        GoogleCalendarService.syncCompletion(input.user_id, habit.title, input.completed_date).catch(err => console.error('Calendar sync failed:', err));
 
         // Log social activity
         const { logActivity } = require('./socialService');
