@@ -51,6 +51,12 @@ model User {
   external_integrations    ExternalIntegration[]
   referrals_sent           Referral[]        @relation("ReferrerRel")
   referral_received        Referral?         @relation("ReferredRel")
+  push_subscriptions       PushSubscription[]
+  
+  stripe_customer_id       String?           @unique
+  subscription_id          String?           @unique
+  plan                     String            @default("FREE") // "FREE" | "PRO" | "TEAM"
+  subscription_status      String?           // "active" | "canceled" | "past_due"
 }
 
 model Referral {
@@ -374,4 +380,16 @@ model PartnerInquiry {
   message      String?
   status       String   @default("PENDING") // "PENDING" | "CONTACTED" | "PARTNERED"
   created_at   DateTime @default(now())
+}
+
+model PushSubscription {
+  id        String   @id @default(uuid())
+  user_id   String
+  endpoint  String   @unique
+  p256dh    String
+  auth      String
+  user      User     @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+
+  @@index([user_id])
 }

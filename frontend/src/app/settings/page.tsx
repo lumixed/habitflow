@@ -10,6 +10,7 @@ import ThemeEditor from '@/components/ThemeEditor';
 import AdvancedPrivacy from '@/components/AdvancedPrivacy';
 import DeveloperSettings from '@/components/DeveloperSettings';
 import IntegrationsList from '@/components/IntegrationsList';
+import PushNotificationToggle from '@/components/PWA/PushNotificationToggle';
 
 const THEMES = [
     { id: 'classic', name: 'Classic', desc: 'The original clean design', color: '#10B981' },
@@ -186,6 +187,11 @@ export default function SettingsPage() {
                             </button>
                         </div>
                     </div>
+                </section>
+
+                <section className="mb-12">
+                    <h2 className="text-xs font-black uppercase tracking-widest opacity-50 mb-6">Notifications</h2>
+                    <PushNotificationToggle />
                 </section>
 
                 <section className="bg-white border border-neutral-200 rounded-lg p-5">

@@ -1,4 +1,5 @@
 import prisma from '../config/prisma';
+import { AppError } from '../middleware/errorHandler';
 import { startOfDay, endOfDay, subDays } from 'date-fns';
 
 export interface HabitInsight {
@@ -81,6 +82,11 @@ export async function getHabitProbability(habitId: string, userId: string): Prom
  * Get insights for all user habits
  */
 export async function getAllHabitInsights(userId: string): Promise<HabitInsight[]> {
+    const user = await prisma.user.findUnique({ where: { id: userId } });
+    if (user?.plan === 'FREE') {
+        throw new AppError('AI Insights are a Premium feature. Upgrade to Pro to unlock!', 403);
+    }
+
     const habits = await prisma.habit.findMany({
         where: { user_id: userId, is_active: true }
     });

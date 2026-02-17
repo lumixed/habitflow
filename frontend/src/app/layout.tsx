@@ -5,6 +5,8 @@ import { AuthProvider } from '@/contexts/AuthContext';
 import { ThemeProvider } from '@/contexts/ThemeContext';
 import MobileNav from '@/components/MobileNav';
 import { KeyboardShortcutsProvider } from '@/components/KeyboardShortcutsProvider';
+import { useEffect, useState } from 'react';
+import InstallPrompt from '@/components/PWA/InstallPrompt';
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter' });
 const roboto = Roboto({ weight: ['400', '700', '900'], subsets: ['latin'], variable: '--font-roboto' });
@@ -35,6 +37,7 @@ export default function RootLayout({
                         <KeyboardShortcutsProvider>
                             {children}
                             <MobileNav />
+                            <InstallPrompt />
                         </KeyboardShortcutsProvider>
                     </ThemeProvider>
                 </AuthProvider>

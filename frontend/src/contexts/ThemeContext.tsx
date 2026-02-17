@@ -52,6 +52,10 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     }, [theme, accentColor]);
 
     const setTheme = async (newTheme: ThemeName) => {
+        if (user && (user as any).plan === 'FREE' && newTheme !== 'classic') {
+            alert('Custom themes are a Pro feature! Upgrade to unlock.');
+            return;
+        }
         setThemeState(newTheme);
         if (token) {
             try {
@@ -63,6 +67,12 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     };
 
     const setAccentColor = async (newColor: string) => {
+        if (user && (user as any).plan === 'FREE' && newColor !== '#6366F1') {
+            // Allow basic colors or just block custom picker?
+            // For simplicity, let's just block it for now
+            alert('Custom accent colors are a Pro feature!');
+            return;
+        }
         setAccentColorState(newColor);
         if (token) {
             try {
@@ -74,6 +84,10 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     };
 
     const setFont = async (newFont: FontName) => {
+        if (user && (user as any).plan === 'FREE' && newFont !== 'inter') {
+            alert('Custom fonts are a Pro feature!');
+            return;
+        }
         setFontState(newFont);
         if (token) {
             try {

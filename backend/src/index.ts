@@ -20,6 +20,7 @@ import integrationRoutes from './routes/integrations';
 import referralRoutes from './routes/referrals';
 import publicRoutes from './routes/public';
 import partnerRoutes from './routes/partners';
+import billingRoutes from './routes/billing';
 import { initializeScheduledJobs } from './jobs/emailReports';
 import { initBackupJob } from './services/backupService';
 
@@ -72,6 +73,7 @@ app.use('/api/integrations', integrationRoutes);
 app.use('/api/referrals', referralRoutes);
 app.use('/api/public', publicRoutes);
 app.use('/api/partners', partnerRoutes);
+app.use('/api/billing', billingRoutes);
 
 app.use(errorHandler);
 

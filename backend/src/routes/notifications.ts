@@ -37,4 +37,15 @@ router.get('/suggest-time', authenticate, async (req: any, res, next) => {
     }
 });
 
+// Subscribe to push notifications
+router.post('/subscribe', authenticate, async (req: any, res, next) => {
+    try {
+        const userId = req.user.sub;
+        await notificationService.subscribeToPush(userId, req.body);
+        res.status(201).json({ message: 'Subscribed successfully' });
+    } catch (error) {
+        next(error);
+    }
+});
+
 export default router;

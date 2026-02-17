@@ -1,5 +1,6 @@
 import prisma from '../config/prisma';
 import { AppError } from '../middleware/errorHandler';
+import webpush from 'web-push';
 
 export interface NotificationPref {
     user_id: string;
@@ -7,6 +8,15 @@ export interface NotificationPref {
     push_alerts: boolean;
     reminder_time: string; // "HH:MM"
     smart_reminders: boolean;
+}
+
+// Configure web-push
+if (process.env.VAPID_PUBLIC_KEY && process.env.VAPID_PRIVATE_KEY && process.env.VAPID_MAILTO) {
+    webpush.setVapidDetails(
+        process.env.VAPID_MAILTO,
+        process.env.VAPID_PUBLIC_KEY,
+        process.env.VAPID_PRIVATE_KEY
+    );
 }
 
 export async function getNotificationPrefs(userId: string) {
@@ -79,4 +89,53 @@ export async function calculateSmartReminderTime(userId: string) {
     const formattedHour = suggestHour.toString().padStart(2, '0');
 
     return `${formattedHour}:00`;
+}
+
+export async function subscribeToPush(userId: string, subscription: any) {
+    return prisma.pushSubscription.upsert({
+        where: { endpoint: subscription.endpoint },
+        update: {
+            user_id: userId,
+            p256dh: subscription.keys.p256dh,
+            auth: subscription.keys.auth,
+        },
+        create: {
+            user_id: userId,
+            endpoint: subscription.endpoint,
+            p256dh: subscription.keys.p256dh,
+            auth: subscription.keys.auth,
+        },
+    });
+}
+
+export async function sendPushNotification(userId: string, title: string, body: string, data?: any) {
+    const subscriptions = await prisma.pushSubscription.findMany({
+        where: { user_id: userId },
+    });
+
+    const payload = JSON.stringify({
+        title,
+        body,
+        data,
+    });
+
+    const promises = subscriptions.map((sub) => {
+        const pushSubscription = {
+            endpoint: sub.endpoint,
+            keys: {
+                p256dh: sub.p256dh,
+                auth: sub.auth,
+            },
+        };
+
+        return webpush.sendNotification(pushSubscription, payload).catch((error) => {
+            console.error('Push error:', error);
+            if (error.statusCode === 410 || error.statusCode === 404) {
+                // Subscription has expired or is no longer valid
+                return prisma.pushSubscription.delete({ where: { id: sub.id } });
+            }
+        });
+    });
+
+    return Promise.all(promises);
 }

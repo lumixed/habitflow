@@ -27,6 +27,18 @@ export async function createHabit(input: CreateHabitInput) {
         throw new AppError('Habit title is required', 400);
     }
 
+    const user = await prisma.user.findUnique({ where: { id: input.user_id } });
+    if (!user) throw new AppError('User not found', 404);
+
+    if (user.plan === 'FREE') {
+        const habitCount = await prisma.habit.count({
+            where: { user_id: input.user_id, is_active: true }
+        });
+        if (habitCount >= 5) {
+            throw new AppError('Free plan is limited to 5 active habits. Upgrade to Pro for unlimited!', 403);
+        }
+    }
+
     const habit = await prisma.habit.create({
         data: {
             user_id: input.user_id,
