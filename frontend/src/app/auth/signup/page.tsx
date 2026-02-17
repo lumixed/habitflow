@@ -1,11 +1,11 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, Suspense } from 'react';
 import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useAuth } from '@/contexts/AuthContext';
 
-export default function SignupPage() {
+function SignupForm() {
     const router = useRouter();
     const searchParams = useSearchParams();
     const { signup } = useAuth();
@@ -41,6 +41,101 @@ export default function SignupPage() {
     };
 
     return (
+        <form onSubmit={handleSubmit} className="space-y-5">
+            {/* Display Name */}
+            <div>
+                <label htmlFor="display_name" className="block text-[10px] font-black text-neutral-400 uppercase tracking-[0.2em] mb-1.5">
+                    Display name
+                </label>
+                <input
+                    type="text"
+                    id="display_name"
+                    name="display_name"
+                    value={formData.display_name}
+                    onChange={handleChange}
+                    required
+                    className="w-full px-4 py-2.5 bg-neutral-50 border border-neutral-200 rounded-md text-sm text-neutral-900 placeholder-neutral-300 focus:outline-none focus:ring-1 focus:ring-neutral-900 focus:border-transparent transition-all"
+                    placeholder="E.G. ALEX SMITH"
+                />
+            </div>
+
+            {/* Email */}
+            <div>
+                <label htmlFor="email" className="block text-[10px] font-black text-neutral-400 uppercase tracking-[0.2em] mb-1.5">
+                    Email address
+                </label>
+                <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    value={formData.email}
+                    onChange={handleChange}
+                    required
+                    className="w-full px-4 py-2.5 bg-neutral-50 border border-neutral-200 rounded-md text-sm text-neutral-900 placeholder-neutral-300 focus:outline-none focus:ring-1 focus:ring-neutral-900 focus:border-transparent transition-all"
+                    placeholder="YOU@EXAMPLE.COM"
+                />
+            </div>
+
+            {/* Password */}
+            <div>
+                <label htmlFor="password" className="block text-[10px] font-black text-neutral-400 uppercase tracking-[0.2em] mb-1.5">
+                    Password
+                </label>
+                <input
+                    type="password"
+                    id="password"
+                    name="password"
+                    value={formData.password}
+                    onChange={handleChange}
+                    required
+                    minLength={6}
+                    className="w-full px-4 py-2.5 bg-neutral-50 border border-neutral-200 rounded-md text-sm text-neutral-900 placeholder-neutral-300 focus:outline-none focus:ring-1 focus:ring-neutral-900 focus:border-transparent transition-all"
+                    placeholder="MIN. 6 CHARACTERS"
+                />
+            </div>
+
+            {/* Error message */}
+            {error && (
+                <div className="p-3 bg-red-50 border border-red-200 rounded-lg text-sm text-red-700">
+                    {error}
+                </div>
+            )}
+
+            {/* Referral Code (Optional) */}
+            <div>
+                <label htmlFor="referred_by" className="block text-[10px] font-black text-neutral-400 uppercase tracking-[0.2em] mb-1.5">
+                    Referral Code (Optional)
+                </label>
+                <input
+                    type="text"
+                    id="referred_by"
+                    name="referred_by"
+                    value={formData.referred_by}
+                    onChange={handleChange}
+                    className="w-full px-4 py-2.5 bg-neutral-50 border border-neutral-200 rounded-md text-sm text-neutral-900 placeholder-neutral-300 focus:outline-none focus:ring-1 focus:ring-neutral-900 focus:border-transparent transition-all"
+                    placeholder="ENTER CODE"
+                />
+                {referralCode && (
+                    <p className="mt-1 text-[10px] text-emerald-500 font-bold uppercase tracking-wider">
+                        ✓ Referral code applied!
+                    </p>
+                )}
+            </div>
+
+            {/* Submit button */}
+            <button
+                type="submit"
+                disabled={isSubmitting}
+                className="w-full py-3 bg-neutral-900 dark:bg-white text-white dark:text-neutral-900 text-[10px] font-black uppercase tracking-[0.2em] rounded-md hover:bg-neutral-800 disabled:opacity-50 disabled:cursor-not-allowed transition-all"
+            >
+                {isSubmitting ? 'CREATING...' : 'SIGN UP'}
+            </button>
+        </form>
+    );
+}
+
+export default function SignupPage() {
+    return (
         <div className="min-h-screen flex">
             {/* Left side - Form */}
             <div className="flex-1 flex items-center justify-center px-6 py-12">
@@ -66,97 +161,9 @@ export default function SignupPage() {
                         </p>
                     </div>
 
-                    {/* Form */}
-                    <form onSubmit={handleSubmit} className="space-y-5">
-                        {/* Display Name */}
-                        <div>
-                            <label htmlFor="display_name" className="block text-[10px] font-black text-neutral-400 uppercase tracking-[0.2em] mb-1.5">
-                                Display name
-                            </label>
-                            <input
-                                type="text"
-                                id="display_name"
-                                name="display_name"
-                                value={formData.display_name}
-                                onChange={handleChange}
-                                required
-                                className="w-full px-4 py-2.5 bg-neutral-50 border border-neutral-200 rounded-md text-sm text-neutral-900 placeholder-neutral-300 focus:outline-none focus:ring-1 focus:ring-neutral-900 focus:border-transparent transition-all"
-                                placeholder="E.G. ALEX SMITH"
-                            />
-                        </div>
-
-                        {/* Email */}
-                        <div>
-                            <label htmlFor="email" className="block text-[10px] font-black text-neutral-400 uppercase tracking-[0.2em] mb-1.5">
-                                Email address
-                            </label>
-                            <input
-                                type="email"
-                                id="email"
-                                name="email"
-                                value={formData.email}
-                                onChange={handleChange}
-                                required
-                                className="w-full px-4 py-2.5 bg-neutral-50 border border-neutral-200 rounded-md text-sm text-neutral-900 placeholder-neutral-300 focus:outline-none focus:ring-1 focus:ring-neutral-900 focus:border-transparent transition-all"
-                                placeholder="YOU@EXAMPLE.COM"
-                            />
-                        </div>
-
-                        {/* Password */}
-                        <div>
-                            <label htmlFor="password" className="block text-[10px] font-black text-neutral-400 uppercase tracking-[0.2em] mb-1.5">
-                                Password
-                            </label>
-                            <input
-                                type="password"
-                                id="password"
-                                name="password"
-                                value={formData.password}
-                                onChange={handleChange}
-                                required
-                                minLength={6}
-                                className="w-full px-4 py-2.5 bg-neutral-50 border border-neutral-200 rounded-md text-sm text-neutral-900 placeholder-neutral-300 focus:outline-none focus:ring-1 focus:ring-neutral-900 focus:border-transparent transition-all"
-                                placeholder="MIN. 6 CHARACTERS"
-                            />
-                        </div>
-
-                        {/* Error message */}
-                        {error && (
-                            <div className="p-3 bg-red-50 border border-red-200 rounded-lg text-sm text-red-700">
-                                {error}
-                            </div>
-                        )}
-
-                        {/* Referral Code (Optional) */}
-                        <div>
-                            <label htmlFor="referred_by" className="block text-[10px] font-black text-neutral-400 uppercase tracking-[0.2em] mb-1.5">
-                                Referral Code (Optional)
-                            </label>
-                            <input
-                                type="text"
-                                id="referred_by"
-                                name="referred_by"
-                                value={formData.referred_by}
-                                onChange={handleChange}
-                                className="w-full px-4 py-2.5 bg-neutral-50 border border-neutral-200 rounded-md text-sm text-neutral-900 placeholder-neutral-300 focus:outline-none focus:ring-1 focus:ring-neutral-900 focus:border-transparent transition-all"
-                                placeholder="ENTER CODE"
-                            />
-                            {referralCode && (
-                                <p className="mt-1 text-[10px] text-emerald-500 font-bold uppercase tracking-wider">
-                                    ✓ Referral code applied!
-                                </p>
-                            )}
-                        </div>
-
-                        {/* Submit button */}
-                        <button
-                            type="submit"
-                            disabled={isSubmitting}
-                            className="w-full py-3 bg-neutral-900 dark:bg-white text-white dark:text-neutral-900 text-[10px] font-black uppercase tracking-[0.2em] rounded-md hover:bg-neutral-800 disabled:opacity-50 disabled:cursor-not-allowed transition-all"
-                        >
-                            {isSubmitting ? 'CREATING...' : 'SIGN UP'}
-                        </button>
-                    </form>
+                    <Suspense fallback={<div className="animate-pulse text-xs font-bold text-neutral-400 uppercase tracking-widest p-8 text-center">Initializing...</div>}>
+                        <SignupForm />
+                    </Suspense>
 
                     {/* Footer */}
                     <p className="mt-8 text-center text-[10px] font-bold text-neutral-400 uppercase tracking-widest">

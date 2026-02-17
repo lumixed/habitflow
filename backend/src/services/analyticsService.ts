@@ -188,3 +188,47 @@ export async function getTrendData(userId: string) {
 
     return result;
 }
+
+/**
+ * Get community-wide global statistics
+ */
+export async function getGlobalStats() {
+    const [totalUsers, totalCompletions, activeChallenges] = await Promise.all([
+        prisma.user.count(),
+        prisma.completion.count(),
+        prisma.challenge.count({
+            where: {
+                end_date: { gte: new Date() }
+            }
+        })
+    ]);
+
+    // Get popular habits (top 3 by title)
+    const popularHabitsData = await prisma.habit.groupBy({
+        by: ['title'],
+        _count: {
+            id: true
+        },
+        orderBy: {
+            _count: {
+                id: 'desc'
+            }
+        },
+        take: 3,
+        where: {
+            is_active: true
+        }
+    });
+
+    const popularHabits = popularHabitsData.map(h => ({
+        title: h.title,
+        count: h._count.id
+    }));
+
+    return {
+        totalUsers,
+        totalHabitCompletions: totalCompletions,
+        activeChallenges,
+        popularHabits
+    };
+}

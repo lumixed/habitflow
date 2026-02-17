@@ -75,4 +75,14 @@ router.get('/search', async (req: Request, res: Response, next: NextFunction) =>
     }
 });
 
+// Community Highlights
+router.get('/highlights', async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const highlights = await socialService.getCommunityHighlights();
+        res.json({ highlights });
+    } catch (error) {
+        next(error);
+    }
+});
+
 export default router;

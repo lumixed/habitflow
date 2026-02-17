@@ -281,3 +281,36 @@ export async function logActivity(userId: string, type: 'HABIT_COMPLETED' | 'LEV
         }
     });
 }
+
+/**
+ * Get noteworthy community achievements and highlights
+ */
+export async function getCommunityHighlights(limit = 5) {
+    const highlights = await prisma.socialActivity.findMany({
+        where: {
+            type: {
+                in: ['LEVEL_UP', 'ACHIEVEMENT_UNLOCKED', 'STREAK_MILESTONE']
+            },
+            user: {
+                is_profile_public: true,
+                is_anonymous: false // Don't show anonymous in highlights
+            }
+        },
+        include: {
+            user: {
+                select: {
+                    id: true,
+                    display_name: true,
+                    avatar_url: true,
+                    level: true
+                }
+            }
+        },
+        orderBy: {
+            created_at: 'desc'
+        },
+        take: limit
+    });
+
+    return highlights;
+}

@@ -52,4 +52,17 @@ router.get('/trends', authenticate, async (req: any, res) => {
     }
 });
 
+/**
+ * GET /api/analytics/global
+ * Get community-wide stats
+ */
+router.get('/global', authenticate, async (req: any, res) => {
+    try {
+        const data = await analyticsService.getGlobalStats();
+        res.json(data);
+    } catch (error: any) {
+        res.status(500).json({ error: error.message });
+    }
+});
+
 export default router;

@@ -88,7 +88,7 @@ export class ReferralService {
                 data: {
                     user_id: referrerId,
                     type: 'STREAK_MILESTONE', // Generic for now, maybe add REFERRAL_BONUS later
-                    content: `Earned a referral bonus! 🎁`
+                    content_text: `Earned a referral bonus! 🎁`
                 }
             })
         ]);
