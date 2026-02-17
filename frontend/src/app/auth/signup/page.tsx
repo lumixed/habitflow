@@ -1,18 +1,22 @@
 'use client';
 
 import { useState } from 'react';
-import { useRouter } from 'next/navigation';
 import Link from 'next/link';
+import { useSearchParams } from 'next/navigation';
 import { useAuth } from '@/contexts/AuthContext';
 
 export default function SignupPage() {
     const router = useRouter();
+    const searchParams = useSearchParams();
     const { signup } = useAuth();
+
+    const referralCode = searchParams.get('ref') || '';
 
     const [formData, setFormData] = useState({
         email: '',
         password: '',
         display_name: '',
+        referred_by: referralCode,
     });
     const [error, setError] = useState('');
     const [isSubmitting, setIsSubmitting] = useState(false);
@@ -28,7 +32,7 @@ export default function SignupPage() {
         setIsSubmitting(true);
 
         try {
-            await signup(formData.email, formData.password, formData.display_name);
+            await signup(formData.email, formData.password, formData.display_name, formData.referred_by);
             router.push('/dashboard');
         } catch (err: any) {
             setError(err.message || 'Something went wrong. Please try again.');
@@ -122,6 +126,27 @@ export default function SignupPage() {
                                 {error}
                             </div>
                         )}
+
+                        {/* Referral Code (Optional) */}
+                        <div>
+                            <label htmlFor="referred_by" className="block text-[10px] font-black text-neutral-400 uppercase tracking-[0.2em] mb-1.5">
+                                Referral Code (Optional)
+                            </label>
+                            <input
+                                type="text"
+                                id="referred_by"
+                                name="referred_by"
+                                value={formData.referred_by}
+                                onChange={handleChange}
+                                className="w-full px-4 py-2.5 bg-neutral-50 border border-neutral-200 rounded-md text-sm text-neutral-900 placeholder-neutral-300 focus:outline-none focus:ring-1 focus:ring-neutral-900 focus:border-transparent transition-all"
+                                placeholder="ENTER CODE"
+                            />
+                            {referralCode && (
+                                <p className="mt-1 text-[10px] text-emerald-500 font-bold uppercase tracking-wider">
+                                    ✓ Referral code applied!
+                                </p>
+                            )}
+                        </div>
 
                         {/* Submit button */}
                         <button

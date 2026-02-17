@@ -30,7 +30,7 @@ interface AuthContextType {
     isLoading: boolean;
     login: (email: string, password: string) => Promise<{ two_factor_required?: boolean; userId?: string } | void>;
     verify2FA: (userId: string, token: string) => Promise<void>;
-    signup: (email: string, password: string, display_name: string) => Promise<void>;
+    signup: (email: string, password: string, display_name: string, referred_by?: string) => Promise<void>;
     logout: () => void;
     updateUser: (data: Partial<User>) => void;
 }
@@ -102,11 +102,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         setUser(data.user);
     };
 
-    const signup = async (email: string, password: string, display_name: string) => {
+    const signup = async (email: string, password: string, display_name: string, referred_by?: string) => {
         const data = await api.post<{ token: string; user: User }>('/api/auth/signup', {
             email,
             password,
             display_name,
+            referred_by,
         });
         localStorage.setItem('habitflow_token', data.token);
         setToken(data.token);

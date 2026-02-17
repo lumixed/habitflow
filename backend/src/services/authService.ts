@@ -2,6 +2,7 @@ import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import prisma from '../config/prisma';
 import { AppError } from '../middleware/errorHandler';
+import { ReferralService } from './referralService';
 import { generateSecret, verify, generateURI } from 'otplib';
 import QRCode from 'qrcode';
 
@@ -13,6 +14,7 @@ interface SignupInput {
     email: string;
     password: string;
     display_name: string;
+    referred_by?: string;
 }
 
 interface LoginInput {
@@ -36,7 +38,8 @@ function signToken(payload: TokenPayload): string {
 }
 
 
-export async function signup({ email, password, display_name }: SignupInput) {
+export async function signup(input: SignupInput) {
+    const { email, password, display_name } = input;
     if (!email || !password || !display_name) {
         throw new AppError('Email, password, and display name are required', 400);
     }
@@ -55,12 +58,15 @@ export async function signup({ email, password, display_name }: SignupInput) {
     }
 
     const password_hash = await bcrypt.hash(password, 12);
+    const referral_code = await ReferralService.generateUniqueCode();
+
     const user = await prisma.$transaction(async (tx) => {
         const newUser = await tx.user.create({
             data: {
                 email,
                 password_hash,
                 display_name: display_name.trim(),
+                referral_code,
                 xp: 0,
                 level: 1,
                 coins: 0,
@@ -75,6 +81,14 @@ export async function signup({ email, password, display_name }: SignupInput) {
 
         return newUser;
     });
+
+    // Process referral if code was provided
+    if (input.referred_by) {
+        await ReferralService.processReferral(user.id, input.referred_by).catch(err => {
+            console.error('Failed to process referral:', err);
+        });
+    }
+
     const token = signToken({
         sub: user.id,
         email: user.email,

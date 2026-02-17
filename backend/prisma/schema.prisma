@@ -19,6 +19,7 @@ model User {
   coins                    Int               @default(0)
   accent_color             String            @default("#6366F1")
   theme_name               String            @default("classic")
+  referral_code            String?           @unique
   widget_order             String            @default("xp,habits,stats,suggestions")
   is_profile_public        Boolean           @default(true)
   font_family              String            @default("inter")
@@ -48,6 +49,20 @@ model User {
   api_keys                 ApiKey[]
   webhooks                 Webhook[]
   external_integrations    ExternalIntegration[]
+  referrals_sent           Referral[]        @relation("ReferrerRel")
+  referral_received        Referral?         @relation("ReferredRel")
+}
+
+model Referral {
+  id          String   @id @default(uuid())
+  referrer_id String
+  referred_id String   @unique
+  rewarded    Boolean  @default(false)
+  created_at  DateTime @default(now())
+  referrer    User     @relation("ReferrerRel", fields: [referrer_id], references: [id])
+  referred    User     @relation("ReferredRel", fields: [referred_id], references: [id])
+
+  @@index([referrer_id])
 }
 
 model Habit {

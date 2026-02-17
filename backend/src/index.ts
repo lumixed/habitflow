@@ -17,6 +17,7 @@ import correlationRoutes from './routes/correlations';
 import publicApiRoutes from './routes/publicApi';
 import developerRoutes from './routes/developer';
 import integrationRoutes from './routes/integrations';
+import referralRoutes from './routes/referrals';
 import { initializeScheduledJobs } from './jobs/emailReports';
 import { initBackupJob } from './services/backupService';
 
@@ -66,6 +67,7 @@ app.use('/api/correlations', correlationRoutes);
 app.use('/api/v1', publicApiRoutes);
 app.use('/api/developer', developerRoutes);
 app.use('/api/integrations', integrationRoutes);
+app.use('/api/referrals', referralRoutes);
 
 app.use(errorHandler);
 

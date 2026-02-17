@@ -7,11 +7,12 @@ import Navbar from '@/components/Navbar';
 import SocialFeed from '@/components/SocialFeed';
 import FriendList from '@/components/FriendList';
 import UserSearch from '@/components/UserSearch';
+import ReferralDashboard from '@/components/ReferralDashboard';
 
 export default function SocialPage() {
     const router = useRouter();
     const { user, isLoading: authLoading } = useAuth();
-    const [activeTab, setActiveTab] = useState<'feed' | 'friends' | 'search'>('feed');
+    const [activeTab, setActiveTab] = useState<'feed' | 'friends' | 'search' | 'invite'>('feed');
 
     useEffect(() => {
         if (!authLoading && !user) {
@@ -64,6 +65,15 @@ export default function SocialPage() {
                         >
                             Find People
                         </button>
+                        <button
+                            onClick={() => setActiveTab('invite')}
+                            className={`w-full text-left px-4 py-3 rounded-xl font-semibold transition-all ${activeTab === 'invite'
+                                ? 'bg-white border-2 border-primary-500 text-primary-600 shadow-sm'
+                                : 'text-neutral-500 hover:bg-neutral-100'
+                                }`}
+                        >
+                            Invite Friends
+                        </button>
                     </div>
 
                     {/* Content Area */}
@@ -84,6 +94,12 @@ export default function SocialPage() {
                             <div className="p-6">
                                 <h2 className="text-xl font-bold text-neutral-900 mb-6">Search Users</h2>
                                 <UserSearch />
+                            </div>
+                        )}
+                        {activeTab === 'invite' && (
+                            <div className="p-6">
+                                <h2 className="text-xl font-bold text-neutral-900 mb-6">Referral Rewards</h2>
+                                <ReferralDashboard />
                             </div>
                         )}
                     </div>
