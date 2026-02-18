@@ -33,9 +33,10 @@ interface HabitCardProps {
     onDelete: (id: string) => void;
     onEdit: (habit: Habit) => void;
     onReward?: (rewards: any) => void;
+    onViewDetail?: (habit: Habit) => void;
 }
 
-export default function HabitCard({ habit, onToggleActive, onDelete, onEdit, onReward }: HabitCardProps) {
+export default function HabitCard({ habit, onToggleActive, onDelete, onEdit, onReward, onViewDetail }: HabitCardProps) {
     const [confirmDelete, setConfirmDelete] = useState(false);
     const { streak, isDateCompleted, toggleCompletion } = useCompletions(habit.id);
     const [insight, setInsight] = useState<HabitInsight | null>(null);
@@ -119,13 +120,21 @@ export default function HabitCard({ habit, onToggleActive, onDelete, onEdit, onR
             <div className="relative z-10 p-4 pl-5">
                 {/* Top row: icon + title + streak + actions */}
                 <div className="flex items-start justify-between gap-3">
-                    <div className="flex items-start gap-3 flex-1">
+                    {/* Icon + Title (Clickable for Detail) */}
+                    <div
+                        className="flex items-start gap-3 flex-1 cursor-pointer group/title"
+                        onClick={() => onViewDetail?.(habit)}
+                        role="button"
+                        tabIndex={0}
+                        aria-label={`View details for ${habit.title}`}
+                        onKeyDown={(e) => e.key === 'Enter' && onViewDetail?.(habit)}
+                    >
                         {/* Icon */}
                         <span className="text-2xl leading-none mt-0.5">{emoji}</span>
 
                         {/* Title + frequency + streak */}
                         <div className="flex-1">
-                            <h3 className="text-sm font-bold text-neutral-900 dark:text-neutral-100 uppercase tracking-tight leading-4">{habit.title}</h3>
+                            <h3 className="text-sm font-bold text-neutral-900 dark:text-neutral-100 uppercase tracking-tight leading-4 group-hover/title:text-primary-500 transition-colors">{habit.title}</h3>
                             <div className="flex items-center gap-2 mt-1">
                                 <span className="text-[10px] font-black text-neutral-500 uppercase tracking-wider">{FREQUENCY_LABELS[habit.frequency]}</span>
                                 {streak > 0 && (
@@ -150,6 +159,7 @@ export default function HabitCard({ habit, onToggleActive, onDelete, onEdit, onR
                                     ? 'text-white bg-neutral-900 dark:bg-white dark:text-neutral-900'
                                     : 'text-neutral-400 hover:text-neutral-900 dark:hover:text-white border border-neutral-100 dark:border-neutral-700'
                                     }`}
+                                aria-label={isTodayCompleted ? 'Completed today' : 'Mark as done today'}
                                 title={isTodayCompleted ? 'Completed today' : 'Mark as done today'}
                             >
                                 <svg className="w-5 h-5 md:w-3.5 md:h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -165,6 +175,7 @@ export default function HabitCard({ habit, onToggleActive, onDelete, onEdit, onR
                                 onEdit(habit);
                             }}
                             className="p-3 md:p-1.5 text-neutral-400 hover:text-neutral-600 hover:bg-neutral-100 rounded-lg transition-colors"
+                            aria-label={`Edit ${habit.title}`}
                             title="Edit"
                         >
                             <svg className="w-5 h-5 md:w-4 md:h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -182,6 +193,7 @@ export default function HabitCard({ habit, onToggleActive, onDelete, onEdit, onR
                                 ? 'text-success-600 hover:bg-success-50'
                                 : 'text-neutral-400 hover:bg-neutral-100'
                                 }`}
+                            aria-label={habit.is_active ? `Pause ${habit.title}` : `Resume ${habit.title}`}
                             title={habit.is_active ? 'Pause habit' : 'Resume habit'}
                         >
                             {habit.is_active ? (
@@ -210,6 +222,7 @@ export default function HabitCard({ habit, onToggleActive, onDelete, onEdit, onR
                                 ? 'text-white bg-red-500 hover:bg-red-600'
                                 : 'text-neutral-400 hover:text-red-500 hover:bg-red-50'
                                 }`}
+                            aria-label={confirmDelete ? `Confirm delete ${habit.title}` : `Delete ${habit.title}`}
                             title={confirmDelete ? 'Click again to confirm delete' : 'Delete'}
                         >
                             <svg className="w-5 h-5 md:w-4 md:h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">

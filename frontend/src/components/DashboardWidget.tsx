@@ -54,6 +54,8 @@ export default function DashboardWidget({ id, title, children, icon }: Dashboard
                     <div
                         {...attributes}
                         {...listeners}
+                        role="button"
+                        aria-label={`Reorder ${title} widget`}
                         className="p-3 cursor-grab active:cursor-grabbing text-neutral-300 hover:text-neutral-500 hover:bg-neutral-50 dark:hover:bg-neutral-900 rounded-xl transition-all"
                     >
                         <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">

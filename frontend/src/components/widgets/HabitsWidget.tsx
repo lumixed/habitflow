@@ -38,13 +38,14 @@ export default function HabitsWidget({
     return (
         <div className="space-y-3">
             {activeHabits.slice(0, 3).map((habit) => (
-                <div key={habit.id} onClick={() => onViewDetail(habit)} className="cursor-pointer">
+                <div key={habit.id}>
                     <HabitCard
                         habit={habit}
                         onToggleActive={onToggleActive}
                         onDelete={onDelete}
                         onEdit={onOpenEdit}
                         onReward={onReward}
+                        onViewDetail={onViewDetail}
                     />
                 </div>
             ))}

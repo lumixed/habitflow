@@ -22,6 +22,12 @@ interface User {
     data_retention_days?: number;
     scheduled_export_enabled?: boolean;
     last_export_at?: string;
+
+    // Subscription fields
+    plan: 'FREE' | 'PRO' | 'TEAM';
+    stripe_customer_id?: string;
+    subscription_id?: string;
+    subscription_status?: string;
 }
 
 interface AuthContextType {

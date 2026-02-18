@@ -104,16 +104,22 @@ export default function HabitModal({ isOpen, onClose, onSave, editHabit }: Habit
             />
 
             {/* Modal */}
-            <div className="fixed inset-0 z-50 flex items-center justify-center px-4 md:px-0">
+            <div
+                className="fixed inset-0 z-50 flex items-center justify-center px-4 md:px-0"
+                role="dialog"
+                aria-modal="true"
+                aria-labelledby="habit-modal-title"
+            >
                 <div className="bg-white rounded-md shadow-xl w-full max-w-md max-h-[85vh] md:max-h-[90vh] overflow-y-auto border border-neutral-200">
                     {/* Header */}
                     <div className="flex items-center justify-between p-6 pb-4">
-                        <h2 className="text-sm font-black text-neutral-900 uppercase tracking-widest">
+                        <h2 id="habit-modal-title" className="text-sm font-black text-neutral-900 uppercase tracking-widest">
                             {editHabit ? 'Edit habit' : 'New habit'}
                         </h2>
                         <button
                             onClick={onClose}
                             className="p-3 -mr-2 text-neutral-400 hover:text-neutral-900 hover:bg-neutral-50 rounded-md transition-colors"
+                            aria-label="Close modal"
                         >
                             <svg className="w-5 h-5 md:w-4 md:h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M6 18L18 6M6 6l12 12" />
@@ -159,6 +165,7 @@ export default function HabitModal({ isOpen, onClose, onSave, editHabit }: Habit
                                         key={f.value}
                                         type="button"
                                         onClick={() => setFrequency(f.value)}
+                                        aria-pressed={frequency === f.value}
                                         className={`flex-1 px-2 py-3 text-[9px] font-black uppercase tracking-widest rounded-md border transition-all ${frequency === f.value
                                             ? 'border-neutral-900 bg-neutral-900 text-white'
                                             : 'border-neutral-200 text-neutral-400 hover:bg-neutral-50'
@@ -179,6 +186,8 @@ export default function HabitModal({ isOpen, onClose, onSave, editHabit }: Habit
                                         key={c.value}
                                         type="button"
                                         onClick={() => setColor(c.value)}
+                                        aria-label={`Select ${c.name} color`}
+                                        aria-pressed={color === c.value}
                                         className={`w-8 h-8 md:w-6 md:h-6 rounded-md border-2 transition-all ${color === c.value ? 'border-neutral-900 scale-110 shadow-sm' : 'border-transparent'
                                             }`}
                                         style={{ backgroundColor: c.value }}
@@ -198,6 +207,8 @@ export default function HabitModal({ isOpen, onClose, onSave, editHabit }: Habit
                                         key={i.key}
                                         type="button"
                                         onClick={() => setIcon(i.key)}
+                                        aria-label={`Select ${i.key} icon`}
+                                        aria-pressed={icon === i.key}
                                         className={`p-3 text-lg rounded-md border transition-all ${icon === i.key
                                             ? 'border-neutral-900 bg-neutral-900 text-white'
                                             : 'border-white bg-white hover:bg-neutral-50'

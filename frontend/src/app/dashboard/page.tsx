@@ -218,6 +218,7 @@ export default function DashboardPage() {
     return (
         <div className="min-h-screen bg-neutral-50 dark:bg-[#050505] transition-colors duration-500">
             <Navbar />
+            <h1 className="sr-only">Dashboard - HabitFlow</h1>
 
             <main className="max-w-2xl mx-auto px-4 py-12">
                 <DndContext
