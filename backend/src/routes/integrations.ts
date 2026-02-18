@@ -10,8 +10,12 @@ const router = Router();
  * GET /api/integrations/google/auth
  * Get the Google OAuth2 authorization URL
  */
-router.get('/google/auth', authenticate, (req: any, res: Response) => {
+router.get('/google/auth', authenticate, async (req: any, res: Response) => {
     try {
+        const user = await prisma.user.findUnique({ where: { id: req.user.sub } });
+        if (user?.plan === 'FREE') {
+            return res.status(403).json({ error: 'External integrations are a Pro feature. Upgrade to unlock!' });
+        }
         const url = GoogleCalendarService.getAuthUrl(req.user.sub);
         res.json({ url });
     } catch (error: any) {
@@ -47,8 +51,12 @@ router.get('/google/callback', async (req: Request, res: Response) => {
  * STRAVA INTEGRATION
  */
 
-router.get('/strava/auth', authenticate, (req: any, res: Response) => {
+router.get('/strava/auth', authenticate, async (req: any, res: Response) => {
     try {
+        const user = await prisma.user.findUnique({ where: { id: req.user.sub } });
+        if (user?.plan === 'FREE') {
+            return res.status(403).json({ error: 'External integrations are a Pro feature. Upgrade to unlock!' });
+        }
         const url = StravaService.getAuthUrl(req.user.sub);
         res.json({ url });
     } catch (error: any) {

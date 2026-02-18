@@ -6,6 +6,7 @@
 import { Router, Request, Response } from 'express';
 import { authenticate } from '../middleware/auth';
 import { getYearInReview } from '../services/yearInReviewService';
+import prisma from '../config/prisma';
 
 const router = Router();
 
@@ -18,6 +19,11 @@ router.get('/:year?', authenticate, async (req: Request, res: Response) => {
         const userId = req.user?.sub;
         if (!userId) {
             return res.status(401).json({ error: 'Unauthorized' });
+        }
+
+        const user = await prisma.user.findUnique({ where: { id: userId } });
+        if (user?.plan === 'FREE') {
+            return res.status(403).json({ error: 'Year in Review is a Pro feature. Upgrade to unlock!' });
         }
 
         const year = req.params.year ? parseInt(req.params.year) : new Date().getFullYear();

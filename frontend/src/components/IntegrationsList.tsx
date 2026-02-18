@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { Calendar, CheckCircle2, AlertCircle, Trash2, ExternalLink, RefreshCw } from 'lucide-react';
+import { Calendar, CheckCircle2, AlertCircle, Trash2, ExternalLink, RefreshCw, Lock } from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext';
 import api from '@/lib/api';
 
@@ -11,7 +11,7 @@ interface Integration {
 }
 
 const IntegrationsList = () => {
-    const { token } = useAuth();
+    const { token, user } = useAuth();
     const [integrations, setIntegrations] = useState<Integration[]>([]);
     const [isLoading, setIsLoading] = useState(true);
     const [isSyncing, setIsSyncing] = useState(false);
@@ -34,6 +34,10 @@ const IntegrationsList = () => {
     };
 
     const handleConnect = async (provider: 'google' | 'strava') => {
+        if (user?.plan === 'FREE') {
+            alert('External integrations are a Pro feature! Upgrade to unlock.');
+            return;
+        }
         try {
             if (!token) return;
             const { url } = await api.get<{ url: string }>(`/api/integrations/${provider}/auth`, token);
@@ -104,10 +108,10 @@ const IntegrationsList = () => {
                     ) : (
                         <button
                             onClick={() => handleConnect('google')}
-                            className="bg-neutral-900 text-white px-6 py-2 rounded-xl text-sm font-bold hover:bg-black transition-all flex items-center gap-2"
+                            className={`bg-neutral-900 text-white px-6 py-2 rounded-xl text-sm font-bold hover:bg-black transition-all flex items-center gap-2 ${user?.plan === 'FREE' ? 'opacity-50 grayscale' : ''}`}
                         >
-                            Connect
-                            <ExternalLink className="w-4 h-4" />
+                            {user?.plan === 'FREE' ? <Lock className="w-4 h-4" /> : <ExternalLink className="w-4 h-4" />}
+                            {user?.plan === 'FREE' ? 'Upgrade' : 'Connect'}
                         </button>
                     )}
                 </div>
@@ -152,10 +156,10 @@ const IntegrationsList = () => {
                         ) : (
                             <button
                                 onClick={() => handleConnect('strava')}
-                                className="bg-neutral-900 text-white px-6 py-2 rounded-xl text-sm font-bold hover:bg-black transition-all flex items-center gap-2"
+                                className={`bg-neutral-900 text-white px-6 py-2 rounded-xl text-sm font-bold hover:bg-black transition-all flex items-center gap-2 ${user?.plan === 'FREE' ? 'opacity-50 grayscale' : ''}`}
                             >
-                                Connect
-                                <ExternalLink className="w-4 h-4" />
+                                {user?.plan === 'FREE' ? <Lock className="w-4 h-4" /> : <ExternalLink className="w-4 h-4" />}
+                                {user?.plan === 'FREE' ? 'Upgrade' : 'Connect'}
                             </button>
                         )}
                     </div>
