@@ -13,6 +13,12 @@ const prisma = new PrismaClient();
 export interface GamificationRewards {
     xp: number;
     coins: number;
+    breakdown?: {
+        baseXP: number;
+        streakBonus: number;
+        difficultyBonus: number;
+        multiplier: number;
+    };
     levelUp?: {
         oldLevel: number;
         newLevel: number;
@@ -35,13 +41,14 @@ export interface GamificationRewards {
 export async function processCompletion(
     userId: string,
     habitId: string,
-    completionDate: Date
+    completionDate: Date,
+    difficulty: string = 'MEDIUM'
 ): Promise<GamificationRewards> {
     // Update streak
     const { streak, milestone } = await updateStreak(userId, habitId, completionDate);
 
-    // Calculate XP and coin rewards based on streak
-    const rewards = calculateRewards(streak.currentCount);
+    // Calculate XP and coin rewards based on streak and difficulty
+    const rewards = calculateRewards(streak.currentCount, difficulty);
 
     // Get user's current stats
     const user = await prisma.user.findUnique({
@@ -146,6 +153,12 @@ export async function processCompletion(
     return {
         xp: rewards.totalXP + achievementXP,
         coins: rewards.coins + achievementCoins,
+        breakdown: {
+            baseXP: rewards.baseXP,
+            streakBonus: rewards.bonusXP,
+            difficultyBonus: 0, // Simplified for now since difficulty is baked into combined multiplier
+            multiplier: Number((rewards.totalXP / rewards.baseXP).toFixed(2))
+        },
         levelUp: levelUpInfo.leveledUp ? {
             oldLevel: levelUpInfo.oldLevel,
             newLevel: levelUpInfo.newLevel

@@ -74,26 +74,44 @@ export function getXPProgress(totalXP: number): {
 
 /**
  * Calculate streak multiplier
- * 1-6 days: 1x
- * 7-29 days: 1.5x
- * 30-99 days: 2x
- * 100+ days: 3x
+ * Smoother multiplier: +1% per day of streak, capped at 2x (100 days)
+ * Large milestones still give extra jumps: 
+ * 7 days: +10%, 30 days: +25%
  */
 export function getStreakMultiplier(streakCount: number): number {
-    if (streakCount >= 100) return 3;
-    if (streakCount >= 30) return 2;
-    if (streakCount >= 7) return 1.5;
-    return 1;
+    let multiplier = 1.0;
+
+    // Smooth daily bonus (capped at 100 days / 2x base)
+    multiplier += Math.min(streakCount, 100) * 0.01;
+
+    // Milestone jumps
+    if (streakCount >= 30) multiplier += 0.25;
+    else if (streakCount >= 7) multiplier += 0.1;
+
+    return Number(multiplier.toFixed(2));
 }
+
+/**
+ * Difficulty multipliers
+ */
+export const DIFFICULTY_MULTIPLIERS: Record<string, number> = {
+    EASY: 0.8,
+    MEDIUM: 1.0,
+    HARD: 1.5
+};
 
 /**
  * Calculate XP and coin rewards for a habit completion
  */
-export function calculateRewards(streakCount: number): XPReward {
-    const multiplier = getStreakMultiplier(streakCount);
-    const bonusXP = Math.floor(BASE_XP * (multiplier - 1));
-    const totalXP = BASE_XP + bonusXP;
-    const coins = Math.floor(BASE_COINS * multiplier);
+export function calculateRewards(streakCount: number, difficulty: string = 'MEDIUM'): XPReward {
+    const streakMultiplier = getStreakMultiplier(streakCount);
+    const difficultyMultiplier = DIFFICULTY_MULTIPLIERS[difficulty] || 1.0;
+
+    const combinedMultiplier = streakMultiplier * difficultyMultiplier;
+
+    const totalXP = Math.floor(BASE_XP * combinedMultiplier);
+    const bonusXP = totalXP - BASE_XP;
+    const coins = Math.floor(BASE_COINS * combinedMultiplier);
 
     return {
         baseXP: BASE_XP,

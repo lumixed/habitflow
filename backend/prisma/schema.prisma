@@ -83,6 +83,7 @@ model Habit {
   created_at       DateTime     @default(now())
   background_image String?
   is_private       Boolean      @default(false)
+  difficulty       Difficulty   @default(MEDIUM)
   completions      Completion[]
   user             User         @relation(fields: [user_id], references: [id], onDelete: Cascade)
   streaks          Streak[]
@@ -341,6 +342,12 @@ enum Frequency {
   DAILY
   WEEKLY
   WEEKDAYS
+}
+
+enum Difficulty {
+  EASY
+  MEDIUM
+  HARD
 }
 
 enum GroupRole {

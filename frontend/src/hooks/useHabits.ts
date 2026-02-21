@@ -12,6 +12,7 @@ export interface Habit {
     icon: string;
     is_active: boolean;
     background_image: string | null;
+    difficulty: 'EASY' | 'MEDIUM' | 'HARD';
     created_at: string;
 }
 
@@ -22,6 +23,7 @@ interface CreateHabitInput {
     color?: string;
     icon?: string;
     background_image?: string;
+    difficulty?: 'EASY' | 'MEDIUM' | 'HARD';
 }
 
 interface UpdateHabitInput {
@@ -32,6 +34,7 @@ interface UpdateHabitInput {
     icon?: string;
     background_image?: string;
     is_active?: boolean;
+    difficulty?: 'EASY' | 'MEDIUM' | 'HARD';
 }
 
 

@@ -36,7 +36,8 @@ export async function logCompletion(input: LogCompletionInput) {
         const rewards = await processCompletion(
             input.user_id,
             input.habit_id,
-            input.completed_date
+            input.completed_date,
+            habit.difficulty
         );
 
         // Update analytics

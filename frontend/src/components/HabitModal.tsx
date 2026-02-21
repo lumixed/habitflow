@@ -33,6 +33,12 @@ const FREQUENCIES = [
     { value: 'WEEKLY', label: 'Once a week' },
 ];
 
+const DIFFICULTIES = [
+    { value: 'EASY', label: 'Easy', color: 'text-green-500', bg: 'bg-green-50', border: 'border-green-200' },
+    { value: 'MEDIUM', label: 'Medium', color: 'text-yellow-600', bg: 'bg-yellow-50', border: 'border-yellow-200' },
+    { value: 'HARD', label: 'Hard', color: 'text-red-500', bg: 'bg-red-50', border: 'border-red-200' },
+];
+
 interface HabitModalProps {
     isOpen: boolean;
     onClose: () => void;
@@ -47,6 +53,7 @@ export default function HabitModal({ isOpen, onClose, onSave, editHabit }: Habit
     const [color, setColor] = useState('#10B981');
     const [icon, setIcon] = useState('target');
     const [backgroundImage, setBackgroundImage] = useState('');
+    const [difficulty, setDifficulty] = useState<'EASY' | 'MEDIUM' | 'HARD'>('MEDIUM');
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [error, setError] = useState('');
 
@@ -58,6 +65,7 @@ export default function HabitModal({ isOpen, onClose, onSave, editHabit }: Habit
             setColor(editHabit.color);
             setIcon(editHabit.icon);
             setBackgroundImage((editHabit as any).background_image || '');
+            setDifficulty(editHabit.difficulty || 'MEDIUM');
         } else {
             setTitle('');
             setDescription('');
@@ -65,6 +73,7 @@ export default function HabitModal({ isOpen, onClose, onSave, editHabit }: Habit
             setColor('#10B981');
             setIcon('target');
             setBackgroundImage('');
+            setDifficulty('MEDIUM');
         }
         setError('');
     }, [editHabit, isOpen]);
@@ -84,7 +93,15 @@ export default function HabitModal({ isOpen, onClose, onSave, editHabit }: Habit
 
         try {
             console.log('Saving habit...');
-            await onSave({ title, description, frequency, color, icon, background_image: backgroundImage });
+            await onSave({
+                title,
+                description,
+                frequency,
+                color,
+                icon,
+                background_image: backgroundImage,
+                difficulty
+            });
             console.log('Habit saved successfully');
             setIsSubmitting(false);
             onClose(); // Close modal on success
@@ -233,6 +250,31 @@ export default function HabitModal({ isOpen, onClose, onSave, editHabit }: Habit
                                 placeholder="https://images.unsplash.com/..."
                                 className="w-full px-4 py-3 bg-neutral-50 border border-neutral-200 rounded-md text-sm text-neutral-900 placeholder-neutral-300 focus:outline-none focus:ring-1 focus:ring-neutral-900 focus:border-transparent transition-all"
                             />
+                        </div>
+
+                        {/* Difficulty */}
+                        <div>
+                            <label className="block text-[10px] font-black text-neutral-400 uppercase tracking-[0.2em] mb-2">Difficulty & Rewards</label>
+                            <div className="flex gap-2">
+                                {DIFFICULTIES.map((d) => (
+                                    <button
+                                        key={d.value}
+                                        type="button"
+                                        onClick={() => setDifficulty(d.value as any)}
+                                        aria-pressed={difficulty === d.value}
+                                        className={`flex-1 px-2 py-3 rounded-md border transition-all flex flex-col items-center gap-1 ${difficulty === d.value
+                                            ? `border-neutral-900 bg-neutral-900 text-white shadow-md scale-[1.02]`
+                                            : 'border-neutral-200 bg-white text-neutral-400 hover:bg-neutral-50'
+                                            }`}
+                                    >
+                                        <span className="text-[10px] font-black uppercase tracking-widest">{d.label}</span>
+                                        <span className={`text-[8px] font-bold ${difficulty === d.value ? 'text-neutral-300' : 'text-neutral-400'}`}>
+                                            {d.value === 'EASY' ? '0.8x XP' : d.value === 'MEDIUM' ? '1.0x XP' : '1.5x XP'}
+                                        </span>
+                                    </button>
+                                ))}
+                            </div>
+                            <p className="mt-2 text-[9px] text-neutral-400 italic">Harder habits reward significantly more points and coins.</p>
                         </div>
 
 

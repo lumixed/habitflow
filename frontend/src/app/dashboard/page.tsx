@@ -139,6 +139,7 @@ export default function DashboardPage() {
         refetchStats();
         if (!rewards) return;
 
+        // Show achievement celebration
         if (rewards.newAchievements && rewards.newAchievements.length > 0) {
             const achievement = rewards.newAchievements[0];
             celebrate({
@@ -152,6 +153,7 @@ export default function DashboardPage() {
                 }
             });
         }
+        // Show level up celebration
         else if (rewards.levelUp && rewards.levelUp.leveledUp) {
             celebrate({
                 type: 'levelUp',
@@ -160,6 +162,20 @@ export default function DashboardPage() {
                     description: `You've reached level ${rewards.levelUp.newLevel}!`,
                     level: rewards.levelUp.newLevel,
                     icon: ''
+                }
+            });
+        }
+        // show regular XP reward feedback
+        else if (rewards.xp > 0) {
+            celebrate({
+                type: 'milestone', // Use milestone style for regular XP for now
+                data: {
+                    title: 'Habit Completed!',
+                    description: rewards.breakdown
+                        ? `Earned ${rewards.xp} XP (Base: ${rewards.breakdown.baseXP} x ${rewards.breakdown.multiplier}x Bonus)`
+                        : `Earned ${rewards.xp} XP!`,
+                    xp: rewards.xp,
+                    coins: rewards.coins
                 }
             });
         }

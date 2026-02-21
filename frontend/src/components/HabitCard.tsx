@@ -145,6 +145,13 @@ export default function HabitCard({ habit, onToggleActive, onDelete, onEdit, onR
                                         </span>
                                     </>
                                 )}
+                                <span className="text-neutral-300">•</span>
+                                <span className={`text-[9px] font-black uppercase tracking-wider ${habit.difficulty === 'HARD' ? 'text-red-500' :
+                                    habit.difficulty === 'EASY' ? 'text-green-500' :
+                                        'text-yellow-600'
+                                    }`}>
+                                    {habit.difficulty || 'MEDIUM'}
+                                </span>
                             </div>
                         </div>
                     </div>
