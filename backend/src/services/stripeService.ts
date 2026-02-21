@@ -1,9 +1,14 @@
 import Stripe from 'stripe';
 import prisma from '../config/prisma';
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || '', {
-    apiVersion: '2023-10-16' as any,
-});
+const stripeKey = process.env.STRIPE_SECRET_KEY;
+if (!stripeKey || stripeKey.startsWith('sk_test_placeholder')) {
+    console.warn('[stripeService] WARNING: STRIPE_SECRET_KEY is not set or is a placeholder. Billing features will be unavailable.');
+}
+
+const stripe = stripeKey && !stripeKey.startsWith('sk_test_placeholder')
+    ? new Stripe(stripeKey, { apiVersion: '2023-10-16' as any })
+    : null as unknown as Stripe;
 
 export const PLAN_PRICES = {
     PRO: 'price_pro_placeholder',

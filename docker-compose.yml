@@ -28,6 +28,12 @@ services:
       JWT_SECRET: dev-secret-change-in-production
       PORT: 3001
       CORS_ORIGIN: http://localhost:3000
+      STRIPE_SECRET_KEY: sk_test_placeholder
+      STRIPE_PUBLISHABLE_KEY: pk_test_placeholder
+      STRIPE_WEBHOOK_SECRET: whsec_placeholder
+      VAPID_PUBLIC_KEY: BC3j9sjjuAySp1vVoU6CQU4GGbu7t2jg_zxS8S8PYcEYFx1BO2X-FlssF7Y62iNMWgXYqll9fFfO4n99p7r4k60
+      VAPID_PRIVATE_KEY: ibcn5RNzmB9n-Tr239FZIrIFyV_eYckKuslL8h9EHds
+      VAPID_MAILTO: mailto:jep@example.com
     depends_on:
       db:
         condition: service_healthy
