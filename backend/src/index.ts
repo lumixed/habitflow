@@ -77,16 +77,18 @@ app.use('/api/billing', billingRoutes);
 
 app.use(errorHandler);
 
-// Initialize scheduled email reports
-initializeScheduledJobs();
+if (process.env.NODE_ENV !== 'test') {
+    // Initialize scheduled email reports
+    initializeScheduledJobs();
 
-// Initialize weekly data backups
-initBackupJob();
+    // Initialize weekly data backups
+    initBackupJob();
 
-app.listen(PORT, () => {
-    console.log(`🚀 Server running on http://localhost:${PORT}`);
-    console.log(`📧 Email reports scheduled and ready`);
-    console.log(`   Health check: http://localhost:${PORT}/api/health`);
-});
+    app.listen(PORT, () => {
+        console.log(`🚀 Server running on http://localhost:${PORT}`);
+        console.log(`📧 Email reports scheduled and ready`);
+        console.log(`   Health check: http://localhost:${PORT}/api/health`);
+    });
+}
 
 export default app;
