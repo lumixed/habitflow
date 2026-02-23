@@ -14,12 +14,12 @@ import PushNotificationToggle from '@/components/PWA/PushNotificationToggle';
 
 const THEMES = [
     { id: 'classic', name: 'Classic', desc: 'The original clean design', color: '#10B981' },
-    { id: 'pastel', name: 'Soft Pastel', desc: 'Calming soft colors', color: '#f472b6' },
+    { id: 'pastel', name: 'Soft Pastel', desc: 'Calming soft colors', color: '#93c5fd' },
     { id: 'cyberpunk', name: 'Cyberpunk', desc: 'Neon yellow on deep black', color: '#facc15' },
 ];
 
 const ACCENTS = [
-    '#6366F1', '#10B981', '#F43F5E', '#F59E0B', '#8B5CF6', '#EC4899', '#06B6D4'
+    '#2563EB', '#10B981', '#F43F5E', '#F59E0B', '#0EA5E9', '#06B6D4', '#F97316'
 ];
 
 export default function SettingsPage() {

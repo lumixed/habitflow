@@ -26,7 +26,7 @@ export default function SocialFeed() {
     const getActivityIcon = (type: string) => {
         switch (type) {
             case 'HABIT_COMPLETED': return <Check size={16} className="text-green-600" />;
-            case 'FRIEND_JOINED': return <Heart size={16} className="text-pink-600" />;
+            case 'FRIEND_JOINED': return <Heart size={16} className="text-blue-600" />;
             case 'ACHIEVEMENT_UNLOCKED': return <Trophy size={16} className="text-yellow-600" />;
             case 'STREAK_MILESTONE': return <Flame size={16} className="text-orange-600" />;
             default: return <MessageCircle size={16} className="text-blue-600" />;

@@ -25,7 +25,7 @@ interface ThemeConfig {
 
 const DEFAULT_THEME: ThemeConfig = {
     colors: {
-        primary: '#6366F1',
+        primary: '#2563EB',
         secondary: '#10B981',
         accent: '#F43F5E',
         background: '#F9FAFB',

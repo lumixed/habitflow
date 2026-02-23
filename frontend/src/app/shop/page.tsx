@@ -44,7 +44,7 @@ export default function ShopPage() {
             <main className="max-w-5xl mx-auto px-6 py-12">
                 <header className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
                     <div>
-                        <h1 className="text-5xl font-black uppercase tracking-tighter mb-2 bg-gradient-to-r from-primary-400 to-purple-400 bg-clip-text text-transparent">
+                        <h1 className="text-5xl font-black uppercase tracking-tighter mb-2 bg-gradient-to-r from-primary-400 to-blue-400 bg-clip-text text-transparent">
                             The Shop
                         </h1>
                         <p className="text-neutral-400 font-medium">

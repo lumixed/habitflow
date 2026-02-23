@@ -17,7 +17,7 @@ export default function Confetti({ trigger, duration = 3000 }: ConfettiProps) {
 
             const end = Date.now() + duration;
 
-            const colors = ['#6366F1', '#8B5CF6', '#EC4899', '#F59E0B'];
+            const colors = ['#2563EB', '#10B981', '#F59E0B', '#3B82F6'];
 
             (function frame() {
                 confetti({

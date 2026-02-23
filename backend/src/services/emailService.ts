@@ -69,17 +69,17 @@ export async function sendWeeklyReport(
     <style>
         body { font-family: system-ui, -apple-system, sans-serif; background: #f5f5f5; padding: 20px; }
         .container { max-width: 600px; margin: 0 auto; background: white; border-radius: 24px; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
-        .header { background: linear-gradient(135deg, #6366F1 0%, #8B5CF6 100%); color: white; padding: 40px 24px; text-align: center; }
+        .header { background: linear-gradient(135deg, #2563EB 0%, #10B981 100%); color: white; padding: 40px 24px; text-align: center; }
         .header h1 { margin: 0; font-size: 32px; font-weight: 800; }
         .header p { margin: 8px 0 0; opacity: 0.9; }
         .content { padding: 32px 24px; }
         .stat-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin: 24px 0; }
         .stat { text-align: center; padding: 20px; background: #f9fafb; border-radius: 16px; }
-        .stat-value { font-size: 36px; font-weight: 800; color: #6366F1; margin: 0; }
+        .stat-value { font-size: 36px; font-weight: 800; color: #2563EB; margin: 0; }
         .stat-label { font-size: 12px; color: #6b7280; text-transform: uppercase; letter-spacing: 0.05em; margin: 8px 0 0; }
         .habits-list { margin: 24px 0; }
         .habit-item { display: flex; justify-content: space-between; padding: 12px 16px; background: #f9fafb; border-radius: 12px; margin-bottom: 8px; }
-        .cta { display: inline-block; background: #6366F1; color: white; text-decoration: none; padding: 16px 32px; border-radius: 12px; font-weight: 700; margin: 24px 0; }
+        .cta { display: inline-block; background: #2563EB; color: white; text-decoration: none; padding: 16px 32px; border-radius: 12px; font-weight: 700; margin: 24px 0; }
         .footer { text-align: center; padding: 24px; color: #6b7280; font-size: 12px; }
     </style>
 </head>

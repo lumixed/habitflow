@@ -41,7 +41,7 @@ export default function CelebrationModal({ isOpen, onClose, type, data }: Celebr
     const getGradient = () => {
         switch (type) {
             case 'levelUp':
-                return 'from-purple-500 to-pink-500';
+                return 'from-blue-500 to-cyan-500';
             case 'milestone':
                 return 'from-orange-500 to-red-500';
             case 'achievement':

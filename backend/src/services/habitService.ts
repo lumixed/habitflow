@@ -45,7 +45,7 @@ export async function createHabit(input: CreateHabitInput) {
             title: input.title.trim(),
             description: input.description?.trim() || null,
             frequency: input.frequency || 'DAILY',
-            color: input.color || '#6366F1',
+            color: input.color || '#2563EB',
             icon: input.icon || 'target',
             background_image: input.background_image || null,
         },

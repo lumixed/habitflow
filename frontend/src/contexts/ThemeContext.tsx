@@ -21,13 +21,13 @@ const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
     const { user, token } = useAuth();
     const [theme, setThemeState] = useState<ThemeName>('classic');
-    const [accentColor, setAccentColorState] = useState('#6366F1');
+    const [accentColor, setAccentColorState] = useState('#2563EB');
     const [font, setFontState] = useState<FontName>('inter');
 
     useEffect(() => {
         if (user) {
             setThemeState((user as any).theme_name || 'classic');
-            setAccentColorState((user as any).accent_color || '#6366F1');
+            setAccentColorState((user as any).accent_color || '#2563EB');
             setFontState((user as any).font_family || 'inter');
         }
     }, [user]);
@@ -67,7 +67,7 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     };
 
     const setAccentColor = async (newColor: string) => {
-        if (user && (user as any).plan === 'FREE' && newColor !== '#6366F1') {
+        if (user && (user as any).plan === 'FREE' && newColor !== '#2563EB') {
             // Allow basic colors or just block custom picker?
             // For simplicity, let's just block it for now
             alert('Custom accent colors are a Pro feature!');

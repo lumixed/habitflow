@@ -55,7 +55,7 @@ export default function YearInReviewPage() {
 
     if (loading) {
         return (
-            <div className="min-h-screen bg-gradient-to-br from-purple-900 via-purple-800 to-purple-900 flex items-center justify-center">
+            <div className="min-h-screen bg-gradient-to-br from-blue-900 via-blue-800 to-blue-900 flex items-center justify-center">
                 <div className="text-white text-2xl font-bold">Loading your {currentYear} wrapped...</div>
             </div>
         );
@@ -76,7 +76,7 @@ export default function YearInReviewPage() {
 
     const slides = [
         // Slide 1: Welcome
-        <div key="welcome" className="h-screen flex flex-col items-center justify-center p-8 bg-gradient-to-br from-purple-600 to-blue-600">
+        <div key="welcome" className="h-screen flex flex-col items-center justify-center p-8 bg-gradient-to-br from-blue-700 to-cyan-700">
             <h1 className="text-6xl md:text-8xl font-black text-white mb-4 animate-fadeIn">{currentYear}</h1>
             <p className="text-3xl md:text-4xl font-bold text-white/90">Your Year in HabitFlow</p>
         </div>,
@@ -96,14 +96,14 @@ export default function YearInReviewPage() {
         </div>,
 
         // Slide 4: Longest Streak
-        <div key="streak" className="h-screen flex flex-col items-center justify-center p-8 bg-gradient-to-br from-pink-600 to-purple-600">
+        <div key="streak" className="h-screen flex flex-col items-center justify-center p-8 bg-gradient-to-br from-orange-600 to-amber-600">
             <div className="text-8xl md:text-9xl font-black text-white mb-4 animate-scaleIn">{data.longestStreak}</div>
             <p className="text-2xl md:text-3xl font-bold text-white/90">Day Streak</p>
             <p className="text-lg text-white/70 mt-4">Unstoppable!</p>
         </div>,
 
         // Slide 5: Top Habits
-        <div key="top-habits" className="h-screen flex flex-col items-center justify-center p-8 bg-gradient-to-br from-purple-600 to-pink-600">
+        <div key="top-habits" className="h-screen flex flex-col items-center justify-center p-8 bg-gradient-to-br from-emerald-600 to-blue-600">
             <h2 className="text-4xl md:text-5xl font-black text-white mb-8">Your Top Habits</h2>
             <div className="w-full max-w-md space-y-4">
                 {data.topHabits.slice(0, 3).map((habit, idx) => (
@@ -143,7 +143,7 @@ export default function YearInReviewPage() {
         </div>,
 
         // Slide 8: Share
-        <div key="share" className="h-screen flex flex-col items-center justify-center p-8 bg-gradient-to-br from-purple-600 to-pink-600">
+        <div key="share" className="h-screen flex flex-col items-center justify-center p-8 bg-gradient-to-br from-blue-600 to-cyan-600">
             <h2 className="text-4xl md:text-5xl font-black text-white mb-4">Share Your Year</h2>
             <p className="text-xl text-white/90 mb-8">Show off your amazing progress!</p>
             <ShareButton

@@ -77,7 +77,7 @@ model Habit {
   title            String
   description      String?
   frequency        Frequency    @default(DAILY)
-  color            String       @default("#6366F1")
+  color            String       @default("#2563EB")
   icon             String       @default("target")
   is_active        Boolean      @default(true)
   created_at       DateTime     @default(now())

@@ -65,7 +65,7 @@ const ReferralDashboard = () => {
     return (
         <div className="space-y-6">
             {/* Main Referral Card */}
-            <div className="bg-gradient-to-br from-indigo-500 to-purple-600 rounded-[2.5rem] p-8 text-white shadow-xl relative overflow-hidden">
+            <div className="bg-gradient-to-br from-blue-600 to-emerald-600 rounded-[2.5rem] p-8 text-white shadow-xl relative overflow-hidden">
                 <div className="absolute top-0 right-0 p-8 opacity-10">
                     <Gift size={160} />
                 </div>
@@ -85,7 +85,7 @@ const ReferralDashboard = () => {
                         </div>
                         <button
                             onClick={copyToClipboard}
-                            className="bg-white text-indigo-600 px-4 py-2 rounded-xl font-bold flex items-center gap-2 hover:scale-105 transition-transform"
+                            className="bg-white text-blue-600 px-4 py-2 rounded-xl font-bold flex items-center gap-2 hover:scale-105 transition-transform"
                         >
                             {copied ? <Check size={18} /> : <Copy size={18} />}
                             {copied ? 'Copied' : 'Copy'}
@@ -114,7 +114,7 @@ const ReferralDashboard = () => {
             {/* Stats Grid */}
             <div className="grid grid-cols-2 gap-4">
                 <div className="bg-white rounded-3xl p-6 border-2 border-neutral-100">
-                    <TrendingUp className="text-indigo-500 mb-2" size={24} />
+                    <TrendingUp className="text-blue-500 mb-2" size={24} />
                     <div className="text-2xl font-black">{stats?.totalReferrals || 0}</div>
                     <div className="text-xs opacity-50 font-bold uppercase tracking-wider">Accepted</div>
                 </div>

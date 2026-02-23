@@ -5,11 +5,11 @@ import { Habit } from '@/hooks/useHabits';
 
 const COLORS = [
     { name: 'Emerald', value: '#10B981' },
-    { name: 'Indigo', value: '#6366F1' },
+    { name: 'Blue', value: '#2563EB' },
     { name: 'Rose', value: '#F43F5E' },
     { name: 'Amber', value: '#F59E0B' },
     { name: 'Sky', value: '#0EA5E9' },
-    { name: 'Violet', value: '#8B5CF6' },
+    { name: 'Cyan', value: '#06B6D4' },
     { name: 'Orange', value: '#F97316' },
     { name: 'Teal', value: '#14B8A6' },
 ];
@@ -50,7 +50,7 @@ export default function HabitModal({ isOpen, onClose, onSave, editHabit }: Habit
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
     const [frequency, setFrequency] = useState('DAILY');
-    const [color, setColor] = useState('#10B981');
+    const [color, setColor] = useState('#2563EB');
     const [icon, setIcon] = useState('target');
     const [backgroundImage, setBackgroundImage] = useState('');
     const [difficulty, setDifficulty] = useState<'EASY' | 'MEDIUM' | 'HARD'>('MEDIUM');
@@ -70,7 +70,7 @@ export default function HabitModal({ isOpen, onClose, onSave, editHabit }: Habit
             setTitle('');
             setDescription('');
             setFrequency('DAILY');
-            setColor('#10B981');
+            setColor('#2563EB');
             setIcon('target');
             setBackgroundImage('');
             setDifficulty('MEDIUM');
