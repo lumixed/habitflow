@@ -24,15 +24,12 @@ export default function LanguageSelector() {
     const currentLocale = getCurrentLocale();
 
     const handleLanguageChange = (newLocale: string) => {
-        // Replace current locale in path or add it if not present
-        let newPath;
-        if (pathname.match(/^\/(en|es|fr|de|ja)/)) {
-            newPath = pathname.replace(/^\/(en|es|fr|de|ja)/, `/${newLocale}`);
-        } else {
-            newPath = `/${newLocale}${pathname}`;
+        if (newLocale !== 'en') {
+            alert('Internationalization fully coming soon! The translation files are ready, but the app routing structure is still being configured for multiple languages.');
+            return;
         }
 
-        router.push(newPath);
+        // Wait completely to prevent routing 404s due to missing [locale] directory
     };
 
     return (
