@@ -24,7 +24,7 @@ const ACCENTS = [
 
 export default function SettingsPage() {
     const { user } = useAuth();
-    const { theme, accentColor, font, setTheme, setAccentColor, setFont } = useTheme();
+    const { theme, accentColor, setTheme, setAccentColor } = useTheme();
     const router = useRouter();
 
     return (
@@ -97,25 +97,6 @@ export default function SettingsPage() {
                     </div>
                 </section>
 
-                <section className="mb-12">
-                    <h2 className="text-xs font-black uppercase tracking-widest opacity-50 mb-6">Font</h2>
-                    <div className="bg-white border border-neutral-200 rounded-lg p-5 space-y-3">
-                        {(['inter', 'roboto', 'outfit', 'poppins', 'montserrat'] as const).map((fontName) => (
-                            <button
-                                key={fontName}
-                                onClick={() => setFont(fontName)}
-                                className={`w-full p-4 rounded-2xl text-left transition-all ${font === fontName
-                                    ? 'bg-neutral-900 text-white'
-                                    : 'bg-white hover:bg-neutral-100'
-                                    }`}
-                                style={{ fontFamily: `var(--font-${fontName})` }}
-                            >
-                                <div className="font-bold capitalize">{fontName}</div>
-                                <div className="text-sm opacity-60">The quick brown fox jumps over the lazy dog</div>
-                            </button>
-                        ))}
-                    </div>
-                </section>
 
                 <section className="mb-12">
                     <h2 className="text-xs font-black uppercase tracking-widest opacity-50 mb-6">Privacy</h2>

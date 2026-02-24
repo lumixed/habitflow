@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { Inter, Roboto, Outfit, Poppins, Montserrat } from 'next/font/google';
+import { Inter } from 'next/font/google';
 import '@/styles/globals.css';
 import { AuthProvider } from '@/contexts/AuthContext';
 import { ThemeProvider } from '@/contexts/ThemeContext';
@@ -8,11 +8,7 @@ import { KeyboardShortcutsProvider } from '@/components/KeyboardShortcutsProvide
 import { useEffect, useState } from 'react';
 import InstallPrompt from '@/components/PWA/InstallPrompt';
 
-const inter = Inter({ subsets: ['latin'], variable: '--font-inter' });
-const roboto = Roboto({ weight: ['400', '700', '900'], subsets: ['latin'], variable: '--font-roboto' });
-const outfit = Outfit({ subsets: ['latin'], variable: '--font-outfit' });
-const poppins = Poppins({ weight: ['400', '600', '800'], subsets: ['latin'], variable: '--font-poppins' });
-const montserrat = Montserrat({ subsets: ['latin'], variable: '--font-montserrat' });
+const inter = Inter({ subsets: ['latin'] });
 
 
 export const metadata: Metadata = {
@@ -30,7 +26,7 @@ export default function RootLayout({
     children: React.ReactNode;
 }) {
     return (
-        <html lang="en" className={`${inter.variable} ${roboto.variable} ${outfit.variable} ${poppins.variable} ${montserrat.variable}`}>
+        <html lang="en" className={inter.className}>
             <body className={`min-h-screen bg-neutral-50 text-neutral-800 pb-20 md:pb-0 safe-area-pt safe-area-pb`}>
                 <AuthProvider>
                     <ThemeProvider>
