@@ -49,12 +49,7 @@ export default function LeaderboardPage() {
         return 'from-neutral-800 to-neutral-900';
     };
 
-    const getRankEmoji = (rank: number) => {
-        if (rank === 1) return '🥇';
-        if (rank === 2) return '🥈';
-        if (rank === 3) return '🥉';
-        return '🏅';
-    };
+
 
     if (loading) {
         return (
@@ -117,7 +112,7 @@ export default function LeaderboardPage() {
                             >
                                 {/* Rank */}
                                 <div className={`flex-shrink-0 w-12 h-12 rounded-md bg-gradient-to-br ${getRankColor(entry.rank)} flex items-center justify-center shadow-sm`}>
-                                    <span className="text-2xl">{getRankEmoji(entry.rank)}</span>
+                                    <span className="text-xl font-black text-white">{entry.rank}</span>
                                 </div>
 
                                 {/* User info */}

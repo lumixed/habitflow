@@ -175,7 +175,7 @@ export default function AnalyticsPage() {
 
                             <div className="mt-8 p-6 bg-emerald-50 dark:bg-emerald-900/10 rounded-md border border-emerald-100 dark:border-emerald-900/20">
                                 <p className="text-xs text-emerald-800 dark:text-emerald-300 font-medium leading-relaxed">
-                                    💡 <b className="font-black uppercase tracking-widest text-[10px] mr-1">Insight:</b>
+                                    <b className="font-black uppercase tracking-widest text-[10px] mr-1">Insight:</b>
                                     You're most consistent on {data.insights?.mostProductiveDay}s. Try scheduling your hardest habits then!
                                 </p>
                             </div>

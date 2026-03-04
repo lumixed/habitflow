@@ -8,9 +8,7 @@ type ThemeName = 'classic' | 'pastel' | 'cyberpunk';
 
 interface ThemeContextType {
     theme: ThemeName;
-    accentColor: string;
     setTheme: (theme: ThemeName) => void;
-    setAccentColor: (color: string) => void;
 }
 
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
@@ -18,12 +16,10 @@ const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
     const { user, token } = useAuth();
     const [theme, setThemeState] = useState<ThemeName>('classic');
-    const [accentColor, setAccentColorState] = useState('#2563EB');
 
     useEffect(() => {
         if (user) {
             setThemeState((user as any).theme_name || 'classic');
-            setAccentColorState((user as any).accent_color || '#2563EB');
         }
     }, [user]);
 
@@ -31,7 +27,13 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
         // Apply theme to document
         const root = document.documentElement;
         root.setAttribute('data-theme', theme);
-        root.style.setProperty('--color-primary', accentColor);
+
+        // Hardcoded yellow accent color palette
+        root.style.setProperty('--color-primary', '#facc15'); // yellow-400
+        root.style.setProperty('--color-primary-50', '#fefce8'); // yellow-50
+        root.style.setProperty('--color-primary-100', '#fef9c3'); // yellow-100
+        root.style.setProperty('--color-primary-600', '#ca8a04'); // yellow-600
+        root.style.setProperty('--color-primary-700', '#a16207'); // yellow-700
 
         // Update body bg based on theme
         if (theme === 'cyberpunk') {
@@ -41,7 +43,7 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
             root.style.setProperty('--bg-main', '#f9fafb');
             root.style.setProperty('--text-main', '#111827');
         }
-    }, [theme, accentColor]);
+    }, [theme]);
 
     const setTheme = async (newTheme: ThemeName) => {
         if (user && (user as any).plan === 'FREE' && newTheme !== 'classic') {
@@ -58,25 +60,8 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
         }
     };
 
-    const setAccentColor = async (newColor: string) => {
-        if (user && (user as any).plan === 'FREE' && newColor !== '#2563EB') {
-            // Allow basic colors or just block custom picker?
-            // For simplicity, let's just block it for now
-            alert('Custom accent colors are a Pro feature!');
-            return;
-        }
-        setAccentColorState(newColor);
-        if (token) {
-            try {
-                await api.post('/api/auth/profile/update', { accent_color: newColor }, token);
-            } catch (err) {
-                console.error('Failed to save accent color preference:', err);
-            }
-        }
-    };
-
     return (
-        <ThemeContext.Provider value={{ theme, accentColor, setTheme, setAccentColor }}>
+        <ThemeContext.Provider value={{ theme, setTheme }}>
             {children}
         </ThemeContext.Provider>
     );

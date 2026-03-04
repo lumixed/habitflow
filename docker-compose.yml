@@ -11,7 +11,7 @@ services:
     volumes:
       - pgdata:/var/lib/postgresql/data
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U habitflow -d habitflow_dev"]
+      test: [ "CMD-SHELL", "pg_isready -U habitflow -d habitflow_dev" ]
       interval: 5s
       timeout: 5s
       retries: 5
@@ -34,24 +34,31 @@ services:
       VAPID_PUBLIC_KEY: BC3j9sjjuAySp1vVoU6CQU4GGbu7t2jg_zxS8S8PYcEYFx1BO2X-FlssF7Y62iNMWgXYqll9fFfO4n99p7r4k60
       VAPID_PRIVATE_KEY: ibcn5RNzmB9n-Tr239FZIrIFyV_eYckKuslL8h9EHds
       VAPID_MAILTO: mailto:jep@example.com
+    command: sh -c "npx prisma generate && npx prisma db push --accept-data-loss && npm run dev"
     depends_on:
       db:
         condition: service_healthy
-#    volumes:
-#      - ./backend:/app
-#      - /app/node_modules
+    volumes:
+      - ./backend:/app
+      - /app/node_modules
 
   frontend:
     build:
       context: ./frontend
       dockerfile: Dockerfile
+      target: dev
     container_name: habitflow-frontend
     ports:
       - "3000:3000"
     environment:
       NEXT_PUBLIC_API_URL: http://localhost:3001
+    command: npm run dev
     depends_on:
       - backend
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+      - /app/.next
 
 volumes:
   pgdata:

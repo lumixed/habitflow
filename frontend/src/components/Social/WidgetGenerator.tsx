@@ -93,7 +93,7 @@ const WidgetGenerator = () => {
             {/* Privacy Note */}
             {!user.is_profile_public && (
                 <div className="p-4 bg-amber-50 border border-amber-200 rounded-xl flex gap-3 items-start">
-                    <div className="text-amber-600 mt-0.5">⚠️</div>
+
                     <div>
                         <p className="text-xs font-bold text-amber-900 uppercase tracking-tight">Profile is currently private</p>
                         <p className="text-[10px] text-amber-700 font-medium uppercase tracking-widest mt-1">

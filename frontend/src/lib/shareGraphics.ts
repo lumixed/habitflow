@@ -29,7 +29,7 @@ export function generateShareGraphic(options: ShareGraphicOptions): string {
     if (!ctx) throw new Error('Could not get canvas context');
 
     const { type, data } = options;
-    const accentColor = data.accentColor || '#2563EB';
+    const accentColor = data.accentColor || '#facc15';
 
     // Background gradient
     const gradient = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);

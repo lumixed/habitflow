@@ -25,9 +25,9 @@ interface ThemeConfig {
 
 const DEFAULT_THEME: ThemeConfig = {
     colors: {
-        primary: '#2563EB',
+        primary: '#facc15',
         secondary: '#10B981',
-        accent: '#F43F5E',
+        accent: '#facc15',
         background: '#F9FAFB',
         text: '#111827',
         border: '#E5E7EB'
@@ -52,7 +52,11 @@ export default function ThemeEditor() {
         const saved = localStorage.getItem('customTheme');
         if (saved) {
             try {
-                setTheme(JSON.parse(saved));
+                const parsed = JSON.parse(saved);
+                // Ensure primary and accent are yellow even in saved themes
+                parsed.colors.primary = '#facc15';
+                parsed.colors.accent = '#facc15';
+                setTheme(parsed);
                 setIsModified(true);
             } catch (e) {
                 console.error('Failed to load custom theme');
@@ -83,6 +87,7 @@ export default function ThemeEditor() {
     }, [theme]);
 
     const handleColorChange = (key: keyof ThemeConfig['colors'], value: string) => {
+        if (key === 'primary' || key === 'accent') return; // Prevent changing these
         const newTheme = {
             ...theme,
             colors: { ...theme.colors, [key]: value }
@@ -137,6 +142,9 @@ export default function ThemeEditor() {
             reader.onload = (event) => {
                 try {
                     const imported = JSON.parse(event.target?.result as string);
+                    // Ensure primary and accent are yellow
+                    imported.colors.primary = '#facc15';
+                    imported.colors.accent = '#facc15';
                     setTheme(imported);
                     setIsModified(true);
                     alert('Theme imported successfully');
@@ -201,27 +209,29 @@ export default function ThemeEditor() {
             <div className="bg-white border border-neutral-200 rounded-lg p-5">
                 <h4 className="text-sm font-semibold text-neutral-700 mb-4">Color Palette</h4>
                 <div className="grid grid-cols-2 gap-3">
-                    {Object.entries(theme.colors).map(([key, value]) => (
-                        <div key={key}>
-                            <label className="block text-xs font-medium text-neutral-600 mb-1.5 capitalize">
-                                {key.replace(/([A-Z])/g, ' $1')}
-                            </label>
-                            <div className="flex items-center gap-2">
-                                <input
-                                    type="color"
-                                    value={value}
-                                    onChange={(e) => handleColorChange(key as keyof ThemeConfig['colors'], e.target.value)}
-                                    className="w-12 h-10 rounded-md border border-neutral-300 cursor-pointer"
-                                />
-                                <input
-                                    type="text"
-                                    value={value}
-                                    onChange={(e) => handleColorChange(key as keyof ThemeConfig['colors'], e.target.value)}
-                                    className="flex-1 px-2.5 py-1.5 rounded-md border border-neutral-200 font-mono text-xs"
-                                />
+                    {Object.entries(theme.colors)
+                        .filter(([key]) => key !== 'primary' && key !== 'accent')
+                        .map(([key, value]) => (
+                            <div key={key}>
+                                <label className="block text-xs font-medium text-neutral-600 mb-1.5 capitalize">
+                                    {key.replace(/([A-Z])/g, ' $1')}
+                                </label>
+                                <div className="flex items-center gap-2">
+                                    <input
+                                        type="color"
+                                        value={value}
+                                        onChange={(e) => handleColorChange(key as keyof ThemeConfig['colors'], e.target.value)}
+                                        className="w-12 h-10 rounded-md border border-neutral-300 cursor-pointer"
+                                    />
+                                    <input
+                                        type="text"
+                                        value={value}
+                                        onChange={(e) => handleColorChange(key as keyof ThemeConfig['colors'], e.target.value)}
+                                        className="flex-1 px-2.5 py-1.5 rounded-md border border-neutral-200 font-mono text-xs"
+                                    />
+                                </div>
                             </div>
-                        </div>
-                    ))}
+                        ))}
                 </div>
             </div>
 

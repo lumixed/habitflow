@@ -8,19 +8,6 @@ import { Haptics, ImpactStyle } from '@capacitor/haptics';
 
 
 
-const ICON_MAP: Record<string, string> = {
-    target: '🎯', run: '🏃', book: '📚', water: '💧', sleep: '😴', meditate: '🧘', exercise: '💪', write: '✍️', cook: '🍳', learn: '🧠',
-    guitar: '🎸', music: '🎵', brush: '🎨', camera: '📷', code: '💻', game: '🎮', gardening: '🌱', pet: '🐾', phone: '📵', money: '💰',
-    heart: '❤️', star: '⭐', fire: '🔥', moon: '🌙', sun: '☀️', cloud: '☁️', rain: '🌧️', coffee: '☕', tea: '🍵', apple: '🍎',
-    pizza: '🍕', bike: '🚲', car: '🚗', plane: '✈️', map: '🗺️', home: '🏠', work: '💼', school: '🏫', church: '⛪', beach: '🏖️',
-    mountain: '⛰️', tree: '🌳', flower: '🌸', bird: '🐦', dog: '🐶', cat: '🐱', fish: '🐟', rocket: '🚀', clock: '⏰', diary: '📔',
-    weights: '🏋️', yoga: '🧘‍♀️', swim: '🏊', walk: '🚶', hike: '🥾', tennis: '🎾', soccer: '⚽', basketball: '🏀', golf: '⛳', chess: '♟️',
-    clean: '🧹', wash: '🧺', trash: '🗑️', shop: '🛒', gift: '🎁', party: '🎉', beer: '🍺', wine: '🍷', cocktail: '🍸', water_glass: '🥃',
-    pill: '💊', doctor: '👨‍⚕️', dentist: '🦷', glasses: '👓', watch: '⌚', lightbulb: '💡', tool: '🛠️', key: '🔑', lock: '🔒', shield: '🛡️',
-    flag: '🚩', trophy: '🏆', medal: '🏅', crown: '👑', diamond: '💎', money_bag: '💰', credit_card: '💳', chart: '📊', calendar: '📅', clip: '📎',
-    search: '🔍', mail: '✉️', bell: '🔔', speaker: '🔊', mic: '🎤', video: '📹', tv: '📺', radio: '📻', battery: '🔋', bolt: '⚡',
-};
-
 const FREQUENCY_LABELS: Record<string, string> = {
     DAILY: 'Daily',
     WEEKLY: 'Weekly',
@@ -42,7 +29,6 @@ export default function HabitCard({ habit, onToggleActive, onDelete, onEdit, onR
     const [insight, setInsight] = useState<HabitInsight | null>(null);
     const { getHabitInsight } = useAI();
 
-    const emoji = ICON_MAP[habit.icon] || '🎯';
     const today = new Date();
     const isTodayCompleted = isDateCompleted(today);
 
@@ -129,8 +115,6 @@ export default function HabitCard({ habit, onToggleActive, onDelete, onEdit, onR
                         aria-label={`View details for ${habit.title}`}
                         onKeyDown={(e) => e.key === 'Enter' && onViewDetail?.(habit)}
                     >
-                        {/* Icon */}
-                        <span className="text-2xl leading-none mt-0.5">{emoji}</span>
 
                         {/* Title + frequency + streak */}
                         <div className="flex-1">

@@ -37,7 +37,7 @@ export default function ShareButton({ type, data, className = '' }: ShareButtonP
             disabled={isSharing}
             className={`flex items-center gap-2 px-4 py-2 rounded-2xl bg-primary-500 text-white font-bold text-sm hover:bg-primary-600 transition-colors disabled:opacity-50 ${className}`}
         >
-            <span>📤</span>
+
             <span>{isSharing ? 'Sharing...' : 'Share'}</span>
         </button>
     );

@@ -151,7 +151,7 @@ export default function YearInReviewPage() {
                 data={{
                     title: `${currentYear} Wrapped`,
                     subtitle: `${data.totalCompletions} completions • ${data.totalDaysActive} days active`,
-                    icon: '🎊',
+
                     value: data.totalCompletions
                 }}
                 className="mb-4"

@@ -124,7 +124,7 @@ export default function DashboardPage() {
             title,
             description,
             frequency: 'DAILY',
-            color: '#2563EB',
+            color: '#facc15',
             icon: 'target',
             is_active: true
         } as Habit);

@@ -18,13 +18,9 @@ const THEMES = [
     { id: 'cyberpunk', name: 'Cyberpunk', desc: 'Neon yellow on deep black', color: '#facc15' },
 ];
 
-const ACCENTS = [
-    '#2563EB', '#10B981', '#F43F5E', '#F59E0B', '#0EA5E9', '#06B6D4', '#F97316'
-];
-
 export default function SettingsPage() {
     const { user } = useAuth();
-    const { theme, accentColor, setTheme, setAccentColor } = useTheme();
+    const { theme, setTheme } = useTheme();
     const router = useRouter();
 
     return (
@@ -59,41 +55,6 @@ export default function SettingsPage() {
                                 <p className="text-xs opacity-60">{t.desc}</p>
                             </button>
                         ))}
-                    </div>
-                </section>
-
-                <section className="mb-12">
-                    <h2 className="text-xs font-black uppercase tracking-widest opacity-50 mb-6">Accent Color</h2>
-                    <div className="flex flex-wrap gap-4">
-                        {ACCENTS.map((color) => (
-                            <button
-                                key={color}
-                                onClick={() => setAccentColor(color)}
-                                className={`h-12 w-12 rounded-2xl transition-all ${accentColor === color
-                                    ? 'scale-110 ring-4 ring-primary-500/20 shadow-lg shadow-black/5'
-                                    : 'hover:scale-105 opacity-80'
-                                    }`}
-                                style={{ backgroundColor: color }}
-                            >
-                                {accentColor === color && (
-                                    <span className="text-white">✓</span>
-                                )}
-                            </button>
-                        ))}
-                        <div className="relative">
-                            <input
-                                type="color"
-                                value={accentColor}
-                                onChange={(e) => setAccentColor(e.target.value)}
-                                className="h-12 w-12 rounded-2xl cursor-pointer opacity-0 absolute inset-0 z-10"
-                            />
-                            <div
-                                className="h-12 w-12 rounded-2xl flex items-center justify-center border-2 border-dashed border-neutral-300 bg-white"
-                                style={{ backgroundColor: ACCENTS.includes(accentColor) ? 'transparent' : accentColor }}
-                            >
-                                <span className="text-xl">+</span>
-                            </div>
-                        </div>
                     </div>
                 </section>
 

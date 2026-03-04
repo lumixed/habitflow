@@ -14,19 +14,6 @@ const COLORS = [
     { name: 'Teal', value: '#14B8A6' },
 ];
 
-const ICONS = [
-    { key: 'target', label: '🎯' }, { key: 'run', label: '🏃' }, { key: 'book', label: '📚' }, { key: 'water', label: '💧' }, { key: 'sleep', label: '😴' },
-    { key: 'meditate', label: '🧘' }, { key: 'exercise', label: '💪' }, { key: 'write', label: '✍️' }, { key: 'cook', label: '🍳' }, { key: 'learn', label: '🧠' },
-    { key: 'guitar', label: '🎸' }, { key: 'music', label: '🎵' }, { key: 'brush', label: '🎨' }, { key: 'camera', label: '📷' }, { key: 'code', label: '💻' },
-    { key: 'game', label: '🎮' }, { key: 'gardening', label: '🌱' }, { key: 'pet', label: '🐾' }, { key: 'phone', label: '📵' }, { key: 'money', label: '💰' },
-    { key: 'heart', label: '❤️' }, { key: 'star', label: '⭐' }, { key: 'fire', label: '🔥' }, { key: 'moon', label: '🌙' }, { key: 'sun', label: '☀️' },
-    { key: 'cloud', label: '☁️' }, { key: 'rain', label: '🌧️' }, { key: 'coffee', label: '☕' }, { key: 'tea', label: '🍵' }, { key: 'apple', label: '🍎' },
-    { key: 'pizza', label: '🍕' }, { key: 'bike', label: '🚲' }, { key: 'car', label: '🚗' }, { key: 'plane', label: '✈️' }, { key: 'map', label: '🗺️' },
-    { key: 'home', label: '🏠' }, { key: 'work', label: '💼' }, { key: 'school', label: '🏫' }, { key: 'church', label: '⛪' }, { key: 'beach', label: '🏖️' },
-    { key: 'mountain', label: '⛰️' }, { key: 'tree', label: '🌳' }, { key: 'flower', label: '🌸' }, { key: 'bird', label: '🐦' }, { key: 'dog', label: '🐶' },
-    { key: 'cat', label: '🐱' }, { key: 'fish', label: '🐟' }, { key: 'rocket', label: '🚀' }, { key: 'clock', label: '⏰' }, { key: 'diary', label: '📔' },
-];
-
 const FREQUENCIES = [
     { value: 'DAILY', label: 'Every day' },
     { value: 'WEEKDAYS', label: 'Weekdays only' },
@@ -51,7 +38,6 @@ export default function HabitModal({ isOpen, onClose, onSave, editHabit }: Habit
     const [description, setDescription] = useState('');
     const [frequency, setFrequency] = useState('DAILY');
     const [color, setColor] = useState('#2563EB');
-    const [icon, setIcon] = useState('target');
     const [backgroundImage, setBackgroundImage] = useState('');
     const [difficulty, setDifficulty] = useState<'EASY' | 'MEDIUM' | 'HARD'>('MEDIUM');
     const [isSubmitting, setIsSubmitting] = useState(false);
@@ -63,7 +49,6 @@ export default function HabitModal({ isOpen, onClose, onSave, editHabit }: Habit
             setDescription(editHabit.description || '');
             setFrequency(editHabit.frequency);
             setColor(editHabit.color);
-            setIcon(editHabit.icon);
             setBackgroundImage((editHabit as any).background_image || '');
             setDifficulty(editHabit.difficulty || 'MEDIUM');
         } else {
@@ -71,7 +56,6 @@ export default function HabitModal({ isOpen, onClose, onSave, editHabit }: Habit
             setDescription('');
             setFrequency('DAILY');
             setColor('#2563EB');
-            setIcon('target');
             setBackgroundImage('');
             setDifficulty('MEDIUM');
         }
@@ -98,7 +82,6 @@ export default function HabitModal({ isOpen, onClose, onSave, editHabit }: Habit
                 description,
                 frequency,
                 color,
-                icon,
                 background_image: backgroundImage,
                 difficulty
             });
@@ -214,29 +197,6 @@ export default function HabitModal({ isOpen, onClose, onSave, editHabit }: Habit
                             </div>
                         </div>
 
-
-                        {/* Icon */}
-                        <div>
-                            <label className="block text-[10px] font-black text-neutral-400 uppercase tracking-[0.2em] mb-2">Icon</label>
-                            <div className="grid grid-cols-5 gap-2 max-h-40 overflow-y-auto p-1 bg-neutral-50 rounded-md border border-neutral-200">
-                                {ICONS.map((i) => (
-                                    <button
-                                        key={i.key}
-                                        type="button"
-                                        onClick={() => setIcon(i.key)}
-                                        aria-label={`Select ${i.key} icon`}
-                                        aria-pressed={icon === i.key}
-                                        className={`p-3 text-lg rounded-md border transition-all ${icon === i.key
-                                            ? 'border-neutral-900 bg-neutral-900 text-white'
-                                            : 'border-white bg-white hover:bg-neutral-50'
-                                            }`}
-                                        title={i.key}
-                                    >
-                                        {i.label}
-                                    </button>
-                                ))}
-                            </div>
-                        </div>
 
                         {/* Background Image */}
                         <div>

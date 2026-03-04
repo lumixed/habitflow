@@ -115,7 +115,7 @@ export default function CorrelationMatrix() {
                     <div className="space-y-2">
                         {data.insights.map((insight, idx) => (
                             <div key={idx} className="flex items-start gap-2">
-                                <span className="text-blue-600">💡</span>
+
                                 <p className="text-sm text-neutral-700">{insight}</p>
                             </div>
                         ))}

@@ -4,19 +4,6 @@ import { useRouter } from 'next/navigation';
 import { Habit } from '@/hooks/useHabits';
 import { useCompletions } from '@/hooks/useCompletions';
 
-const ICON_MAP: Record<string, string> = {
-    target: '🎯',
-    run: '🏃',
-    book: '📚',
-    water: '💧',
-    sleep: '😴',
-    meditate: '🧘',
-    exercise: '💪',
-    write: '✍️',
-    cook: '🍳',
-    learn: '🧠',
-};
-
 interface HabitDetailProps {
     habit: Habit;
     onClose: () => void;
@@ -25,7 +12,6 @@ interface HabitDetailProps {
 export default function HabitDetail({ habit, onClose }: HabitDetailProps) {
     const { streak, isDateCompleted, toggleCompletion, isLoading } = useCompletions(habit.id);
 
-    const emoji = ICON_MAP[habit.icon] || '🎯';
 
     const generateCalendar = () => {
         const today = new Date();
@@ -74,8 +60,7 @@ export default function HabitDetail({ habit, onClose }: HabitDetailProps) {
                         Back to dashboard
                     </button>
 
-                    <div className="flex items-center gap-4">
-                        <span className="text-3xl grayscale opacity-40">{emoji}</span>
+                    <div className="flex items-center">
                         <div>
                             <h1 className="text-xl font-black text-neutral-900 uppercase tracking-tight">{habit.title}</h1>
                             {streak > 0 && (
@@ -116,19 +101,19 @@ export default function HabitDetail({ habit, onClose }: HabitDetailProps) {
                                         onClick={() => !isFuture && handleDayClick(date)}
                                         disabled={isFuture}
                                         className={`aspect-square rounded-md border transition-all ${isFuture
-                                                ? 'border-neutral-50 bg-neutral-50/50 cursor-not-allowed'
-                                                : isCompleted
-                                                    ? 'border-neutral-900 bg-neutral-900 text-white'
-                                                    : 'border-neutral-200 hover:bg-neutral-50'
+                                            ? 'border-neutral-50 bg-neutral-50/50 cursor-not-allowed'
+                                            : isCompleted
+                                                ? 'border-neutral-900 bg-neutral-900 text-white'
+                                                : 'border-neutral-200 hover:bg-neutral-50'
                                             } ${isToday ? 'ring-1 ring-neutral-900 ring-offset-2' : ''}`}
                                     >
                                         <div className="flex flex-col items-center justify-center h-full">
                                             <span
                                                 className={`text-[10px] font-black ${isFuture
-                                                        ? 'text-neutral-200'
-                                                        : isCompleted
-                                                            ? 'text-white'
-                                                            : 'text-neutral-400'
+                                                    ? 'text-neutral-200'
+                                                    : isCompleted
+                                                        ? 'text-white'
+                                                        : 'text-neutral-400'
                                                     }`}
                                             >
                                                 {date.getDate()}

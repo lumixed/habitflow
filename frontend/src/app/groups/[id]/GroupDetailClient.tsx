@@ -9,18 +9,7 @@ import { useChallenges } from '@/hooks/useChallenges';
 import ChallengeCard from '@/components/ChallengeCard';
 import CreateChallengeModal from '@/components/CreateChallengeModal';
 
-const ICON_MAP: Record<string, string> = {
-    target: '🎯',
-    run: '🏃',
-    book: '📚',
-    water: '💧',
-    sleep: '😴',
-    meditate: '🧘',
-    exercise: '💪',
-    write: '✍️',
-    cook: '🍳',
-    learn: '🧠',
-};
+
 
 export default function GroupDetailClient({ id }: { id: string }) {
     const router = useRouter();
@@ -192,7 +181,7 @@ export default function GroupDetailClient({ id }: { id: string }) {
                                         member.habits.map((habit: any) => (
                                             <div key={habit.id} className="flex items-center justify-between gap-4">
                                                 <div className="flex items-center gap-2 flex-1 min-w-0">
-                                                    <span className="text-lg flex-shrink-0">{ICON_MAP[habit.icon] || '✨'}</span>
+                                                    <div className="w-2 h-2 rounded-full" style={{ backgroundColor: habit.color }} />
                                                     <span className="text-sm font-medium text-neutral-700 truncate">{habit.title}</span>
                                                     <span className="text-[10px] font-black text-neutral-600 bg-white border border-neutral-300 px-1.5 py-0.5 rounded ml-1">
                                                         {habit.streak_days}d
