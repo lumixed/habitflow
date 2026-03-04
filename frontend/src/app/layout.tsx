@@ -1,4 +1,4 @@
-import type { Metadata } from 'next';
+import type { Metadata, Viewport } from 'next';
 import { Inter } from 'next/font/google';
 import '@/styles/globals.css';
 import { AuthProvider } from '@/contexts/AuthContext';
@@ -15,8 +15,15 @@ export const metadata: Metadata = {
     title: 'HabitFlow',
     description: 'Build habits, stay accountable, achieve your goals.',
     manifest: '/manifest.json',
+};
+
+export const viewport: Viewport = {
     themeColor: '#000000',
-    viewport: 'width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover',
+    width: 'device-width',
+    initialScale: 1,
+    maximumScale: 1,
+    userScalable: false,
+    viewportFit: 'cover',
 };
 
 
