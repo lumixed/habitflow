@@ -7,8 +7,8 @@ const withPWA = require('next-pwa')({
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-    // Static export for Capacitor (only when STATIC_BUILD=true)
-    output: process.env.STATIC_BUILD === 'true' ? 'export' : undefined,
+    // Standalone output for Docker or static export for Capacitor
+    output: process.env.STATIC_BUILD === 'true' ? 'export' : 'standalone',
     images: {
         unoptimized: true,
     },
