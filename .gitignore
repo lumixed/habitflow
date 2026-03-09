@@ -32,4 +32,9 @@ Thumbs.db
 .idea/
 
 # ─── Testing ──────────────────────────────────────────────────────────
-coverage/
+# ─── Terraform ────────────────────────────────────────────────────────
+.terraform/
+*.tfstate
+*.tfstate.*
+terraform.tfvars
+.terraform.lock.hcl

@@ -8,7 +8,8 @@
         "start": "next start",
         "mobile:build": "STATIC_BUILD=true next build && npx cap sync",
         "mobile:ios": "npx cap open ios",
-        "mobile:android": "npx cap open android"
+        "mobile:android": "npx cap open android",
+        "lint": "next lint"
     },
     "dependencies": {
         "@capacitor/android": "^6.2.1",
