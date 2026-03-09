@@ -21,7 +21,22 @@ export interface KeyboardShortcut {
 export function useKeyboardShortcuts(shortcuts: KeyboardShortcut[]) {
     useEffect(() => {
         const handleKeyDown = (event: KeyboardEvent) => {
+            // Ignore shortcuts if the user is typing in an input or textarea
+            const target = event.target as HTMLElement;
+            if (!target || !target.tagName) return;
+
+            const isInput =
+                target.tagName === 'INPUT' ||
+                target.tagName === 'TEXTAREA' ||
+                (target instanceof HTMLElement && target.isContentEditable);
+
+            if (isInput && !event.ctrlKey && !event.altKey && !event.metaKey) {
+                return;
+            }
+
             const matchingShortcut = shortcuts.find((shortcut) => {
+                if (!shortcut.key || !event.key) return false;
+
                 return (
                     shortcut.key.toLowerCase() === event.key.toLowerCase() &&
                     !!shortcut.ctrl === event.ctrlKey &&
