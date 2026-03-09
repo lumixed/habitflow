@@ -12,15 +12,6 @@ interface ThemeConfig {
         text: string;
         border: string;
     };
-    borderRadius: {
-        sm: string;
-        md: string;
-        lg: string;
-        xl: string;
-    };
-    spacing: {
-        scale: number; // 0.8 to 1.5
-    };
 }
 
 const DEFAULT_THEME: ThemeConfig = {
@@ -32,15 +23,6 @@ const DEFAULT_THEME: ThemeConfig = {
         text: '#111827',
         border: '#E5E7EB'
     },
-    borderRadius: {
-        sm: '0.375rem',
-        md: '0.5rem',
-        lg: '1rem',
-        xl: '2.5rem'
-    },
-    spacing: {
-        scale: 1.0
-    }
 };
 
 export default function ThemeEditor() {
@@ -75,15 +57,6 @@ export default function ThemeEditor() {
         root.style.setProperty('--bg-main', theme.colors.background);
         root.style.setProperty('--text-main', theme.colors.text);
         root.style.setProperty('--border-color', theme.colors.border);
-
-        // Border radius
-        root.style.setProperty('--radius-sm', theme.borderRadius.sm);
-        root.style.setProperty('--radius-md', theme.borderRadius.md);
-        root.style.setProperty('--radius-lg', theme.borderRadius.lg);
-        root.style.setProperty('--radius-xl', theme.borderRadius.xl);
-
-        // Spacing
-        root.style.setProperty('--spacing-scale', theme.spacing.scale.toString());
     }, [theme]);
 
     const handleColorChange = (key: keyof ThemeConfig['colors'], value: string) => {
@@ -91,24 +64,6 @@ export default function ThemeEditor() {
         const newTheme = {
             ...theme,
             colors: { ...theme.colors, [key]: value }
-        };
-        setTheme(newTheme);
-        setIsModified(true);
-    };
-
-    const handleBorderRadiusChange = (key: keyof ThemeConfig['borderRadius'], value: string) => {
-        const newTheme = {
-            ...theme,
-            borderRadius: { ...theme.borderRadius, [key]: value }
-        };
-        setTheme(newTheme);
-        setIsModified(true);
-    };
-
-    const handleSpacingChange = (scale: number) => {
-        const newTheme = {
-            ...theme,
-            spacing: { scale }
         };
         setTheme(newTheme);
         setIsModified(true);
@@ -235,51 +190,6 @@ export default function ThemeEditor() {
                 </div>
             </div>
 
-            {/* Border Radius */}
-            <div className="bg-white border border-neutral-200 rounded-lg p-5">
-                <h4 className="text-sm font-semibold text-neutral-700 mb-4">Border Radius</h4>
-                <div className="grid grid-cols-2 gap-3">
-                    {Object.entries(theme.borderRadius).map(([key, value]) => (
-                        <div key={key}>
-                            <label className="block text-xs font-medium text-neutral-600 mb-1.5 uppercase">
-                                {key} <span className="text-neutral-400">({value})</span>
-                            </label>
-                            <input
-                                type="range"
-                                min="0"
-                                max="40"
-                                step="2"
-                                value={parseFloat(value) * 16} // rem to px
-                                onChange={(e) => handleBorderRadiusChange(key as keyof ThemeConfig['borderRadius'], `${parseFloat(e.target.value) / 16}rem`)}
-                                className="w-full"
-                            />
-                            <div className="mt-2 h-10 rounded border border-neutral-300 bg-neutral-50" style={{ borderRadius: value }} />
-                        </div>
-                    ))}
-                </div>
-            </div>
-
-            {/* Spacing Scale */}
-            <div className="bg-white border border-neutral-200 rounded-lg p-5">
-                <h4 className="text-sm font-semibold text-neutral-700 mb-3">Spacing Scale</h4>
-                <div>
-                    <label className="block text-xs font-medium text-neutral-600 mb-2">
-                        Global Multiplier: <span className="font-semibold">{theme.spacing.scale}x</span>
-                    </label>
-                    <input
-                        type="range"
-                        min="0.8"
-                        max="1.5"
-                        step="0.1"
-                        value={theme.spacing.scale}
-                        onChange={(e) => handleSpacingChange(parseFloat(e.target.value))}
-                        className="w-full"
-                    />
-                    <div className="mt-2 text-xs text-neutral-500">
-                        Affects padding, margins, and gaps throughout the app
-                    </div>
-                </div>
-            </div>
         </div>
     );
 }
