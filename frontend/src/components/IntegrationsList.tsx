@@ -34,16 +34,18 @@ const IntegrationsList = () => {
     };
 
     const handleConnect = async (provider: 'google' | 'strava') => {
-        if (user?.plan === 'FREE') {
-            alert('External integrations are a Pro feature! Upgrade to unlock.');
-            return;
-        }
+        console.log(`[Integrations] Attempting to connect to ${provider}...`);
         try {
-            if (!token) return;
+            if (!token) {
+                alert('You must be logged in to connect integrations.');
+                return;
+            }
             const { url } = await api.get<{ url: string }>(`/api/integrations/${provider}/auth`, token);
+            console.log(`[Integrations] Redirecting to: ${url}`);
             window.location.href = url;
         } catch (err) {
             console.error(`Failed to start ${provider} auth:`, err);
+            alert(`Failed to start ${provider} connection. Check console for details.`);
         }
     };
 
@@ -108,10 +110,10 @@ const IntegrationsList = () => {
                     ) : (
                         <button
                             onClick={() => handleConnect('google')}
-                            className={`bg-neutral-900 text-white px-6 py-2 rounded-xl text-sm font-bold hover:bg-black transition-all flex items-center gap-2 ${user?.plan === 'FREE' ? 'opacity-50 grayscale' : ''}`}
+                            className="bg-neutral-900 text-white px-6 py-2 rounded-xl text-sm font-bold hover:bg-black transition-all flex items-center gap-2"
                         >
-                            {user?.plan === 'FREE' ? <Lock className="w-4 h-4" /> : <ExternalLink className="w-4 h-4" />}
-                            {user?.plan === 'FREE' ? 'Upgrade' : 'Connect'}
+                            <ExternalLink className="w-4 h-4" />
+                            Connect
                         </button>
                     )}
                 </div>
@@ -156,10 +158,10 @@ const IntegrationsList = () => {
                         ) : (
                             <button
                                 onClick={() => handleConnect('strava')}
-                                className={`bg-neutral-900 text-white px-6 py-2 rounded-xl text-sm font-bold hover:bg-black transition-all flex items-center gap-2 ${user?.plan === 'FREE' ? 'opacity-50 grayscale' : ''}`}
+                                className="bg-neutral-900 text-white px-6 py-2 rounded-xl text-sm font-bold hover:bg-black transition-all flex items-center gap-2"
                             >
-                                {user?.plan === 'FREE' ? <Lock className="w-4 h-4" /> : <ExternalLink className="w-4 h-4" />}
-                                {user?.plan === 'FREE' ? 'Upgrade' : 'Connect'}
+                                <ExternalLink className="w-4 h-4" />
+                                Connect
                             </button>
                         )}
                     </div>
